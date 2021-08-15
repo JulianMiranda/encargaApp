@@ -1,4 +1,4 @@
-package com.enviospackuba;
+package com.enviosencarga;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 

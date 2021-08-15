@@ -106,7 +106,7 @@ export const InfoScreen = () => {
       </View>
       <View style={styles.container}>
         {open === 0 && <Image
-				source={require('../../assets/logo_splash.png')}
+				source={require('../../assets/encarga4.png')}
 				style={{height: 200, width: 270, alignSelf: 'center', marginTop: 50}}
 			/>}
     {showText1 && (

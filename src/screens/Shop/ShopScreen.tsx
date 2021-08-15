@@ -77,7 +77,7 @@ export const ShopScreen = () => {
     setOpenModal(false);
             /* navigation.navigate('HomeScreen'); */
             Linking.openURL(
-              'http://api.whatsapp.com/send?text=Hola 📦 *baría*, he realizado una compra!&phone=+593992918332',
+              'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, he realizado una compra!&phone=+593962914922',
             );
   }
 

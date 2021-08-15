@@ -5,7 +5,7 @@ export const TandC = () => {
     return (
         <ScrollView>
         <Text style={{...styles.text, fontSize: 26,}}>Estimado Cliente</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	baría es una Agencia de Compras radicada en ecuador con destino a Cuba.</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	enCarga es una Agencia de Compras radicada en ecuador con destino a Cuba.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	El peso máximo de cada paquete es de 1.50 kilogramos, con un costo de 19.80 USD por paquete.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Cada persona residente en Cuba puede recibir 30 paquetes al año, divididos en 10 cada dos meses.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Los artículos que excedan los 1.50 kilogramos tienen un costo mayor de envío según su peso y volumen, dichos artículos no pueden exceder los 200 puntos en valor de Aduanas de Cuba.</Text>
@@ -21,8 +21,8 @@ export const TandC = () => {
         <Text style={{...styles.text, fontSize: 18,}}>•	Cada paquete tiene su código, es independiente a otro y así son tratados, por lo que pueden llegarle al destinatario en fechas diferentes.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Los servicios de entrega son hasta el domicilio de la persona que recibe, dicha entrega corre a cargo de Correos de Cuba.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Una vez la carga haya salido de nuestra agencia no hay devolución posible.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	baría NO se hace responsable de sus envíos una vez entregados a Aduanas de Cuba y sigan su curso de destino hasta su domicilio.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	Algunos artículos pagan servicios de aduanas en la moneda del país (CUP Cuba) y algunos electrodomésticos además pagan aranceles, por lo que sugerimos consultar la ley de aduana antes de comprar, baría NO se hace responsable de estos pagos.</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	enCarga NO se hace responsable de sus envíos una vez entregados a Aduanas de Cuba y sigan su curso de destino hasta su domicilio.</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	Algunos artículos pagan servicios de aduanas en la moneda del país (CUP Cuba) y algunos electrodomésticos además pagan aranceles, por lo que sugerimos consultar la ley de aduana antes de comprar, enCarga NO se hace responsable de estos pagos.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Al recibir el paquete o bulto debe estar debidamente sellado, debe pedir al agente de Correos de Cuba comprobación de peso si tiene alguna duda.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Informamos que existen atrasos con los servicios de entrega de paquetería, debido a las complicaciones de la pandemia del covid-19, por lo que no podemos indicarle una fecha exacta en la entrega de sus paquetes.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Con gusto le atenderemos por mensajes de texto al WhatsApp +593992918332 o +593983597192, o al correo enviospackuba@gmail.com.</Text>

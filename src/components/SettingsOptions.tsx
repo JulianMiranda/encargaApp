@@ -52,7 +52,7 @@ export default function SettingsOptions() {
   const redirectWhatsapp= () => {
     setOpenModal(false)
     Linking.openURL(
-      'http://api.whatsapp.com/send?text=Hola 📦 *baría*, me podría ayudar?&phone=+593992918332',
+      'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593962914922',
     )
   }
 
@@ -95,7 +95,7 @@ export default function SettingsOptions() {
         {
           text: 'Sí',
           onPress: () =>  Linking.openURL(
-            'http://api.whatsapp.com/send?text=Hola 📦 *baría*, me podría ayudar?&phone=+593992918332',
+            'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593992918332',
           )
         },
       ],

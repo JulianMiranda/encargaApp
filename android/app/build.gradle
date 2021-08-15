@@ -138,7 +138,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.enviospackuba"
+        applicationId "com.enviosencarga"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 8

@@ -7,6 +7,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:972227950825:android:c2ec2dc0ff9d6572a45878",
+        "android_client_info": {
+          "package_name": "com.enviosencarga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972227950825-jd855stqku3offl3paqff1omo6rp303o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enviosencarga",
+            "certificate_hash": "3d677e7c80dde7f9e2e42b43ec1a4d7a5516d93c"
+          }
+        },
+        {
+          "client_id": "972227950825-rjihtaboqeekrln22sm44hja83j42qpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW6-9oY7Ai3wBoHtRZP56TTUAl4PChg7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972227950825-rjihtaboqeekrln22sm44hja83j42qpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:972227950825:android:03f8d56f4aa33f83a45878",
         "android_client_info": {
           "package_name": "com.enviospackuba"
@@ -14,11 +51,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "972227950825-5kj0k3t7uk94m7436db78a9r54sllqv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enviospackuba",
+            "certificate_hash": "1f9fada6e0c99f51ebc23ae73e27df7d9d6c9618"
+          }
+        },
+        {
           "client_id": "972227950825-iv2dcjia9plon0rvfl6ldablk0cecbea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.enviospackuba",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "972227950825-mcvhjbna90urgq9e69fpq430qvmt88ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enviospackuba",
+            "certificate_hash": "8e9f1490f6677868fd077195c32e26c6a09e2511"
           }
         },
         {
