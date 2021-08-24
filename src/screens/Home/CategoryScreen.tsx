@@ -96,12 +96,12 @@ export const CategoryScreen = (props: Props) => {
               //start={{x: 0.5, y: 0.0}}
               //end={{x: 0.1, y: 0.2}}
               //colors={['#4c669f', '#3b5998', '#192f6a']}
-              colors={[color, '#f7baba']}>
+              colors={[color, '#d6e6fc']}>
               <Text
                 style={{
                   ...styles.mainName,
                   top: top + 50,
-                  fontFamily: 'NovaSlim-Regular',
+                  fontFamily: 'Merienda-Regular',
                 }}>
                 {name + '\n'}
               </Text>

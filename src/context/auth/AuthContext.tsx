@@ -27,6 +27,7 @@ type AuthContextProps = {
   logOut: () => void;
   removeError: () => void;
   loginB: () => void;
+  sendPrice: number;
 };
 
 const authInicialState: AuthState = {
@@ -34,6 +35,7 @@ const authInicialState: AuthState = {
   wait: false,
   user: null,
   errorMessage: '',
+  sendPrice: 0,
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -64,7 +66,8 @@ export const AuthProvider = ({children}: any) => {
 
   const checkToken = async (isLogin = false) => {
    /*  const headers = await getHeaders(); */
-  
+   const sendPrice = await api.get<number>('/orders/getPrice')
+   dispatch({type: 'setPrice', payload: sendPrice.data});
    const token = await AsyncStorage.getItem('token');
     // No token, no autenticado
     if (!token) return dispatch({type: 'notAuthenticated'});

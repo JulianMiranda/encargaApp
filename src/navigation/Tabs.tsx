@@ -44,7 +44,7 @@ export const Tabs = () => {
         style: styles.navigator,
         labelStyle: {
           marginBottom: Platform.OS === 'ios' ? -5 : 3,
-          fontFamily: 'calibri-7',
+          fontFamily: 'Merienda-Regular',
           fontSize: 11,
         },
         tabStyle: {
@@ -54,9 +54,11 @@ export const Tabs = () => {
       }}>
       <Tab.Screen
         name="Home"
+        
         component={HomeStack}
         options={{
           title: 'Tienda',
+         
           tabBarIcon: ({color}) => (
             <FontAws name="store" size={24} color={color} />
           ),

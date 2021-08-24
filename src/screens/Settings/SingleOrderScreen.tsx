@@ -27,7 +27,7 @@ export const SingleOrderScreen = (props: Props) => {
           style={{
             fontSize: 22,
             fontWeight: '300',
-            fontFamily: 'NovaSlim-Regular',
+            fontFamily: 'Merienda-Regular',
           }}>
           Realizada {moment(order.createdAt).fromNow()}
         </Text>
@@ -36,7 +36,7 @@ export const SingleOrderScreen = (props: Props) => {
           style={{
             fontSize: 22,
             fontWeight: '300',
-            fontFamily: 'NovaSlim-Regular',
+            fontFamily: 'Merienda-Regular',
             marginTop: 15,
             marginBottom: 7,
           }}>
@@ -49,7 +49,7 @@ export const SingleOrderScreen = (props: Props) => {
             style={{marginHorizontal: 5, flexDirection: 'row'}}>
             <Text
               style={{
-                fontFamily: 'NovaSlim-Regular',
+                fontFamily: 'Merienda-Regular',
                 marginLeft: 2,
                 fontSize: 18,
                 width: 50,
@@ -58,7 +58,7 @@ export const SingleOrderScreen = (props: Props) => {
             </Text>
             <Text
               style={{
-                fontFamily: 'NovaSlim-Regular',
+                fontFamily: 'Merienda-Regular',
                 fontSize: 18,
                 marginLeft: 4,
               }}>
@@ -74,7 +74,7 @@ export const SingleOrderScreen = (props: Props) => {
             alignSelf: 'flex-end',
             marginRight: 10,
             fontWeight: '300',
-            fontFamily: 'NovaSlim-Regular',
+            fontFamily: 'Merienda-Regular',
           }}>
          Valor de compra: {formatToCurrency(order.cost)}
         </Text>

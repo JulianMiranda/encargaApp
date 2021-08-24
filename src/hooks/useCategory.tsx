@@ -12,6 +12,7 @@ export const useCategory = (id: string) => {
   const loadSubcategories = async () => {
     const body = {      
       filter: {category: ['=', id], status: ['=', true]},
+      docsPerPage: 100,
       population: [
         {
           path: 'category',

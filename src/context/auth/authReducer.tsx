@@ -5,12 +5,14 @@ export interface AuthState {
   user: User | null;
   errorMessage: string;
   wait: boolean;
+  sendPrice: number;
 }
 
 type AuthAction =
   | {type: 'notAuthenticated'}
   | {type: 'signUp'; payload: {user: User}}
   | {type: 'addError'; payload: string}
+  | {type: 'setPrice'; payload: number}
   | {type: 'removeError'}
   | {type: 'logout'}
   | {type: 'initCheck'}
@@ -26,6 +28,11 @@ export const authReducer = (
         ...state,
         status: 'authenticated',
       };
+    case 'setPrice':
+      return {
+        ...state,
+        sendPrice: action.payload,
+        };
     case 'logout':
     case 'notAuthenticated':
       return {

@@ -79,6 +79,6 @@ const styles = StyleSheet.create({
   },
   firstText: {
     fontSize: 16,
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
   },
 });

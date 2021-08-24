@@ -6,6 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {TopScreen} from '../../components/TopScreen';
 import { TandC } from '../../components/TandC';
 import { useAnimation } from '../../hooks/useAnimation';
+import { AboutApp } from '../../components/AboutApp';
 
 export const InfoScreen = () => {
   const navigation = useNavigation();
@@ -116,16 +117,7 @@ export const InfoScreen = () => {
       )}
     {showText2 && (
       <View style={{marginTop: -190}}>
-        <Text style={styles.text}>
-        📦 Somos una agencia de compras radicada en Ecuador con destino a Cuba
-        </Text>
-
-        <Text style={styles.text}>
-        📦 Ofrecemos productos para consumo personal y negocio
-        </Text>
-        <Text style={styles.text}>
-        📦 Toda mercadería a partir de 6 unidades toma un precio por mayor 
-        </Text>
+         <AboutApp/>
         </View>
       )}
        
@@ -147,7 +139,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     fontSize: 28,
     /*  fontWeight: 'bold',
     marginBottom: 25, */
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     fontWeight: '300',
     textAlign: 'left',
     marginVertical: 20,
@@ -171,7 +163,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     alignSelf: 'center',
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     color: 'white',
     fontSize: 18,
     marginHorizontal: 20,
@@ -205,13 +197,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   textStyle: {
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     color: "white",
     fontWeight: "bold",
     textAlign: "center"
   },
   modalText: {
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     margin: 100,
     marginBottom: 30,
     textAlign: "center"

@@ -24,7 +24,7 @@ export const CategoryCard = ({category}: Props) => {
       onPress={() =>
         navigation.navigate('CategoryScreen', {
           category: category,
-          color: colors.primary,
+          color: colors.card,
         })
       }>
       <View
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   name: {
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     fontSize: 22,
     top: 4,
     left: 10,

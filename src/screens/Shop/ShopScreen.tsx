@@ -19,6 +19,7 @@ import {HeaderTable} from '../../components/HeaderTable';
 import LinearGradient from 'react-native-linear-gradient';
 import {formatToCurrency} from '../../utils/formatToCurrency';
 import { ModalComponent } from '../../components/ModalComponent';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 export const ShopScreen = () => {
   const {
@@ -29,6 +30,7 @@ export const ShopScreen = () => {
 
   const {car, message, emptyCar, makeShop, removeAlert} =
     useContext(ShopContext);
+    const {sendPrice} = useContext(AuthContext);
   const [total, setTotal] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('');
@@ -168,7 +170,7 @@ export const ShopScreen = () => {
                 marginLeft: 10,
                 fontSize: 22,
                 fontWeight: '400',
-                fontFamily: 'NovaSlim-Regular',
+                fontFamily: 'Merienda-Regular',
                 alignSelf: 'center',           
               }}>
               Carrito vacío 😦
@@ -186,7 +188,7 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 24,
                     fontWeight: '400',
-                    fontFamily: 'NovaSlim-Regular',
+                    fontFamily: 'Merienda-Regular',
                   }}>
                   Valor de compra:
                 </Text>
@@ -196,7 +198,7 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 26,
                     fontWeight: '600',
-                    fontFamily: 'NovaSlim-Regular',
+                    fontFamily: 'Merienda-Regular',
                   }}>
                   {formatToCurrency(total)}
                 </Text>
@@ -223,9 +225,9 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 16,
                     fontWeight: '400',
-                    fontFamily: 'NovaSlim-Regular',
+                    fontFamily: 'Merienda-Regular',
                   }}>
-                  *Para su envío, la compra se embalará en paquetes de 1.5 kg con un costo de $19.80 por paquete.
+                  *Para su envío, la compra se embalará en paquetes de 1.5 kg con un costo de ${sendPrice} por paquete.
                 </Text>
                 </View>
         )}
@@ -235,7 +237,7 @@ export const ShopScreen = () => {
       <>
       <View style={styles.emptyButton}>      
         <TouchableOpacity onPress={emptyCarConfirm}>
-          <Text style={{color: colors.card, fontFamily: 'NovaSlim-Regular'}}>
+          <Text style={{color: colors.card, fontFamily: 'Merienda-Regular'}}>
             Vaciar Carrito
           </Text>
         </TouchableOpacity>
@@ -245,7 +247,7 @@ export const ShopScreen = () => {
       <TouchableOpacity
         activeOpacity={car.length < 1 ? 1 : 0.8}
         onPress={car.length < 1 ? () => {} : makeShopFunction}>
-        <Text style={{color: 'white', fontFamily: 'NovaSlim-Regular'}}>
+        <Text style={{color: 'white', fontFamily: 'Merienda-Regular'}}>
           Realizar Compra
         </Text>
       </TouchableOpacity>
@@ -268,7 +270,7 @@ const styles = StyleSheet.create({
 
   titleList: {
     color: 'white',
-    fontFamily: 'NovaSlim-Regular',
+    fontFamily: 'Merienda-Regular',
     fontSize: 40,
     alignSelf: 'flex-start',
     left: 70,

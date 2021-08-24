@@ -35,7 +35,7 @@ export const TopScreen = (props: Props) => {
             style={{
               ...styles.mainName,
               top: top + 50,
-              fontFamily: 'NovaSlim-Regular',
+              fontFamily: 'Merienda-Regular',
               alignSelf: 'center',
             }}>
             {text}

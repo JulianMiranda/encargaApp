@@ -61,8 +61,8 @@ export const ModalComponent = ({title, body, isLoading, openModal, setOpenModal,
                         elevation: 10,
                         borderRadius: 8
                     }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold',fontFamily: 'NovaSlim-Regular', }}>{title}</Text>
-                        <Text style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'NovaSlim-Regular', }}>{body}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold',fontFamily: 'Merienda-Regular', }}>{title}</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}>{body}</Text>
                         {isLoading && <View style={{flex:1}}>
                             <ActivityIndicator color={colors.primary}/>
                         </View>}
@@ -72,14 +72,14 @@ export const ModalComponent = ({title, body, isLoading, openModal, setOpenModal,
                         activeOpacity={0.8}
                         style={{backgroundColor: '#eeebeb', marginTop: 20, padding: 6,borderRadius: 8,paddingHorizontal: 12}}
                         onPress={closeModal}
-                        ><Text style={{color: '#000',fontFamily: 'NovaSlim-Regular', fontSize: 16}}>Cancelar</Text>
+                        ><Text style={{color: '#000',fontFamily: 'Merienda-Regular', fontSize: 16}}>Cancelar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                         activeOpacity={0.8}
                         style={{backgroundColor: colors.card, marginTop: 20, padding: 4, marginLeft: 30,borderRadius: 8,paddingHorizontal: 10}}
                         onPress={onConfirmModal}
-                        ><Text style={{color: '#ffffff',fontFamily: 'NovaSlim-Regular', fontSize: 16}}>Aceptar</Text>
+                        ><Text style={{color: '#ffffff',fontFamily: 'Merienda-Regular', fontSize: 16}}>Aceptar</Text>
                         </TouchableOpacity>
                         </View>
                        

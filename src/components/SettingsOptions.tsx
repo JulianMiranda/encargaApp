@@ -148,7 +148,7 @@ export default function SettingsOptions() {
                 fontSize: 22,
                 fontWeight: '500',
                 color: '#615e5e',
-                fontFamily: 'NovaSlim-Regular',
+                fontFamily: 'Merienda-Regular',
               }}>
               {menu.title}
             </Text>

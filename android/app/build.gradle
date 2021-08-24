@@ -141,8 +141,8 @@ android {
         applicationId "com.enviosencarga"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "1.1.4"
+        versionCode 3
+        versionName "1.0.3"
     }
     splits {
         abi {
