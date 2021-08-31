@@ -55,7 +55,8 @@ export const CategoryScreen = (props: Props) => {
 
     
    
-  };  
+  }; 
+   
   useEffect(() => {
     if(id === '610c7275b33a5c00158b00a5'){
       setInfoButton(true);

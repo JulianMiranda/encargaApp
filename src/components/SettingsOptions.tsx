@@ -83,23 +83,6 @@ export default function SettingsOptions() {
       setBody('¿Necesita ayuda de un administrador?');
       setOpenModal(true);
 
-    /* Alert.alert(
-      'Contáctanos vía WhatsApp',
-      '¿Necesita ayuda de un administrador?',
-      [
-        {
-          text: 'No',
-          onPress: () => {},
-          style: 'destructive',
-        },
-        {
-          text: 'Sí',
-          onPress: () =>  Linking.openURL(
-            'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593992918332',
-          )
-        },
-      ],
-    ); */
     };
   const selectedComponent = (key: Key) => {
     switch (key) {
@@ -145,7 +128,7 @@ export default function SettingsOptions() {
             <Text
               style={{
                 textAlign: 'center',
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: '500',
                 color: '#615e5e',
                 fontFamily: 'Merienda-Regular',

@@ -17,22 +17,22 @@ type Root = 'Shop' | 'Subca';
 
 interface Props {
   item: Subcategory;
+  edit: boolean;
   root: Root;
 }
-export const SingleSubcategory = ({item, root}: Props) => {
+export const SingleSubcategory = ({item, root, edit}: Props) => {
+ 
   const {car, setItem, unsetItem} = useContext(ShopContext);
   const [cantidad, setCantidad] = useState('1');
   const [buttonName, setButtonName] = useState('Add');
   const [isVisible, setIsVisible] = useState(false);
   
-  useEffect(() => {    
-    car.map(({subcategory, cantidad}) => {      
+  useEffect(() => {  
+    edit ?   setButtonName('Edit') : setButtonName('Add');
+    car.map(({subcategory, cantidad}) => {
       if (subcategory.id === item.id) {        
         setCantidad(cantidad.toString());
-        setButtonName('Edit');
-      } else {
-        setButtonName('Add');
-      }
+       } 
     });
   }, [car]);
   useEffect(() => {

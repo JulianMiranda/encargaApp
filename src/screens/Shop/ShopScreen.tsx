@@ -158,6 +158,7 @@ export const ShopScreen = () => {
               key={index.toString()}
               item={item.subcategory}
               root={'Shop'}
+              edit
             />
           ))}
 
@@ -237,8 +238,8 @@ export const ShopScreen = () => {
       <>
       <View style={styles.emptyButton}>      
         <TouchableOpacity onPress={emptyCarConfirm}>
-          <Text style={{color: colors.card, fontFamily: 'Merienda-Regular'}}>
-            Vaciar Carrito
+          <Text style={{color: colors.card, fontFamily: 'Merienda-Regular', fontSize: 14}}>
+            Vaciar
           </Text>
         </TouchableOpacity>
       </View> 
@@ -247,8 +248,8 @@ export const ShopScreen = () => {
       <TouchableOpacity
         activeOpacity={car.length < 1 ? 1 : 0.8}
         onPress={car.length < 1 ? () => {} : makeShopFunction}>
-        <Text style={{color: 'white', fontFamily: 'Merienda-Regular'}}>
-          Realizar Compra
+        <Text style={{color: 'white', fontFamily: 'Merienda-Regular', fontSize: 14}}>
+         Comprar
         </Text>
       </TouchableOpacity>
     </View>
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     marginVertical: 3,
   },
   shopButton: {
-    width: 150,
+    width: 115,
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 99999,
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
    
   },
   emptyButton: {
-    width: 150,
+    width: 115,
     justifyContent: 'center',
     position: 'absolute',
     bottom: 75,

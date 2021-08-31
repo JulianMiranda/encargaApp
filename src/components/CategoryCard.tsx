@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/core';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 
 import {ThemeContext} from '../context/theme/ThemeContext';
 
@@ -11,13 +11,13 @@ interface Props {
   category: Category;
 }
 
+const {height, width} = Dimensions.get('window');
 export const CategoryCard = ({category}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
 
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -44,8 +44,8 @@ export const CategoryCard = ({category}: Props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 20,
-    height: 160,
-    width: 160,
+    height: width*0.38,
+    width: width*0.38,
     marginBottom: 60,
     borderRadius: 10,
     shadowColor: '#000',
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     left: 10,
   },
   productImage: {
-    width: 160,
-    height: 160,
+    height: width*0.38,
+    width: width*0.38,
     borderRadius: 10,
   },
 });

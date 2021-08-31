@@ -63,11 +63,11 @@ export const HomeScreen = (props: Props) => {
           style={{
            
             alignSelf: 'center',
-            marginTop: top + 5,
-            height: 37,
+            marginTop: top + 6,
+            height: 45,
             width: 100,
             marginRight: 30,
-            marginBottom: 5,
+            marginBottom: -2,
           }}
         />
        
