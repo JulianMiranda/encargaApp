@@ -1,18 +1,24 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import api from '../api/api';
 import {
   SubcategoryResp,
   Subcategory,
 } from '../interfaces/Subcategory.interface';
 
-export const useCategory = (id: string) => {
+export const useSubcategoryPaginated = (id: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const nextPage = useRef(1);
+  const totalPages = useRef(2);
 
   const loadSubcategories = async () => {
+ 
+    
     const body = {      
       filter: {category: ['=', id], status: ['=', true]},
-      docsPerPage: 1000,
+      docsPerPage:  10,
+      sort: "desc",
+      page: nextPage.current,
       population: [
         {
           path: 'category',
@@ -31,16 +37,22 @@ export const useCategory = (id: string) => {
       ],
     };
     try {
-      const resp = await api.post<SubcategoryResp>(
-        '/subcategories/getList',
-        body,
-      );
-      setSubcategories(resp.data.data);
+      if(nextPage.current <= totalPages.current+2){
+        setIsLoading(true);
+        const resp = await api.post<SubcategoryResp>(
+          '/subcategories/getList',
+          body,
+        );
+  
+        nextPage.current = resp.data.page + 1;      
+        totalPages.current = resp.data.totalPages;
+        setSubcategories([...subcategories, ...resp.data.data]);
+      }
+      
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-    }
-    
+    }    
   };
 
   useEffect(() => {
@@ -50,5 +62,6 @@ export const useCategory = (id: string) => {
   return {
     isLoading,
     subcategories,
+    loadSubcategories
   };
 };

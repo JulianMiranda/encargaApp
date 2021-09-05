@@ -12,6 +12,7 @@ export interface RegisterData {
 }
 
 export interface User {
+	status: boolean;
 	role: string;
 	name: string;
 	email?: string;

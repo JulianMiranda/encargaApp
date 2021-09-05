@@ -17,17 +17,16 @@ type Root = 'Shop' | 'Subca';
 
 interface Props {
   item: Subcategory;
-  edit: boolean;
   root: Root;
+  edit: boolean;
 }
 export const SingleSubcategory = ({item, root, edit}: Props) => {
- 
   const {car, setItem, unsetItem} = useContext(ShopContext);
   const [cantidad, setCantidad] = useState('1');
   const [buttonName, setButtonName] = useState('Add');
   const [isVisible, setIsVisible] = useState(false);
   
-  useEffect(() => {  
+  useEffect(() => {    
     edit ?   setButtonName('Edit') : setButtonName('Add');
     car.map(({subcategory, cantidad}) => {
       if (subcategory.id === item.id) {        
@@ -46,6 +45,8 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
       setItem({subcategory: item, cantidad: parseInt(cantidad)});
     }
   };
+
+  
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity activeOpacity={0.8} onPress={() => setIsVisible(true)}>
@@ -145,9 +146,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 3,
+    marginLeft: 5
   },
   name: {
-    fontFamily: 'Merienda-Regular',
+    fontFamily: 'NovaSlim-Regular',
     fontSize: 16,
     fontWeight: '400',
     marginVertical: 3,

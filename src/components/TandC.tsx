@@ -1,5 +1,5 @@
-import React,{useContext} from 'react'
-import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React,{useContext} from 'react';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../context/auth/AuthContext';
 
 export const TandC = () => {
@@ -23,10 +23,10 @@ export const TandC = () => {
         <Text style={{...styles.text, fontSize: 18,}}>•	enCarga NO se hace responsable de sus envíos una vez entregados a Aduanas de Cuba y sigan su curso de destino hasta su domicilio.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Algunos artículos pagan servicios de aduanas en la moneda del país (CUP Cuba) y algunos electrodomésticos además pagan aranceles, por lo que sugerimos consultar la ley de aduana antes de comprar, enCarga NO se hace responsable de estos pagos.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Al recibir el paquete o bulto debe estar debidamente sellado, debe pedir al agente de Correos de Cuba comprobación de peso si tiene alguna duda.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	En caso de estar su paquete abiero, presintado, o con algún daño no debe recibir el paquete; en este caso comucarse con nosotros.</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	En caso de estar su paquete abierto, precintado, o con algún daño no debe recibir el paquete; en este caso comunicarse con nosotros.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Informamos que existen atrasos con los servicios de entrega de paquetería, debido a las complicaciones de la pandemia del covid-19, por lo que no podemos indicarle una fecha exacta en la entrega de sus paquetes.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	Con gusto le atenderemos por mensajes de texto al WhatsApp +593962914922, o al correo enviospackuba@gmail.com.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	En su perfil de cliente ubicado en la parte posterior derecha de nuestra pantalla podrá encontrar:</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	Con gusto le atenderemos por mensajes de texto al WhatsApp +593962914922 o +593983597192, o al correo enviospackuba@gmail.com</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	En su perfil de cliente ubicado en la parte inferior derecha de nuestra pantalla podrá encontrar:</Text>
         
         <TouchableOpacity onPress={()=> Linking.openURL('https://play.google.com/store/apps/details?id=com.acamue.aduanadecuba')} >
         <Text style={{...styles.text, fontSize: 18,  textAlign: 'center',color: '#3366BB'}}>Descargar Normas Aduaneras Cubanas</Text>
@@ -35,7 +35,7 @@ export const TandC = () => {
         <Text style={{...styles.text, fontSize: 18,  textAlign: 'center',color: '#3366BB'}}>Link de rastreo para paquetería en Correos de Cuba</Text>
         </TouchableOpacity>
         
-        <Text style={{...styles.text, fontSize: 20,  textAlign: 'right',}}>Agradecemos su confianza.</Text>
+        <Text style={{...styles.text, fontSize: 20,  textAlign: 'right',}}>Agradecemos su confianza</Text>
         <Text style={{...styles.text, fontSize: 20,  textAlign: 'right',}}>Gracias por preferir enCarga</Text>
        
         
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
    
     text: {
       fontSize: 22,
-      fontFamily: 'Merienda-Regular',
+      fontFamily: 'NovaSlim-Regular',
       fontWeight: '300',
       textAlign: 'left',
       marginVertical: 20,

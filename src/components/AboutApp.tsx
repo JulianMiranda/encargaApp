@@ -16,7 +16,7 @@ export const AboutApp = () => {
         <Text style={{...styles.text, fontSize: 18,}}>•	Al realizar su compra será considerada como finalizada, cualquier pedido extra o fuera de tiempo será considerada una compra posterior futura.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Su compra será realizada en el momento indicado debido al orden lógico de compras mediante nuestra aplicación.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	En caso de desear algún producto no mostrado en nuetra tienda, favor comunicarse con un administrador vía WhatsApp o Correo Electrónico.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	Con gusto le atenderemos por mensaje de texto al WhatsApp +593992918332 o +593995687985, o al correo bariaenvios@gmail.com</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	Con gusto le atenderemos por mensaje de texto al WhatsApp +593962914922 o +593983597192, o al correo enviospackuba@gmail.com</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	enCarga se reserva el derecho de admisión tanto de clientes como de pedidos.</Text>
         
         <Text style={{...styles.text, fontSize: 20,  textAlign: 'right',}}>Agradecemos su confianza.</Text>

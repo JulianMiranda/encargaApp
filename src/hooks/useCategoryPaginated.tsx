@@ -21,13 +21,16 @@ export const useCategoryPaginated = () => {
         },
       ],
     };
-    const resp = await api.post<CategoriesPaginated>(
-      '/categories/getList',
-      body,
-    );
-
-    setCategoryList([...categoryList, ...resp.data.data]);
-    setIsLoading(false);
+    try {
+      const resp = await api.post<CategoriesPaginated>(
+        '/categories/getList',
+        body,
+      );
+      setCategoryList([...categoryList, ...resp.data.data]);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }    
   };
 
   useEffect(() => {

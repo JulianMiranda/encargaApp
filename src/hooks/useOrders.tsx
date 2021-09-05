@@ -12,9 +12,14 @@ export const useOrders = () => {
 		const body = {
 			filter: {user: ['=', user?.id]}
 		};
-		const resp = await api.post<OrderResponse>('/orders/getList', body);
+		try {
+			const resp = await api.post<OrderResponse>('/orders/getList', body);
 		setOrders(resp.data.data);
 		setIsLoading(false);
+		} catch (error) {
+			setIsLoading(false);
+		}
+		
 	};
 
 	useEffect(() => {
