@@ -1,12 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import {
   View,
-  Text,
   Image,
   FlatList,
-  Platform,
   Dimensions,
-  StatusBar,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {CategoryCard} from '../../components/CategoryCard';
@@ -79,6 +76,8 @@ export const HomeScreen = (props: Props) => {
           keyExtractor={(category, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           numColumns={2}
+         /*  ref={flat}
+          onContentSizeChange={()=> flat.current .scrollToEnd()} */
           // Header
           ListHeaderComponent={
             <View

@@ -1,4 +1,5 @@
 import {User} from '../../interfaces/User.interface';
+import {CountryCode, Country} from '../../utils/countryTypes';
 
 export interface AuthState {
   status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -6,6 +7,8 @@ export interface AuthState {
   errorMessage: string;
   wait: boolean;
   sendPrice: number;
+  countryCode: CountryCode;
+  countryCallCode: string;
 }
 
 type AuthAction =
@@ -13,6 +16,8 @@ type AuthAction =
   | {type: 'signUp'; payload: {user: User}}
   | {type: 'addError'; payload: string}
   | {type: 'setPrice'; payload: number}
+  | {type: 'setCountryCode'; payload: CountryCode}
+  | {type: 'setCountryCallCode'; payload: string}
   | {type: 'removeError'}
   | {type: 'logout'}
   | {type: 'initCheck'}
@@ -32,6 +37,16 @@ export const authReducer = (
       return {
         ...state,
         sendPrice: action.payload,
+        };
+    case 'setCountryCode':
+      return {
+        ...state,
+        countryCode: action.payload,
+      };
+    case 'setCountryCallCode':
+        return {
+          ...state,
+          countryCallCode: action.payload,
         };
     case 'logout':
     case 'notAuthenticated':

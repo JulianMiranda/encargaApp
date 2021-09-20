@@ -1,12 +1,9 @@
 import React, {createContext, useEffect, useReducer} from 'react';
-/* 
-import auth from '@react-native-firebase/auth'; */
-/* import firebase from 'firebase'; */
-/* 
-import {getHeaders, getToken} from '../../api/getHeaders'; */
 
+import axios from 'axios';
 import api from '../../api/api';
 import {User, LoginData, RegisterData} from '../../interfaces/User.interface';
+import {CountryCode, Country} from '../../utils/countryTypes';
 
 import {authReducer, AuthState} from './authReducer';
 import messaging from '@react-native-firebase/messaging';
@@ -23,11 +20,15 @@ type AuthContextProps = {
   user: User | null;
   errorMessage: string;
   signUpPhone: (name: string, user: any) => void;
+  setCountryCode: (countryCode: CountryCode) => void;
+  setCountryCallCode: (countryCallCode: string) => void;
   signInPhone: (resp: Login) => void;
   logOut: () => void;
   removeError: () => void;
   loginB: () => void;
   sendPrice: number;
+  countryCode: CountryCode;
+  countryCallCode: string;
 };
 
 const authInicialState: AuthState = {
@@ -36,6 +37,8 @@ const authInicialState: AuthState = {
   user: null,
   errorMessage: '',
   sendPrice: 0,
+  countryCode: 'CU',
+  countryCallCode: '+53'
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -47,7 +50,8 @@ export const AuthProvider = ({children}: any) => {
     checkToken();
   }, []);
 
-  async function requestUserPermission() {
+
+   async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -66,7 +70,20 @@ export const AuthProvider = ({children}: any) => {
   const checkToken = async (isLogin = false) => {
    /*  const headers = await getHeaders(); */
     try {
-      const sendPrice = await api.get<number>('/orders/getPrice');
+      //const sendPrice = await api.get<number>('/orders/getPrice');
+
+      
+      const [sendPrice, country] = await Promise.all([
+				api.get<number>('/orders/getPrice'),
+				axios.get('https://ipapi.co/json/')
+			]);
+      if(country.data.country_calling_code){
+        console.log(country.data.country_calling_code, country.data.country_code);
+        
+        dispatch({type: 'setCountryCallCode', payload: country.data.country_calling_code});
+        dispatch({type: 'setCountryCode', payload: country.data.country_code});
+      }
+    
      
       dispatch({type: 'setPrice', payload: sendPrice.data});
     } catch (error) {
@@ -148,6 +165,14 @@ export const AuthProvider = ({children}: any) => {
     dispatch({type: 'logout'});
   };
 
+  const setCountryCode = async (country_code: CountryCode) => {
+    dispatch({type: 'setCountryCode', payload: country_code});
+  };
+
+  const setCountryCallCode = async (country_call_code: string) => {
+    dispatch({type: 'setCountryCallCode', payload: country_call_code});
+  };
+
   const removeError = () => {
     dispatch({type: 'removeError'});
   };
@@ -156,6 +181,8 @@ export const AuthProvider = ({children}: any) => {
     <AuthContext.Provider
       value={{
         ...state,
+        setCountryCode,
+        setCountryCallCode,
         logOut,
         removeError,
         signInPhone,

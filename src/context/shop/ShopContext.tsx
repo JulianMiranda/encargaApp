@@ -94,7 +94,7 @@ export const ShopProvider = ({children}: any) => {
   const makeShop = async (total: number, description: string) => {
     try {
       const authorized = await api.get<User>(`/users/getOne/${user?.id}`);
-    if (!authorized.data.authorized) {
+    if (!authorized.data.authorized) {      
       const a = await api.post('/orders/setOrder', {
         user: user!.id,
         cost: total,

@@ -83,7 +83,7 @@ export const CategoryScreen = (props: Props) => {
       </TouchableOpacity>
 }
 <KeyboardAvoidingView
-     
+
      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
      style={{flex: 1}}>
 
