@@ -8,6 +8,8 @@ import {Order} from '../interfaces/Order.interface';
 import {SingleOrderScreen} from '../screens/Settings/SingleOrderScreen';
 import { TandCScreen } from '../screens/Settings/TandCScreen';
 import { AppScreen } from '../screens/Settings/AppScreen';
+import { TrackScreen } from '../screens/Settings/TrackScreen';
+import { SingleTrackScreen } from '../screens/Settings/SingleTackScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +17,10 @@ export type RootStackParams = {
   SettingsScreen: undefined;
   ChangeThemeScreen: undefined;
   OrdersScreen: undefined;
+  TandCScreen: undefined;
+  TrackScreen: undefined;
   SingleOrderScreen: {order: Order};
+  SingleTrackScreen: { code: string};
 };
 
 export const SettingsStack = () => {
@@ -78,6 +83,24 @@ export const SettingsStack = () => {
        <Stack.Screen
         name="AppScreen"
         component={AppScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="TrackScreen"
+        component={TrackScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="SingleTrackScreen"
+        component={SingleTrackScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

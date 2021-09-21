@@ -71,8 +71,7 @@ export const AuthProvider = ({children}: any) => {
    /*  const headers = await getHeaders(); */
     try {
       //const sendPrice = await api.get<number>('/orders/getPrice');
-
-      
+     
       const [sendPrice, country] = await Promise.all([
 				api.get<number>('/orders/getPrice'),
 				axios.get('https://ipapi.co/json/')
@@ -87,8 +86,10 @@ export const AuthProvider = ({children}: any) => {
      
       dispatch({type: 'setPrice', payload: sendPrice.data});
     } catch (error) {
-      await AsyncStorage.removeItem('token');
-      dispatch({type: 'notAuthenticated'})
+      console.log('dio');
+      
+      /* await AsyncStorage.removeItem('token');
+      dispatch({type: 'notAuthenticated'}) */
      
     }
  

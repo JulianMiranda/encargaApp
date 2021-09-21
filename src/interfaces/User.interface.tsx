@@ -21,4 +21,5 @@ export interface User {
 	id: string;
 	theme: string;
 	image: Image;
+	codes: string[];
 }

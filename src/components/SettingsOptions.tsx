@@ -100,7 +100,7 @@ export default function SettingsOptions() {
         
         break;
         case 'radar':
-          rastrearCompra();
+          navigation.navigate('TrackScreen');
        
         break;
       case 'logout':
@@ -169,7 +169,7 @@ function generateOptions(selectedComponent: any) {
       title: 'Rastrear mi compra',
       iconType: 'material-community',
       iconNameLeft: 'radar',
-      iconNameRight: 'arrow-top-right',
+      iconNameRight: 'chevron-right',
       iconSizeRight: 26,
       color: '#000000',
       onPress: () => selectedComponent('radar'),
