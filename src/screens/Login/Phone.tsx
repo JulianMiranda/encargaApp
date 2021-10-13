@@ -32,8 +32,6 @@ export default function PhoneNumber(props: any) {
     }
   };
 
-  /* const [countryCode, setCountryCode] = useState<CountryCode>('CU');
- */
   const onSelect = (country: Country) => {
     setCountryCode(country.cca2);
     inputRef.current.setValue(country.callingCode[0]);
