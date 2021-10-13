@@ -52,10 +52,11 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
       <TouchableOpacity activeOpacity={0.8} onPress={() => setIsVisible(true)}>
         <FadeInImage uri={item.images[0].url} style={styles.image} />
       </TouchableOpacity>
+      <TouchableOpacity style={{flex: 6, marginHorizontal: 5}} activeOpacity={0.8} onPress={() => setIsVisible(true)}>
 
-      <View style={{flex: 6, marginHorizontal: 5}}>
         <Text style={{...styles.name, fontSize: 16}}>{item.name}</Text>
-      </View>
+     
+      </TouchableOpacity>
       <View style={{flex: 3, alignItems: 'center'}}>
         <Text style={{...styles.name, fontSize: (parseInt(cantidad) > 5) ? 10 : 14, color: (parseInt(cantidad) > 5) ? 'gray' : 'black'}}>
           {formatToCurrency(item.price)}
