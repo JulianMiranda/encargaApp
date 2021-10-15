@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Platform, StyleSheet, View, StyleProp, ViewStyle , TextInput} from 'react-native';
+import { Platform, StyleSheet, View, StyleProp, ViewStyle , TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 
@@ -37,13 +37,17 @@ export const SearchInput = ({ style, onDebounce }:Props) => {
                     value={ textValue }
                     onChangeText={ setTextValue }
                 />
-
-                <Icon 
-                    name="search-outline"
-                    color="grey"
-                    size={ 30 }
-                />
-
+                <TouchableOpacity
+                activeOpacity={textValue ? 0.8 : 1}
+                onPress={textValue ? ()=>setTextValue('') : ()=>{}
+                }
+                >
+                        <Icon 
+                            name={!textValue ? "search-outline" : 'close-circle-outline'}
+                            color="grey"
+                            size={ 30 }
+                        />
+                </TouchableOpacity>
             </View>
         </View>
     )
