@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
-import React,{useContext} from 'react'
+import React,{useContext, useState} from 'react'
 import { FlatList, View,Text, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Fab } from '../../components/Fab';
+import { ModalAddCode } from '../../components/ModalAddCode';
 import { TopScreen } from '../../components/TopScreen';
 import { AuthContext } from '../../context/auth/AuthContext';
 
@@ -10,10 +11,24 @@ export const TrackScreen = () => {
     const colors = ['#2684FD', '#bae6f7'];
     const {top} = useSafeAreaInsets();
     const navigation = useNavigation();
+
     const {user} = useContext(AuthContext);
+    
+  const [openModal, setOpenModal] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  
     const addTrackCode = ()=>{
-        
+      setTitle('Añade un código');
+       setBody('');
+      setOpenModal(true)
     }
+
+    const confirmModal = ()=>{
+     
+
+      }
     return (
         <>
 
@@ -45,6 +60,8 @@ export const TrackScreen = () => {
            
 
         />
+        <ModalAddCode title={title} body={body} openModal={openModal} isLoading={isLoading} setOpenModal={setOpenModal} onConfirmModal={confirmModal}/>
+   
     </>
     )
 }
