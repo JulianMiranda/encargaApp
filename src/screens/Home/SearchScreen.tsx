@@ -85,8 +85,15 @@ export const SearchScreen = () => {
             marginHorizontal: 20,
         }}>
           {term.length !== 0 && products.length === 0 && 
-          (<View>
-          <Text>No rusults</Text></View>)}
+          (
+          
+          <View style={{flex:1,  top: 200}} >
+           
+          {/*  <FadeInImage uri={require('../../assets/avion.jpg')} style={{height: 300, width: 300}} /> */}
+          {/* <Text>No rusults</Text> */}
+          </View>
+          
+          )}
              <SearchInput
                 onDebounce={ (value) => setTerm( value )  }
                 style={{
@@ -97,12 +104,38 @@ export const SearchScreen = () => {
                     top: ( Platform.OS === 'ios' ) ? top : top + 30
                 }}
             />
-        <FlatList
+
+        {
+          products.length === 0 ? (
+            <View  style={{
+              position: 'absolute',top: 300,
+              flex: 1, alignSelf: 'center',  justifyContent: 'center',
+             }}>
+
+            <Image
+                source={require('../../assets/buscador.jpg')}
+                style={{height: 250, width: 250, borderRadius: 100}}
+              />
+
+
+              {/*  {term.length !== 0 ? (<Image
+                source={require('../../assets/pregunta.jpg')}
+                style={{height: 400, width: 250, }}
+              />) : (<Image
+                source={require('../../assets/buscador.jpg')}
+                style={{height: 250, width: 250, borderRadius: 100}}
+              />)}
+                 */}
+
+            </View>
+            
+          ) : (
+<FlatList
         ListHeaderComponent={(
             <Text style={{
                 paddingBottom: 10,
                 marginTop: ( Platform.OS === 'ios' ) ? top + 60 : top + 80
-            }}>{ term }</Text>
+            }}> </Text>
         )}
 
           data={products}
@@ -112,6 +145,9 @@ export const SearchScreen = () => {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+          )
+        }
+        
      
    </View>
    </>

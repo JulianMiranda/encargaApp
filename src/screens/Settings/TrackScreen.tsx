@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Fab } from '../../components/Fab';
 import { TopScreen } from '../../components/TopScreen';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { homeStyles } from '../../styles/homeTheme';
 
 export const TrackScreen = () => {
     const colors = ['#2684FD', '#bae6f7'];

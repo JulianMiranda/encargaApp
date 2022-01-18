@@ -47,8 +47,19 @@ export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(authReducer, authInicialState);
 
   useEffect(() => {
+    axios.get('https://ipapi.co/json/').then((response) => {
+      console.log('response',response)
+      if(response.data.country_calling_code){
+        console.log(response.data.country_calling_code, response.data.country_code);
+        
+        dispatch({type: 'setCountryCallCode', payload: response.data.country_calling_code});
+        dispatch({type: 'setCountryCode', payload: response.data.country_code});
+      }
+    
+    }).catch((err)=> console.log(err))
     checkToken();
   }, []);
+
 
 
    async function requestUserPermission() {
@@ -71,26 +82,14 @@ export const AuthProvider = ({children}: any) => {
    /*  const headers = await getHeaders(); */
     try {
       //const sendPrice = await api.get<number>('/orders/getPrice');
+   
      
-      const [sendPrice, country] = await Promise.all([
-				api.get<number>('/orders/getPrice'),
-				axios.get('https://ipapi.co/json/')
-			]);
-      if(country.data.country_calling_code){
-        console.log(country.data.country_calling_code, country.data.country_code);
-        
-        dispatch({type: 'setCountryCallCode', payload: country.data.country_calling_code});
-        dispatch({type: 'setCountryCode', payload: country.data.country_code});
-      }
+      const  sendPrice = await api.get<number>('/orders/getPrice');
     
      
       dispatch({type: 'setPrice', payload: sendPrice.data});
     } catch (error) {
-      console.log('dio');
-      
-      /* await AsyncStorage.removeItem('token');
-      dispatch({type: 'notAuthenticated'}) */
-     
+      console.log('dio err el ip');  
     }
  
   
