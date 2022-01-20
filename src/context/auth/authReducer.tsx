@@ -19,6 +19,8 @@ type AuthAction =
   | {type: 'setCountryCode'; payload: CountryCode}
   | {type: 'setCountryCallCode'; payload: string}
   | {type: 'removeError'}
+  | {type: 'deleteCode'; payload: {user: User}}
+  | {type: 'setCode'; payload: {user: User}}
   | {type: 'logout'}
   | {type: 'initCheck'}
   | {type: 'loginB'};
@@ -48,6 +50,16 @@ export const authReducer = (
           ...state,
           countryCallCode: action.payload,
         };
+    case 'deleteCode':
+        return {
+          ...state,
+          user: action.payload.user,
+        };
+    case 'setCode':
+         return {
+          ...state,
+          user: action.payload.user,
+          };
     case 'logout':
     case 'notAuthenticated':
       return {

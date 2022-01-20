@@ -100,8 +100,8 @@ export default function SettingsOptions() {
         
         break;
         case 'radar':
-          navigation.navigate('TrackScreen');
-       
+          //navigation.navigate('TrackScreen');
+          rastrearCompra();
         break;
       case 'logout':
         sinOut();

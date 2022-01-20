@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {ShopContext} from '../context/shop/ShopContext';
@@ -12,6 +13,8 @@ import {Subcategory} from '../interfaces/Subcategory.interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
 import {FadeInImage} from './FadeInImage';
 import {ModalComponent} from './Modal';
+
+import moment from 'moment';
 
 type Root = 'Shop' | 'Subca';
 
@@ -25,6 +28,8 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
   const [cantidad, setCantidad] = useState('1');
   const [buttonName, setButtonName] = useState('Add');
   const [isVisible, setIsVisible] = useState(false);
+
+ 
   
   useEffect(() => {    
     edit ?   setButtonName('Edit') : setButtonName('Add');
@@ -46,10 +51,26 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
     }
   };
 
-  
+  var fechaInicio = new Date(item.updatedAt).getTime();
+  var fechaFin    = new Date().getTime();
+  var diff = fechaFin - fechaInicio;
+  const days = diff/(1000*60*60*24) ;
+ 
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity activeOpacity={0.8} onPress={() => setIsVisible(true)}>
+   {days < 7 && <Image
+          source={require('../assets/productonuevo.png')}
+          style={{
+           position: 'absolute',
+           zIndex: 999999999,
+            height: 35,
+            width: 35,
+            marginRight: 30,
+            marginBottom: -2,
+          }}
+        />}
+      
         <FadeInImage uri={item.images[0].url} style={styles.image} />
       </TouchableOpacity>
       <TouchableOpacity style={{flex: 6, marginHorizontal: 5}} activeOpacity={0.8} onPress={() => setIsVisible(true)}>

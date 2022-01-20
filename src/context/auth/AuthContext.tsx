@@ -20,6 +20,8 @@ type AuthContextProps = {
   user: User | null;
   errorMessage: string;
   signUpPhone: (name: string, user: any) => void;
+  deleteCode: (code: string) => void;
+  setCode: (code: string) => void;
   setCountryCode: (countryCode: CountryCode) => void;
   setCountryCallCode: (countryCallCode: string) => void;
   signInPhone: (resp: Login) => void;
@@ -177,6 +179,43 @@ export const AuthProvider = ({children}: any) => {
     dispatch({type: 'removeError'});
   };
 
+  const deleteCode = async (deletecode: string) => {
+
+    if(state.user){
+      const newCodes = state.user.codes.filter((code)=> code !== deletecode );     
+      try{
+        const resp = await api.put<Boolean>('/users/update/'+state.user?.id, {codes: newCodes}  );
+        const newUser = {
+          ...state.user,
+          codes: newCodes
+        };
+        dispatch({type: 'deleteCode',payload: {user: newUser} });
+      }catch(error){
+        console.log(error)
+      }
+     
+    }
+    
+  };
+  const setCode = async (setcode: string) => {
+
+    if(state.user){
+      const newCodes = [setcode ,...state.user.codes ]   
+      try{
+        const resp = await api.put<Boolean>('/users/update/'+state.user?.id, {codes: newCodes}  );
+        
+        const newUser = {
+          ...state.user,
+          codes: newCodes
+        };
+        dispatch({type: 'setCode',payload: {user: newUser} });
+      }catch(error){
+        console.log(error)
+      }
+     
+    }
+    
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -188,6 +227,8 @@ export const AuthProvider = ({children}: any) => {
         signInPhone,
         signUpPhone,
         loginB,
+        deleteCode,
+        setCode
       }}>
       {children}
     </AuthContext.Provider>

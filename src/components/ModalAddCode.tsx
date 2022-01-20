@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, Button, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, Modal, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ThemeContext } from '../context/theme/ThemeContext';
 
 interface Props {
@@ -9,9 +9,10 @@ interface Props {
     isLoading: boolean;
     setOpenModal:(action: boolean)=>void;
     onConfirmModal:()=>void;
+    setBody:(action: string)=>void;
   }
 
-export const ModalAddCode = ({title, body, isLoading, openModal, setOpenModal, onConfirmModal}: Props) => {
+export const ModalAddCode = ({title, body,setBody, isLoading, openModal, setOpenModal, onConfirmModal}: Props) => {
 
     const {
         theme: {colors},
@@ -65,9 +66,24 @@ export const ModalAddCode = ({title, body, isLoading, openModal, setOpenModal, o
                     }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold',fontFamily: 'Merienda-Regular', }}>{title}</Text>
                         {/* <Text style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}>{body}</Text> */}
-                        {<TextInput   onChangeText={onChangeText}
+                        
+                        <TextInput 
+                    placeholder="CM002278985BA"
+                    style={{ 
+                        flex: 1,
+                        fontSize: 18,
+                        top: (Platform.OS === 'ios') ? 0 : 2
+                    }}
+                    autoFocus
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                    value={ body }
+                    onChangeText={ setBody }
+                />
+                        {/* <TextInput   onChangeText={onChangeText}
                         placeholder="CM002278985BA"
-        value={text} style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}/>}
+        value={text} style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}/>
+                        */} 
                         {isLoading && <View style={{flex:1}}>
                             <ActivityIndicator color={colors.primary}/>
                         </View>}
