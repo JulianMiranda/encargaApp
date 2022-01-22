@@ -16,6 +16,7 @@ import {registerForPushNotifications} from '../../utils/notificationPermissions'
 
 type AuthContextProps = {
   status: 'checking' | 'authenticated' | 'not-authenticated';
+  utility: 'choose' |'shop' | 'money';
   wait: boolean;
   user: User | null;
   errorMessage: string;
@@ -28,19 +29,26 @@ type AuthContextProps = {
   logOut: () => void;
   removeError: () => void;
   loginB: () => void;
+  setShop: () => void;
+  setMoney: () => void;
   sendPrice: number;
   countryCode: CountryCode;
   countryCallCode: string;
+  mn: number;
+  mlc: number;
 };
 
 const authInicialState: AuthState = {
   status: 'checking',
+  utility: 'choose',
   wait: false,
   user: null,
   errorMessage: '',
   sendPrice: 0,
   countryCode: 'CU',
-  countryCallCode: '+53'
+  countryCallCode: '+53',
+  mn: 60,
+  mlc: 130
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -85,11 +93,18 @@ export const AuthProvider = ({children}: any) => {
     try {
       //const sendPrice = await api.get<number>('/orders/getPrice');
    
-     
-      const  sendPrice = await api.get<number>('/orders/getPrice');
+      const [sendPrice, mn,mlc] = await Promise.all([
+        api.get<number>('/orders/getPrice'),
+        api.get<number>('/orders/getMN'),
+        api.get<number>('/orders/getMLC')
+
+      ])
+     /*  const  sendPrice = await api.get<number>('/orders/getPrice'); */
     
      
       dispatch({type: 'setPrice', payload: sendPrice.data});
+      dispatch({type: 'setMN', payload: mn.data});
+      dispatch({type: 'setMLC', payload: mlc.data});
     } catch (error) {
       console.log('dio err el ip');  
     }
@@ -214,12 +229,22 @@ export const AuthProvider = ({children}: any) => {
       }
      
     }
+
     
+  };
+  
+  const setShop = () => {
+    dispatch({type: 'utilityShop'});
+  };
+
+  const setMoney = () => {
+    dispatch({type: 'utilityMoney'});
   };
   return (
     <AuthContext.Provider
       value={{
         ...state,
+
         setCountryCode,
         setCountryCallCode,
         logOut,
@@ -228,7 +253,9 @@ export const AuthProvider = ({children}: any) => {
         signUpPhone,
         loginB,
         deleteCode,
-        setCode
+        setCode,
+        setShop,
+        setMoney
       }}>
       {children}
     </AuthContext.Provider>

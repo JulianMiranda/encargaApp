@@ -9,11 +9,13 @@ import {Tabs} from './Tabs';
 import {EnterPhoneScreen} from '../screens/Login/EnterPhone';
 import {InfoScreen} from '../screens/Login/InfoScreen';
 import {Loading} from '../components/Loading';
+import { MainScreen } from '../screens/MainScreen';
+import { MoneyStack } from './MoneyStack';
 
 const Stack = createStackNavigator();
 
 export const StackNavigator = () => {
-  const {status} = useContext(AuthContext);
+  const {status, utility} = useContext(AuthContext);
   const {theme} = useContext(ThemeContext);
   /* useEffect(() => {
     SplashScreen.hide();
@@ -37,10 +39,31 @@ export const StackNavigator = () => {
             />
           </>
         ) : (
-          <Stack.Screen name="Tabs" component={Tabs} />
+          <>
+          {console.log(utility)}
+          {utility === 'choose' ? (
+            <Stack.Screen name="MainScreen" component={MainScreen} />
+          ):(
+
+            <>
+           {utility === 'money' ? (
+             <Stack.Screen name="MoneyStack" component={MoneyStack} />
+           ):(<Stack.Screen name="Tabs" component={Tabs} />)}
+             </>
+          )}
+                 
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
   /* </View> */
-};
+};/* 
+<Stack.Screen name="MainScreen" component={MainScreen} />
+          <>
+          {console.log(utility)}
+          {utility !== 'shop' ? (
+            <Stack.Screen name="MainScreen" component={MainScreen} />
+          ):(<Stack.Screen name="Tabs" component={Tabs} />)}
+                 
+          </> */

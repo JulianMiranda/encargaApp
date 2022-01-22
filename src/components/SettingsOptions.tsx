@@ -15,11 +15,11 @@ import {ShopContext} from '../context/shop/ShopContext';
 import { TandC } from './TandC';
 import { ModalComponent } from './ModalComponent';
 
-type Key = 'historial' | 'whatsapp' | 'logout' | 'about' | 'radar'| 'app';
+type Key = 'historial' | 'whatsapp' | 'logout' | 'about' | 'radar'| 'app'| 'money';
 
 export default function SettingsOptions() {
   const navigation = useNavigation();
-  const {user, logOut} = useContext(AuthContext);
+  const {user, logOut, setMoney} = useContext(AuthContext);
   const {emptyCar} = useContext(ShopContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -103,6 +103,11 @@ export default function SettingsOptions() {
           //navigation.navigate('TrackScreen');
           rastrearCompra();
         break;
+
+        case 'money':
+          setMoney();
+          break;
+
       case 'logout':
         sinOut();
         break;
@@ -200,6 +205,16 @@ function generateOptions(selectedComponent: any) {
       iconSizeRight: 26,
       color: '#21e462',
       onPress: () => selectedComponent('whatsapp'),
+    },
+
+    {
+      title: 'Enviar dinero',
+      iconType: 'material-community',
+      iconNameLeft: 'currency-usd',
+      iconNameRight: 'chevron-right',
+      iconSizeRight: 26,
+      color: '#008d0c',
+      onPress: () => selectedComponent('money'),
     },
     
     {

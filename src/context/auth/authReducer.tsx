@@ -3,16 +3,21 @@ import {CountryCode, Country} from '../../utils/countryTypes';
 
 export interface AuthState {
   status: 'checking' | 'authenticated' | 'not-authenticated';
+  utility: 'choose' |'shop' | 'money';
   user: User | null;
   errorMessage: string;
   wait: boolean;
   sendPrice: number;
   countryCode: CountryCode;
   countryCallCode: string;
+  mn: number;
+  mlc: number;
 }
 
 type AuthAction =
   | {type: 'notAuthenticated'}
+  | {type: 'utilityShop'}
+  | {type: 'utilityMoney'}
   | {type: 'signUp'; payload: {user: User}}
   | {type: 'addError'; payload: string}
   | {type: 'setPrice'; payload: number}
@@ -23,7 +28,9 @@ type AuthAction =
   | {type: 'setCode'; payload: {user: User}}
   | {type: 'logout'}
   | {type: 'initCheck'}
-  | {type: 'loginB'};
+  | {type: 'loginB'}
+  | {type: 'setMN'; payload: number}
+  | {type: 'setMLC'; payload: number};
 
 export const authReducer = (
   state: AuthState,
@@ -35,11 +42,31 @@ export const authReducer = (
         ...state,
         status: 'authenticated',
       };
+    case 'utilityShop':
+      return {
+        ...state,
+        utility: 'shop',
+      };
+    case 'utilityMoney':
+      return {
+        ...state,
+        utility: 'money',
+      };
     case 'setPrice':
       return {
         ...state,
         sendPrice: action.payload,
         };
+    case 'setMN':
+        return {
+        ...state,
+        mn: action.payload,
+       };
+    case 'setMLC':
+        return {
+        ...state,
+        mlc: action.payload,
+          };
     case 'setCountryCode':
       return {
         ...state,
