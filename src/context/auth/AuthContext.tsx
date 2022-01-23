@@ -10,9 +10,7 @@ import messaging from '@react-native-firebase/messaging';
 import { Login } from '../../interfaces/Login.interface';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-/* 
-import {registerForPushNotifications} from '../../utils/notificationPermissions'; */
+import DeviceCountry from 'react-native-device-country';
 
 type AuthContextProps = {
   status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -55,22 +53,24 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(authReducer, authInicialState);
-
+  
   useEffect(() => {
-    axios.get('https://ipapi.co/json/').then((response) => {
-      console.log('response',response)
-      if(response.data.country_calling_code){
-        console.log(response.data.country_calling_code, response.data.country_code);
-        
-        dispatch({type: 'setCountryCallCode', payload: response.data.country_calling_code});
-        dispatch({type: 'setCountryCode', payload: response.data.country_code});
-      }
     
-    }).catch((err)=> console.log(err))
+   DeviceCountry.getCountryCode()
+  .then((result: any) => {   
+    if(result && result.code){
+        const country = result.code.toUpperCase();
+      dispatch({type: 'setCountryCode', payload: country});
+    }
+    // 
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+ },[])
+  useEffect(() => {
     checkToken();
   }, []);
-
-
 
    async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
@@ -178,7 +178,9 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const logOut = async () => {
+    
     AsyncStorage.removeItem('token');
+    dispatch({type: 'utilityChoose'});
     dispatch({type: 'logout'});
   };
 
@@ -244,7 +246,6 @@ export const AuthProvider = ({children}: any) => {
     <AuthContext.Provider
       value={{
         ...state,
-
         setCountryCode,
         setCountryCallCode,
         logOut,

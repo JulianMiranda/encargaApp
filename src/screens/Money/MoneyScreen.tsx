@@ -1,15 +1,16 @@
 import React, {  useContext, useState} from 'react';
-import {Text, StyleSheet,TouchableOpacity, View, TextInput, ScrollView, Linking} from 'react-native';
-import {loginStyles} from '../../styles/loginTheme';
+import {Text, StyleSheet,TouchableOpacity, View, TextInput, ScrollView, Linking, Image} from 'react-native';
 import { formatToCurrency } from '../../utils/formatToCurrency';
 import CountryPicker from 'react-native-country-picker-modal';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useMoney } from '../../hooks/useMoney';
-import { ModalComponent } from '../../components/ModalComponent';
+import { ModalComponentMoney } from '../../components/ModalComponentMoney';
+import api from '../../api/api';
+
 
 export const MoneyScreen = () => {
-  const {mn,mlc} = useContext(AuthContext);
+  const {mn,mlc,user, countryCode} = useContext(AuthContext);
   const {top} = useSafeAreaInsets();
   const { 
           setSenderFunction,
@@ -22,22 +23,48 @@ export const MoneyScreen = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('Contáctanos vía WhatsApp');
-  const [body, setBody] = useState('Para terminar su remesa escríbanos vía WhatsApp');
+  const [body, setBody] = useState('Para realizar su remesa contáctenos vía WhatsApp');
  
   const redirectWhatsapp= () => {
     setOpenModal(false);
-    Linking.openURL(
-      'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593962914922',
-    )
+    Linking.openURL('http://api.whatsapp.com/send?text=Hola 💵 *enCargaRemesas*, solicito su servicio&phone=+593962914922')
   ;}
 
   const handleButton =()=>{
+    try {
+      const bodyPost = {
+        name: user?.name,
+        phone: user?.phone,
+        sender: sender,
+        reciber: reciber,
+        currency: currency,
+        countryCode: countryCode
+      };
+      console.log(bodyPost);
+      
+      api.post(
+        '/orders/newSendMoney',
+        bodyPost,
+      );
+    } catch (error) {
+      console.log(error);
+      
+    }
+    setTitle('Contáctanos vía WhatsApp');
+    setBody('Para realizar su remesa, contáctenos vía WhatsApp');
+    setOpenModal(true);   
+  };
+
+  const handleButtonHelp =()=>{
+    setTitle('¿Necesitas ayuda?');
+    setBody('Contáctanos vía WhatsApp');
     setOpenModal(true);   
   }
   return (
+    <>
     <ScrollView>
     <View style={{ backgroundColor:'#5096ff', padding: 20}}>     
-      <Text style={{...styles.info, marginTop: top+10}}>Estimado usuario, por el momento solo disponemos de remesas desde el Ecuador. Para hacer un envío desde otra nacionalidad continuar con el envío y nuestro administrador se pondrá en contacto con usted.</Text>
+      <Text style={{...styles.info, marginTop: top+10}}>Estimado cliente, realizamos remesas desde Ecuador. Si está enviando desde otro país contáctenos	vía WhatsApp.</Text>
     </View>
      <View style={styles.inputsContainer}>
     <Text style={{color: 'black', alignSelf: 'flex-start', fontSize: 16}}>Envías</Text>
@@ -78,7 +105,7 @@ export const MoneyScreen = () => {
             placeholder="0"
             style={{  
             height: 50,
-            fontSize: 22, color: 'black', 
+            fontSize: 20, color: 'black', 
             backgroundColor: 'white', 
             flex: 4}}
           />
@@ -106,7 +133,7 @@ export const MoneyScreen = () => {
      <View style={{backgroundColor: 'white', width: '100%', padding: 20}}>
           <Text style={{fontSize: 14, fontWeight: '500', marginBottom: 5}}>Tipo de cambio actual</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>     
-                <Text style={{fontSize: 14, fontWeight: '700'}}>1.00 USD - {formatToCurrency(mn).slice(1)} MN</Text>
+                <Text style={{fontSize: 14, fontWeight: '700'}}>1.00 USD - {formatToCurrency(mn).slice(1)} CUP</Text>
                 <Text style={{fontSize: 14, fontWeight: '700'}}>1.00 USD - {formatToCurrency(100/mlc).slice(1)} MLC</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>     
@@ -115,23 +142,40 @@ export const MoneyScreen = () => {
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>     
                 <Text style={{fontSize: 16, fontWeight: '400'}}>100 USD</Text>
-                <Text style={{fontSize: 16, fontWeight: '400', color: '#0cb415'}}>{mn*100} MN</Text>
+                <Text style={{fontSize: 16, fontWeight: '400', color: '#0cb415'}}>{mn*100} CUP</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>     
                 <Text style={{fontSize: 16, fontWeight: '400'}}>{mlc} USD</Text>
                 <Text style={{fontSize: 16, fontWeight: '400', color: '#0cb415'}}>100 MLC</Text>
             </View>
           </View>
+          <View style={{backgroundColor: '#f8f7f7', marginTop: 10, padding: 10}}>     
+                <Text style={{fontSize: 12, fontWeight: '400', marginLeft: 7}}>(USD) Dolar Estadounidense</Text>
+                <Text style={{fontSize: 12, fontWeight: '400', marginLeft: 7}}>(CUP) Peso Nacional Cubano</Text>
+                <Text style={{fontSize: 12, fontWeight: '400', marginLeft: 7}}>(MLC) Moneda Libremente Convertible</Text>
+            </View>
           <TouchableOpacity 
+              activeOpacity={ 0.8 }
+              onPress={handleButtonHelp}
+              style={styles.buttonHelp}
+                >
+            <Image
+                source={require(`../../assets/whatsapp.png`)}
+                style={{height: 60, width: 60, }} />
+                <Text style={{alignSelf: 'center',color: 'rgb(16,141,9)'}}>Ayuda</Text>
+                  </TouchableOpacity>
+            <ModalComponentMoney isLoading={false} title={title} body={body} openModal={openModal} setOpenModal={setOpenModal} onConfirmModal={redirectWhatsapp}/>
+    </ScrollView>
+    
+    <TouchableOpacity 
               activeOpacity={ 0.8 }
               onPress={handleButton}
               style={styles.button}
                 >
         
-              <Text style={{color:'#ffffff', fontSize: 22, fontWeight: '700'}}>Continuar</Text>
+              <Text style={{color:'#ffffff', fontSize: 22, fontWeight: '700'}}>Enviar</Text>
             </TouchableOpacity>
-            <ModalComponent isLoading={false} title={title} body={body} openModal={openModal} setOpenModal={setOpenModal} onConfirmModal={redirectWhatsapp}/>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -162,7 +206,7 @@ const styles = StyleSheet.create({
   alignItems: 'center'},
   input:{  
     height: 50,
-    fontSize: 22, 
+    fontSize: 20, 
     color: 'black', 
     backgroundColor: 'white',
     flex: 5
@@ -172,12 +216,21 @@ const styles = StyleSheet.create({
       color: '#000000', 
       fontSize: 16, 
       fontWeight: '700'},
-      button:{backgroundColor: '#5096ff',
+      button:{
+      backgroundColor: '#5096ff',
       borderRadius:4 ,
-      margin:5,
-      marginTop:20, 
+      margin:5, 
       height: 50, 
       alignItems: 'center', 
       justifyContent: 'center'
+    },
+    buttonHelp:{
+      marginTop: 20,
+      backgroundColor: 'rgba(255,255,255,0.92)',
+      margin:5, 
+      alignSelf: 'flex-end',
+      
+    },icon:{
+      
     }
 });

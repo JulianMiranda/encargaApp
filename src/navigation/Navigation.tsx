@@ -17,10 +17,7 @@ const Stack = createStackNavigator();
 export const StackNavigator = () => {
   const {status, utility} = useContext(AuthContext);
   const {theme} = useContext(ThemeContext);
-  /* useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-  console.log(status); */
+
 
   if (status === 'checking') return <Loading />;
   return (
@@ -40,7 +37,6 @@ export const StackNavigator = () => {
           </>
         ) : (
           <>
-          {console.log(utility)}
           {utility === 'choose' ? (
             <Stack.Screen name="MainScreen" component={MainScreen} />
           ):(
@@ -57,13 +53,5 @@ export const StackNavigator = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-  /* </View> */
-};/* 
-<Stack.Screen name="MainScreen" component={MainScreen} />
-          <>
-          {console.log(utility)}
-          {utility !== 'shop' ? (
-            <Stack.Screen name="MainScreen" component={MainScreen} />
-          ):(<Stack.Screen name="Tabs" component={Tabs} />)}
-                 
-          </> */
+
+};

@@ -48,14 +48,14 @@ export const ShopProvider = ({children}: any) => {
     try {
       const subcategoriesCar = state.car.map(item => item.subcategory.id);
       if (subcategoriesCar.includes(item.subcategory.id)) {
-        console.log('actualizar Producto');
+    
         const newState = state.car.filter(
           carItem => carItem.subcategory.id !== item.subcategory.id,
         );
         api.post('/shop/setMyShop', {user: user!.id, car: [...newState, item]});
         dispatch({type: 'update_item', payload: item});
       } else {
-        console.log('producto Nuevo');
+       
         api.post('/shop/setMyShop', {user: user!.id, car: [...state.car, item]});
         dispatch({type: 'set_item', payload: item});
       } 

@@ -1,38 +1,25 @@
 import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/core';
-import {Text, View, TouchableOpacity, StyleSheet, Dimensions, Image} from 'react-native';
+import { View,StyleSheet, Dimensions, Image} from 'react-native';
 
 import {ThemeContext} from '../context/theme/ThemeContext';
 
-import {Category} from '../interfaces/Category.interface';
-import {FadeInImage} from './FadeInImage';
-
-interface Props {
-    icon: String;
-  }
-
 const {height, width} = Dimensions.get('window');
-export const ChooseCard = ({icon}:Props) => {
+export const ChooseCard = () => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-console.log(icon)
   const navigation = useNavigation();
   return (
    
       <View
         style={{
           ...styles.cardContainer,
-          /* justifyContent: 'flex-end', */
-          /* width: windowWidth * 0.6, */
-          /* backgroundColor: 'red' */
         }}>
         <Image
-          source={require(`../assets/caja2.jpg`)}
+          source={require(`../assets/caja2.png`)}
           style={styles.productImage} />
-       
-        {/* <FadeInImage uri={category.image.url} style={styles.productImage} /> */}
-        {/* <Text style={{...styles.name, color: '#3f3e3d'}}>{category.name}</Text> */}
+      
       </View>
   );
 };

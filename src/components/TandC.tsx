@@ -15,7 +15,7 @@ export const TandC = () => {
         <Text style={{...styles.text, fontSize: 18,}}>•	Consideramos una compra por mayor para comercio a partir de seis (6) piezas del mismo artículo.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Al realizar compras por mayor las marcas, colores, números, tallas, etc, son surtidas.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	No disponemos de tiendas con productos, realizamos la compra bajo pedido, por lo tanto, realizamos los encargos sin especificidades.</Text>
-        <Text style={{...styles.text, fontSize: 18,}}>•	Las fotos exhibidas en nuestra app de ventas son referenciales, le puede variar el color y la marca, nunca le variará la talla, número o calidad del producto en caso de ropa.</Text>
+        <Text style={{...styles.text, fontSize: 18,}}>•	Las fotos exhibidas en nuestra app de ventas son referenciales, le puede variar el color y la marca, nunca le variará la talla, número o calidad del producto.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Una vez enviados sus paquetes se le enviarán los códigos de seguimiento de sus paquetes de 24 horas a 72 horas laborables.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Cada paquete tiene su código, es independiente a otro y así son tratados, por lo que pueden llegarle al destinatario en fechas diferentes.</Text>
         <Text style={{...styles.text, fontSize: 18,}}>•	Los servicios de entrega son hasta el domicilio de la persona que recibe, dicha entrega corre a cargo de Correos de Cuba.</Text>

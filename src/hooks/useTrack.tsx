@@ -25,20 +25,16 @@ export const useTrack = () => {
       if(user){
 
         const newCodes = user.codes.filter((code)=> code !== deletecode );
-        console.log(newCodes)
-        /* const resp = await api.post<Boolean>('/users/update'+user?.id, {codes: newCodes}  ); */
+      
+       
       }
-      //setCodes(resp.data);
+     
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
     }
     
   };
-
- /*  useEffect(() => {
-    loadSubcategories();
-  }, []); */
 
   return {
     isLoading,

@@ -67,7 +67,6 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
             height: 35,
             width: 35,
             marginRight: 30,
-            marginBottom: -2,
           }}
         />}
       

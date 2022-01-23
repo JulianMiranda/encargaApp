@@ -36,7 +36,7 @@ export const MainScreen = () => {
      activeOpacity={ 0.8 }
      onPress={ ()=>setMoney() }
     >
-     <ChooseCard2 icon='caja.png' />
+     <ChooseCard2 />
     </TouchableOpacity>
 
     <TouchableOpacity 
@@ -44,7 +44,7 @@ export const MainScreen = () => {
      onPress={ ()=> setShop()}
    >
   
-   <ChooseCard icon='caja.png' />
+   <ChooseCard  />
     </TouchableOpacity>
      </View>
      <Image

@@ -53,6 +53,7 @@ export default function PhoneNumber(props: any) {
               {...{
                 countryCode,
                 onSelect,
+                theme: {flagSizeButton: 25},
               }}
               withFilter
               /* renderCountryFilter={placeholder='Buscar'} */

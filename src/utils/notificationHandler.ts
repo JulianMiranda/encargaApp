@@ -2,7 +2,6 @@ import messaging from '@react-native-firebase/messaging';
 
 export const firebasePushSetup = async () => {
   const token = await messaging().getToken();
-  console.log('TOKEN =', token);
 
   const granted = await messaging().requestPermission();
   console.log('GRANTED =', granted);

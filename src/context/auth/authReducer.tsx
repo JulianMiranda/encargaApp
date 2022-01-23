@@ -18,6 +18,7 @@ type AuthAction =
   | {type: 'notAuthenticated'}
   | {type: 'utilityShop'}
   | {type: 'utilityMoney'}
+  | {type: 'utilityChoose'}
   | {type: 'signUp'; payload: {user: User}}
   | {type: 'addError'; payload: string}
   | {type: 'setPrice'; payload: number}
@@ -52,6 +53,11 @@ export const authReducer = (
         ...state,
         utility: 'money',
       };
+     case 'utilityChoose':
+        return {
+          ...state,
+          utility: 'choose',
+        };
     case 'setPrice':
       return {
         ...state,
