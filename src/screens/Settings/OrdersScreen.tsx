@@ -79,6 +79,5 @@ const styles = StyleSheet.create({
   },
   firstText: {
     fontSize: 16,
-    fontFamily: 'Merienda-Regular',
   },
 });

@@ -9,7 +9,6 @@ export const loginStyles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontFamily: 'Merienda-Regular',
     marginTop: 60,
     marginBottom: 60,
     fontSize: 28,
@@ -18,7 +17,6 @@ export const loginStyles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    fontFamily: 'Merienda-Regular',
     marginTop: 100,
     margin: 30,
     fontSize: 16,
@@ -49,7 +47,6 @@ export const loginStyles = StyleSheet.create({
   flagInputText: {
     color: 'black',
     fontSize: 22,
-    fontFamily: 'Merienda-Regular',
     backgroundColor: '#f1f1f1' /* 
     borderBottomColor: 'rgba(0,0,0,0.92)',
     borderBottomWidth: 2, */,
@@ -83,7 +80,6 @@ export const loginStyles = StyleSheet.create({
   },
   textButton: {
     textAlign: 'center',
-    fontFamily: 'Merienda-Regular',
     margin: 7,
     fontSize: 18,
     color: 'white',

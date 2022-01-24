@@ -136,7 +136,6 @@ export default function SettingsOptions() {
                 fontSize: 20,
                 fontWeight: '500',
                 color: '#615e5e',
-                fontFamily: 'Merienda-Regular',
               }}>
               {menu.title}
             </Text>

@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    fontFamily: 'Merienda-Regular',
+    
     fontSize: 28,
     /*  fontWeight: 'bold',
     marginBottom: 25, */
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    fontFamily: 'Merienda-Regular',
+    
     fontWeight: '300',
     textAlign: 'left',
     marginVertical: 20,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     alignSelf: 'center',
-    fontFamily: 'Merienda-Regular',
+    
     color: 'white',
     fontSize: 18,
     marginHorizontal: 20,
@@ -197,13 +197,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   textStyle: {
-    fontFamily: 'Merienda-Regular',
+    
     color: "white",
     fontWeight: "bold",
     textAlign: "center"
   },
   modalText: {
-    fontFamily: 'Merienda-Regular',
+    
     margin: 100,
     marginBottom: 30,
     textAlign: "center"

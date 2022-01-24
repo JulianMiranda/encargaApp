@@ -171,7 +171,6 @@ export const ShopScreen = () => {
                 marginLeft: 10,
                 fontSize: 22,
                 fontWeight: '400',
-                fontFamily: 'Merienda-Regular',
                 alignSelf: 'center',           
               }}>
               Carrito vacío 😦
@@ -189,7 +188,6 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 24,
                     fontWeight: '400',
-                    fontFamily: 'Merienda-Regular',
                   }}>
                   Valor de compra:
                 </Text>
@@ -199,7 +197,6 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 26,
                     fontWeight: '600',
-                    fontFamily: 'Merienda-Regular',
                   }}>
                   {formatToCurrency(total)}
                 </Text>
@@ -226,7 +223,6 @@ export const ShopScreen = () => {
                     marginLeft: 10,
                     fontSize: 16,
                     fontWeight: '400',
-                    fontFamily: 'Merienda-Regular',
                   }}>
                   *Para su envío, la compra se embalará en paquetes de 1.5 kg con un costo de ${sendPrice} por paquete.
                 </Text>
@@ -238,7 +234,7 @@ export const ShopScreen = () => {
       <>
       <View style={styles.emptyButton}>      
         <TouchableOpacity onPress={emptyCarConfirm}>
-          <Text style={{color: colors.card, fontFamily: 'Merienda-Regular', fontSize: 14}}>
+          <Text style={{color: colors.card, fontSize: 14}}>
             Vaciar
           </Text>
         </TouchableOpacity>
@@ -248,7 +244,7 @@ export const ShopScreen = () => {
       <TouchableOpacity
         activeOpacity={car.length < 1 ? 1 : 0.8}
         onPress={car.length < 1 ? () => {} : makeShopFunction}>
-        <Text style={{color: 'white', fontFamily: 'Merienda-Regular', fontSize: 14}}>
+        <Text style={{color: 'white', fontSize: 14}}>
          Comprar
         </Text>
       </TouchableOpacity>
@@ -271,7 +267,6 @@ const styles = StyleSheet.create({
 
   titleList: {
     color: 'white',
-    fontFamily: 'Merienda-Regular',
     fontSize: 40,
     alignSelf: 'flex-start',
     left: 70,

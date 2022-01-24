@@ -64,8 +64,8 @@ export const ModalAddCode = ({title, body,setBody, isLoading, openModal, setOpen
                         elevation: 10,
                         borderRadius: 8
                     }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold',fontFamily: 'Merienda-Regular', }}>{title}</Text>
-                        {/* <Text style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}>{body}</Text> */}
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', }}>{title}</Text>
+                        {/* <Text style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10, }}>{body}</Text> */}
                         
                         <TextInput 
                     placeholder="CM002278985BA"
@@ -82,7 +82,7 @@ export const ModalAddCode = ({title, body,setBody, isLoading, openModal, setOpen
                 />
                         {/* <TextInput   onChangeText={onChangeText}
                         placeholder="CM002278985BA"
-        value={text} style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10,fontFamily: 'Merienda-Regular', }}/>
+        value={text} style={{ fontSize: 16, fontWeight: '300', marginBottom: 20,marginTop: 10, }}/>
                         */} 
                         {isLoading && <View style={{flex:1}}>
                             <ActivityIndicator color={colors.primary}/>
@@ -93,14 +93,14 @@ export const ModalAddCode = ({title, body,setBody, isLoading, openModal, setOpen
                         activeOpacity={0.8}
                         style={{backgroundColor: '#eeebeb', marginTop: 20, padding: 6,borderRadius: 8,paddingHorizontal: 12}}
                         onPress={closeModal}
-                        ><Text style={{color: '#000',fontFamily: 'Merienda-Regular', fontSize: 16}}>Cancelar</Text>
+                        ><Text style={{color: '#000', fontSize: 16}}>Cancelar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                         activeOpacity={0.8}
                         style={{backgroundColor: colors.card, marginTop: 20, padding: 4, marginLeft: 30,borderRadius: 8,paddingHorizontal: 10}}
                         onPress={onConfirmModal}
-                        ><Text style={{color: '#ffffff',fontFamily: 'Merienda-Regular', fontSize: 16}}>Añadir</Text>
+                        ><Text style={{color: '#ffffff', fontSize: 16}}>Añadir</Text>
                         </TouchableOpacity>
                         </View>
                        

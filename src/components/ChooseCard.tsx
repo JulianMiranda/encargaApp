@@ -41,12 +41,6 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  name: {
-    fontFamily: 'Merienda-Regular',
-    fontSize: 22,
-    top: 4,
-    left: 10,
-  },
   productImage: {
     height: width*0.5,
     width: width*0.5,

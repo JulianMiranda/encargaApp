@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   name: {
-    fontFamily: 'NovaSlim-Regular',
     fontSize: 16,
     fontWeight: '400',
     marginVertical: 3,

@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
    
     text: {
       fontSize: 22,
-      fontFamily: 'Merienda-Regular',
       fontWeight: '300',
       textAlign: 'left',
       marginVertical: 20,

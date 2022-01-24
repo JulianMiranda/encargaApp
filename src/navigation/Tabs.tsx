@@ -44,7 +44,6 @@ export const Tabs = () => {
         style: styles.navigator,
         labelStyle: {
           marginBottom: Platform.OS === 'ios' ? -5 : 3,
-          fontFamily: 'Merienda-Regular',
           fontSize: 11,
         },
         tabStyle: {
