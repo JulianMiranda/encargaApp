@@ -52,7 +52,7 @@ export const EnterPhoneScreen = () => {
 
   const ShowAlert = () =>  Alert.alert(
     "Usuario no permitido",
-    "Por favor comunicarse con los Administradores de baría",
+    "Por favor comunicarse con los Administradores de enCarga",
     [
       {
         text: "Cancel",

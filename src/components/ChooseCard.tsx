@@ -17,7 +17,7 @@ export const ChooseCard = () => {
           ...styles.cardContainer,
         }}>
         <Image
-          source={require(`../assets/caja2.png`)}
+           source={require(`../assets/box_round.png`)}
           style={styles.productImage} />
       
       </View>
