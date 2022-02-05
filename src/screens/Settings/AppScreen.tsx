@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native';
-import { TandC } from '../../components/TandC';
+import { AboutApp } from '../../components/AboutApp';
 import { TopScreen } from '../../components/TopScreen';
 
 export const AppScreen = () => {
@@ -9,7 +9,7 @@ export const AppScreen = () => {
         <>
       <TopScreen colors={colors} text="Quiénes somos" backButton={true} height={170} />
       <View style={{margin: 20, paddingBottom: 200}}>
-      <TandC />
+      <AboutApp />
       
       </View>
     

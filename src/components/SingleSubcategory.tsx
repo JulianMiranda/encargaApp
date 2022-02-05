@@ -59,7 +59,7 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity activeOpacity={0.8} onPress={() => setIsVisible(true)}>
-   {days < 7 && <Image
+   {days < 15 && <Image
           source={require('../assets/productonuevo.png')}
           style={{
            position: 'absolute',
