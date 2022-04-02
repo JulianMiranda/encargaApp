@@ -27,10 +27,10 @@ export const ShopProvider = ({children}: any) => {
   const {status, user} = useContext(AuthContext);
   const [state, dispatch] = useReducer(shopReducer, shopInicialState);
 
- 
-
   useEffect(() => {
-    if (status === 'authenticated') checkCar();
+    if (status === 'authenticated') {
+      checkCar();
+    }
   }, [status]);
   const checkCar = async () => {
     try {
@@ -40,30 +40,27 @@ export const ShopProvider = ({children}: any) => {
       }
     } catch (error) {
       console.log(error);
-      
     }
-   
   };
   const setItem = (item: CarItemProps) => {
     try {
-      const subcategoriesCar = state.car.map(item => item.subcategory.id);
+      const subcategoriesCar = state.car.map(carItem => carItem.subcategory.id);
       if (subcategoriesCar.includes(item.subcategory.id)) {
-    
         const newState = state.car.filter(
           carItem => carItem.subcategory.id !== item.subcategory.id,
         );
         api.post('/shop/setMyShop', {user: user!.id, car: [...newState, item]});
         dispatch({type: 'update_item', payload: item});
       } else {
-       
-        api.post('/shop/setMyShop', {user: user!.id, car: [...state.car, item]});
+        api.post('/shop/setMyShop', {
+          user: user!.id,
+          car: [...state.car, item],
+        });
         dispatch({type: 'set_item', payload: item});
-      } 
+      }
     } catch (error) {
       console.log(error);
-      
     }
-    
   };
 
   const unsetItem = (item: Subcategory) => {
@@ -75,46 +72,41 @@ export const ShopProvider = ({children}: any) => {
       dispatch({type: 'unset_item', payload: item});
     } catch (error) {
       console.log(error);
-      
     }
-    
   };
 
   const emptyCar = () => {
     try {
       api.post('/shop/setMyShop', {user: user!.id, car: []});
-    dispatch({type: 'empty_car'});
+      dispatch({type: 'empty_car'});
     } catch (error) {
       console.log(error);
-      
     }
-    
   };
 
   const makeShop = async (total: number, description: string) => {
     try {
       const authorized = await api.get<User>(`/users/getOne/${user?.id}`);
-    if (!authorized.data.authorized) {      
-      const a = await api.post('/orders/setOrder', {
-        user: user!.id,
-        cost: total,
-        car: state.car,
-        description
-      });
-      if (a.status === 201) {       
-        dispatch({type: 'empty_car'})};
-    } else {
-      dispatch({
-        type: 'show_alert',
-        payload:
-          'Es necesario contactar con el proveedor para constatar los detalles del envío',
-      });
-    }
+      if (!authorized.data.authorized) {
+        const a = await api.post('/orders/setOrder', {
+          user: user!.id,
+          cost: total,
+          car: state.car,
+          description,
+        });
+        if (a.status === 201) {
+          dispatch({type: 'empty_car'});
+        }
+      } else {
+        dispatch({
+          type: 'show_alert',
+          payload:
+            'Es necesario contactar con el proveedor para constatar los detalles del envío',
+        });
+      }
     } catch (error) {
       console.log(error);
-      
     }
-    
   };
   const removeAlert = () => {
     dispatch({type: 'remove_alert'});

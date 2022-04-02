@@ -24,6 +24,7 @@ export const EnterPhoneScreen = () => {
         'generateToken/'+phoneNumber
       ).then(async(resp)=> {
         try {
+         
          if(resp.status === 200){
            if(!resp.data.user.status) {
              ShowAlert();
@@ -40,11 +41,19 @@ export const EnterPhoneScreen = () => {
           
         }
        
+      }).catch((err) => {
+        setIsLoading(false);
+        Alert.alert(err.toString(),'',[
+      
+          { text: "OK", onPress: () => navigation.goBack() }
+        ]);
       });
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log('dio este eroor', error);
+      
+      //console.log(error);
       setIsLoading(false);
       Alert.alert('Debe ingresar un número válido');
     }

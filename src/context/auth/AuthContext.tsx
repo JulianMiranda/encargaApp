@@ -6,7 +6,6 @@ import {User, LoginData, RegisterData} from '../../interfaces/User.interface';
 import {CountryCode, Country} from '../../utils/countryTypes';
 
 import {authReducer, AuthState} from './authReducer';
-import messaging from '@react-native-firebase/messaging';
 import { Login } from '../../interfaces/Login.interface';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -72,22 +71,7 @@ export const AuthProvider = ({children}: any) => {
     checkToken();
   }, []);
 
-   async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    const fcmToken = await messaging().getToken();
-    if (fcmToken) {
-      console.log('FCM', fcmToken);
-    }
-
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  }
-
+   
   const checkToken = async (isLogin = false) => {
    /*  const headers = await getHeaders(); */
     try {
@@ -127,10 +111,7 @@ export const AuthProvider = ({children}: any) => {
       }
  
       await AsyncStorage.setItem('token', resp.data.token);
-      if (resp.data.user.role === 'JUN') {
-        requestUserPermission();
-      }
-
+      
       dispatch({
         type: 'signUp',
         payload: {

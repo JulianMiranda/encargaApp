@@ -7,7 +7,6 @@ import {ThemeProvider} from './src/context/theme/ThemeContext';
 import {ShopProvider} from './src/context/shop/ShopContext';
 import moment from 'moment';
 import 'moment/locale/es';
-import {firebasePushSetup} from './src/utils/notificationHandler';
 moment.locale('es');
 
 const AppState = ({children}: any) => {
@@ -34,9 +33,7 @@ const AppState = ({children}: any) => {
 };
 
 export const App = () => {
-  useEffect(() => {
-    firebasePushSetup();
-  }, []);
+
   return (
     <AppState>
       <StackNavigator />

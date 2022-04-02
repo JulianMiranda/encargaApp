@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {getHeaders} from './getHeaders';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,9 +8,9 @@ const baseURL = 'https://encargapp.herokuapp.com/api';
 const api = axios.create({baseURL});
 
 api.interceptors.request.use(async config => {
- /*  const headers = await getHeaders();
+  /*  const headers = await getHeaders();
   const token = headers.get('x-token'); */
-  
+
   const token = await AsyncStorage.getItem('token');
 
   if (token)

@@ -11,7 +11,6 @@ export const SettingsScreen = () => {
 
   return (
     <View>
-      {/* <InfoUser toastRef={toastRef} /> */}
       <TopScreen
         colors={colors}
         text="Mi Perfil"

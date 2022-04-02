@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
 
 project.ext.vectoricons = [
     iconFontNames: [ 'Ionicons.ttf', 'FontAwesome.ttf', 'FontAwesome5.ttf', 'MaterialCommunityIcons.ttf' ] // Name of the font files you want to copy
@@ -205,10 +204,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
-    implementation platform('com.google.firebase:firebase-bom:27.1.0')
-
-    implementation 'com.google.firebase:firebase-auth'
 
     implementation "androidx.browser:browser:1.2.0"
 
