@@ -1,31 +1,19 @@
-import React, {useContext, useEffect} from 'react';
-import {
-  View,
-  Image,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Image, FlatList, Dimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {CategoryCard} from '../../components/CategoryCard';
-import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useCategoryPaginated} from '../../hooks/useCategoryPaginated';
 import {homeStyles} from '../../styles/homeTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/core';
+import {SearchInputBar} from '../../components/SearchInputBar';
 
 interface Props extends StackScreenProps<any, any> {}
-const {width, height} = Dimensions.get('window');
-export const HomeScreen = (props: Props) => {
+const {width} = Dimensions.get('window');
+export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
-const navigation = useNavigation();
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
-
-  const {categoryList, loadCategories, isLoading} = useCategoryPaginated();
+  const {categoryList, isLoading} = useCategoryPaginated();
+  const [openHeader, setOpenHeader] = useState(true);
 
   useEffect(() => {
     if (!isLoading) {
@@ -36,6 +24,7 @@ const navigation = useNavigation();
   return (
     <>
       {/* <StatusBar backgroundColor="green" barStyle="light-content" /> */}
+      <SearchInputBar setOpenHeader={setOpenHeader} />
       <Image
         source={require('../../assets/bandera.jpg')}
         style={homeStyles.imageBG}
@@ -58,29 +47,31 @@ const navigation = useNavigation();
 
           /* top: top, */
         }}>
-        <Image
-          source={require('../../assets/encarga4.png')}
-          style={{
-           
-            alignSelf: 'center',
-            marginTop: top + 6,
-            height: 45,
-            width: 100,
-            marginRight: 30,
-            marginBottom: -2,
-          }}
-        />
-         <TouchableOpacity
-            activeOpacity={0.8}
+        {openHeader && (
+          <Image
+            source={require('../../assets/encarga4.png')}
             style={{
-              position: 'absolute',
-              zIndex: 100000000,
-            
-              right: 40,
-              top: 40}}
-            onPress={()=> navigation.navigate('SearchScreen')}>
-        <Icon name="search" size={26} color='red'  />
-      </TouchableOpacity>
+              alignSelf: 'center',
+              marginTop: top + 6,
+              height: 45,
+              width: 100,
+              marginRight: 30,
+              marginBottom: -2,
+            }}
+          />
+        )}
+        {/*  <TouchableOpacity
+          activeOpacity={0.8}
+          style={{
+            position: 'absolute',
+            zIndex: 100000000,
+
+            right: 40,
+            top: 40,
+          }}
+          onPress={() => navigation.navigate('SearchScreen')}>
+          <Icon name="search" size={26} color="red" />
+        </TouchableOpacity> */}
       </View>
 
       <View style={{alignItems: 'center'}}>
@@ -89,7 +80,7 @@ const navigation = useNavigation();
           keyExtractor={(category, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           numColumns={2}
-         /*  ref={flat}
+          /*  ref={flat}
           onContentSizeChange={()=> flat.current .scrollToEnd()} */
           // Header
           ListHeaderComponent={
