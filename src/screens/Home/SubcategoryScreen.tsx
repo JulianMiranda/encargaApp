@@ -13,6 +13,7 @@ import {ModalImages} from '../../components/ModalImages';
 import {formatToCurrency} from '../../utils/formatToCurrency';
 import {Slider} from '../../components/Slider';
 import {loginStyles} from '../../styles/loginTheme';
+import {ThemeContext} from '../../context/theme/ThemeContext';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
@@ -20,8 +21,11 @@ interface Props
 export const SubcategoryScreen = (props: Props) => {
   const {route} = props;
   const {subcategory} = route.params;
-  const {name, images, price, priceGalore, updatedAt} = subcategory;
+  const {name, images, price, priceGalore, updatedAt, weight} = subcategory;
   const {setItem} = useContext(ShopContext);
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   const [isVisible, setIsVisible] = useState(false);
   const [imageIndex, setImageIndex] = useState(images[0]);
 
@@ -52,6 +56,7 @@ export const SubcategoryScreen = (props: Props) => {
           </View>
           {/* <Text style={styles.stock}>Quedan: {stock}</Text> */}
           <Text style={styles.aviableSizes}>Tallas disponibles:</Text>
+          <Text style={styles.aviableSizes}>Peso en gramos: {weight}g</Text>
           {/* <View style={styles.sizesContainer}>
             {aviableSizes.map((size, index) => (
               <View style={styles.sizeTextContainer} key={index}>
@@ -73,7 +78,9 @@ export const SubcategoryScreen = (props: Props) => {
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...loginStyles.button,
-          marginBottom: 60,
+          padding: 5,
+          backgroundColor: colors.card,
+          marginBottom: 75,
         }}
         activeOpacity={0.8}
         onPress={() => setItem({subcategory, cantidad: 1})}>

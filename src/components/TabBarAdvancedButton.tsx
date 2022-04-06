@@ -1,15 +1,17 @@
 import React, {useContext} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {BottomTabBarButtonProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TabBg} from '../svg';
 import {ThemeContext} from '../context/theme/ThemeContext';
+import {ShopContext} from '../context/shop/ShopContext';
 
 type Props = BottomTabBarButtonProps & {
   bgColor?: string;
 };
 
 export const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => {
+  const {car} = useContext(ShopContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -21,6 +23,25 @@ export const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => {
         activeOpacity={0.8}
         style={{...styles.button, backgroundColor: colors.primary}}
         onPress={props.onPress}>
+        {car.length > 0 && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: -10,
+              backgroundColor: colors.card,
+              borderRadius: 100,
+              height: 22,
+              width: 22,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignContent: 'center',
+            }}>
+            <Text style={{color: 'white'}}>
+              {car.length < 10 ? car.length : '+9'}
+            </Text>
+          </View>
+        )}
         <Icon name="shopping-cart" style={styles.buttonIcon} />
       </TouchableOpacity>
     </View>

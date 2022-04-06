@@ -3,26 +3,27 @@
 import {Image} from './Image.interface';
 
 export interface SubcategoryResp {
-	count: number;
-	page: number;
-	totalPages: number;
-	data: Subcategory[];
+  count: number;
+  page: number;
+  totalPages: number;
+  data: Subcategory[];
 }
 
 export interface Subcategory {
-	status: boolean;
-	name: string;
-	category: Category;
-	createdAt: string;
-	updatedAt: string;
-	images: Image[];
-	id: string;
-	price: number;
-	priceGalore: number;
-	currency: string;
+  status: boolean;
+  name: string;
+  category: Category;
+  createdAt: string;
+  updatedAt: string;
+  images: Image[];
+  id: string;
+  price: number;
+  priceGalore: number;
+  weight: number;
+  currency: string;
 }
 
 export interface Category {
-	name: string;
-	id: string;
+  name: string;
+  id: string;
 }
