@@ -6,14 +6,14 @@ import {User, LoginData, RegisterData} from '../../interfaces/User.interface';
 import {CountryCode, Country} from '../../utils/countryTypes';
 
 import {authReducer, AuthState} from './authReducer';
-import { Login } from '../../interfaces/Login.interface';
+import {Login} from '../../interfaces/Login.interface';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceCountry from 'react-native-device-country';
 
 type AuthContextProps = {
   status: 'checking' | 'authenticated' | 'not-authenticated';
-  utility: 'choose' |'shop' | 'money';
+  utility: 'choose' | 'shop' | 'money';
   wait: boolean;
   user: User | null;
   errorMessage: string;
@@ -45,73 +45,67 @@ const authInicialState: AuthState = {
   countryCode: 'CU',
   countryCallCode: '+53',
   mn: 60,
-  mlc: 130
+  mlc: 130,
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(authReducer, authInicialState);
-  
+
   useEffect(() => {
-    
-   DeviceCountry.getCountryCode()
-  .then((result: any) => {   
-    if(result && result.code){
-        const country = result.code.toUpperCase();
-      dispatch({type: 'setCountryCode', payload: country});
-    }
-    // 
-  })
-  .catch((e) => {
-    console.log(e);
-  });
- },[])
+    DeviceCountry.getCountryCode()
+      .then((result: any) => {
+        if (result && result.code) {
+          const country = result.code.toUpperCase();
+          dispatch({type: 'setCountryCode', payload: country});
+        }
+        //
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
   useEffect(() => {
     checkToken();
   }, []);
 
-   
   const checkToken = async (isLogin = false) => {
-   /*  const headers = await getHeaders(); */
+    /*  const headers = await getHeaders(); */
     try {
       //const sendPrice = await api.get<number>('/orders/getPrice');
-   
-      const [sendPrice, mn,mlc] = await Promise.all([
+
+      const [sendPrice, mn, mlc] = await Promise.all([
         api.get<number>('/orders/getPrice'),
         api.get<number>('/orders/getMN'),
-        api.get<number>('/orders/getMLC')
+        api.get<number>('/orders/getMLC'),
+      ]);
+      /*  const  sendPrice = await api.get<number>('/orders/getPrice'); */
 
-      ])
-     /*  const  sendPrice = await api.get<number>('/orders/getPrice'); */
-    
-     
       dispatch({type: 'setPrice', payload: sendPrice.data});
       dispatch({type: 'setMN', payload: mn.data});
       dispatch({type: 'setMLC', payload: mlc.data});
     } catch (error) {
-      console.log('dio err el ip');  
+      console.log('dio err el ip');
     }
- 
-  
-   const token = await AsyncStorage.getItem('token');
+
+    const token = await AsyncStorage.getItem('token');
     // No token, no autenticado
     if (!token) return dispatch({type: 'notAuthenticated'});
-  
+
     // Hay token
     try {
-
       const resp = await api.get<Login>('/tokenRenew');
-        
+
       if (!resp.data.user.status) {
         return dispatch({type: 'notAuthenticated'});
       }
       if (resp.status !== 200) {
         return dispatch({type: 'notAuthenticated'});
       }
- 
+
       await AsyncStorage.setItem('token', resp.data.token);
-      
+
       dispatch({
         type: 'signUp',
         payload: {
@@ -126,7 +120,7 @@ export const AuthProvider = ({children}: any) => {
   const signInPhone = async (resp: Login) => {
     try {
       dispatch({type: 'initCheck'});
-     
+
       checkToken(true);
     } catch (error) {
       dispatch({
@@ -139,13 +133,9 @@ export const AuthProvider = ({children}: any) => {
   const signUpPhone = async (name: string, user: any) => {
     dispatch({type: 'initCheck'});
     try {
-      api.put<Login>(
-        'users/update/'+user.id,
-        {name}
-      ).then(async(resp)=> {
+      api.put<Login>('users/update/' + user.id, {name}).then(async resp => {
         checkToken(true);
       });
-    
     } catch (error) {
       dispatch({
         type: 'addError',
@@ -159,7 +149,6 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const logOut = async () => {
-    
     AsyncStorage.removeItem('token');
     dispatch({type: 'utilityChoose'});
     dispatch({type: 'logout'});
@@ -178,44 +167,41 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const deleteCode = async (deletecode: string) => {
-
-    if(state.user){
-      const newCodes = state.user.codes.filter((code)=> code !== deletecode );     
-      try{
-        const resp = await api.put<Boolean>('/users/update/'+state.user?.id, {codes: newCodes}  );
+    if (state.user) {
+      const newCodes = state.user.codes.filter(code => code !== deletecode);
+      try {
+        const resp = await api.put<Boolean>('/users/update/' + state.user?.id, {
+          codes: newCodes,
+        });
         const newUser = {
           ...state.user,
-          codes: newCodes
+          codes: newCodes,
         };
-        dispatch({type: 'deleteCode',payload: {user: newUser} });
-      }catch(error){
-        console.log(error)
+        dispatch({type: 'deleteCode', payload: {user: newUser}});
+      } catch (error) {
+        console.log(error);
       }
-     
     }
-    
   };
   const setCode = async (setcode: string) => {
+    if (state.user) {
+      const newCodes = [setcode, ...state.user.codes];
+      try {
+        const resp = await api.put<Boolean>('/users/update/' + state.user?.id, {
+          codes: newCodes,
+        });
 
-    if(state.user){
-      const newCodes = [setcode ,...state.user.codes ]   
-      try{
-        const resp = await api.put<Boolean>('/users/update/'+state.user?.id, {codes: newCodes}  );
-        
         const newUser = {
           ...state.user,
-          codes: newCodes
+          codes: newCodes,
         };
-        dispatch({type: 'setCode',payload: {user: newUser} });
-      }catch(error){
-        console.log(error)
+        dispatch({type: 'setCode', payload: {user: newUser}});
+      } catch (error) {
+        console.log(error);
       }
-     
     }
-
-    
   };
-  
+
   const setShop = () => {
     dispatch({type: 'utilityShop'});
   };
@@ -237,7 +223,7 @@ export const AuthProvider = ({children}: any) => {
         deleteCode,
         setCode,
         setShop,
-        setMoney
+        setMoney,
       }}>
       {children}
     </AuthContext.Provider>

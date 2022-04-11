@@ -12,12 +12,10 @@ export const useSubcategoryPaginated = (id: string) => {
   const totalPages = useRef(2);
 
   const loadSubcategories = async () => {
- 
-    
-    const body = {      
+    const body = {
       filter: {category: ['=', id], status: ['=', true]},
-      docsPerPage:  10,
-      sort: "desc",
+      docsPerPage: 10,
+      sort: 'ASC',
       page: nextPage.current,
       population: [
         {
@@ -37,31 +35,32 @@ export const useSubcategoryPaginated = (id: string) => {
       ],
     };
     try {
-      if(nextPage.current <= totalPages.current+2){
+      if (nextPage.current <= totalPages.current + 2) {
         setIsLoading(true);
         const resp = await api.post<SubcategoryResp>(
           '/subcategories/getList',
           body,
         );
-  
-        nextPage.current = resp.data.page + 1;      
+
+        nextPage.current = resp.data.page + 1;
         totalPages.current = resp.data.totalPages;
         setSubcategories([...subcategories, ...resp.data.data]);
       }
-      
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-    }    
+    }
   };
 
   useEffect(() => {
     loadSubcategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
     isLoading,
     subcategories,
-    loadSubcategories
+    loadSubcategories,
   };
 };

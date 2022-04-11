@@ -1,26 +1,19 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {FadeInImage} from './FadeInImage';
 import {formatToCurrency} from '../utils/formatToCurrency';
-import {ShopContext} from '../context/shop/ShopContext';
 import {CarItemProps} from '../interfaces/Shop.Interface';
+import {SetItemCar} from './SetItemCar';
+import {Subcategory} from '../interfaces/Subcategory.interface';
+import {ShopContext} from '../context/shop/ShopContext';
 
-type Operation = 'add' | 'remove';
 export const ProductShop = ({subcategory, cantidad}: CarItemProps) => {
-  const {price, images, name, weight} = subcategory;
+  const {price, priceGalore, images, name, weight} = subcategory;
+
   const {setItem} = useContext(ShopContext);
 
-  const setCarItem = (action: Operation) => {
-    if (action === 'add') {
-      setItem({subcategory: subcategory, cantidad: cantidad + 1});
-    } else {
-      setItem({subcategory: subcategory, cantidad: cantidad - 1});
-    }
-    /*  if (cantidad < 1) {
-      console.log('Sacar aviso mayor q cero');
-    } else {
-      setItem({subcategory: subcategory, cantidad: cantidad + 1});
-    } */
+  const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
+    setItem({subcategory: subcategoryRef, cantidad: cantidadRef});
   };
 
   return (
@@ -28,29 +21,18 @@ export const ProductShop = ({subcategory, cantidad}: CarItemProps) => {
       <FadeInImage uri={images[0].url} style={styles.image} />
       <View style={styles.subContainer2}>
         <Text style={styles.name}>{name}</Text>
-        <Text>{formatToCurrency(price)}</Text>
+        <Text>
+          {cantidad < 6
+            ? formatToCurrency(price)
+            : formatToCurrency(priceGalore)}
+        </Text>
         <Text>{weight} g</Text>
         <View style={styles.buttonContainer}>
-          <View style={styles.buttonRow}>
-            {cantidad > 0 && (
-              <TouchableOpacity
-                style={styles.leftContainer}
-                activeOpacity={0.8}
-                onPress={() => setCarItem('remove')}>
-                <Text style={styles.left}>-</Text>
-              </TouchableOpacity>
-            )}
-
-            <View style={styles.numberContainer}>
-              <Text style={styles.number}>{cantidad}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.addContainer}
-              activeOpacity={0.8}
-              onPress={() => setCarItem('add')}>
-              <Text style={styles.add}>+</Text>
-            </TouchableOpacity>
-          </View>
+          <SetItemCar
+            subcategory={subcategory}
+            cantidad={cantidad}
+            updateCantidad={updateCantidad}
+          />
         </View>
       </View>
     </View>
@@ -83,31 +65,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginEnd: 5,
   },
-  buttonRow: {flexDirection: 'row', marginRight: 5},
-  leftContainer: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    marginRight: -1,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-  },
-  left: {fontSize: 18, fontWeight: '600'},
-  numberContainer: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-  },
-  number: {fontSize: 16, fontWeight: '600'},
-  addContainer: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  add: {fontSize: 18, fontWeight: '600'},
 });

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -18,6 +19,7 @@ import {formatToCurrency} from '../../utils/formatToCurrency';
 import {ModalComponent} from '../../components/ModalComponent';
 import {AuthContext} from '../../context/auth/AuthContext';
 import {ProductShop} from '../../components/ProductShop';
+import {Factura} from '../../components/Factura';
 
 export const ShopScreen = () => {
   const {
@@ -108,7 +110,9 @@ export const ShopScreen = () => {
   };
 
   useEffect(() => {
-    if (message.length === 0) return;
+    if (message.length === 0) {
+      return;
+    }
 
     Alert.alert('Paso obligatorio', message, [
       {
@@ -161,15 +165,6 @@ export const ShopScreen = () => {
             />
           ))}
 
-          {/*  {car.map((item, index) => (
-            <SingleSubcategory
-              key={index.toString()}
-              item={item.subcategory}
-              root={'Shop'}
-              edit
-            />
-          ))} */}
-
           {car.length < 1 && (
             <>
               <Text
@@ -198,7 +193,7 @@ export const ShopScreen = () => {
                 margin: 15,
                 marginBottom: 10,
                 padding: 10,
-                backgroundColor: '#dce8ff',
+                backgroundColor: '#FEFEFE',
               }}>
               <View
                 style={{
@@ -284,6 +279,7 @@ export const ShopScreen = () => {
                   {formatToCurrency(total)}
                 </Text>
               </View>
+              <Factura />
               <View
                 style={{
                   flexDirection: 'row',

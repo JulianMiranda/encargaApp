@@ -16,6 +16,8 @@ export interface Subcategory {
   createdAt: string;
   updatedAt: string;
   images: Image[];
+  description: Description[];
+  aviableSizes: string[];
   id: string;
   price: number;
   priceGalore: number;
@@ -26,4 +28,9 @@ export interface Subcategory {
 export interface Category {
   name: string;
   id: string;
+}
+
+export interface Description {
+  title: string;
+  content: string;
 }
