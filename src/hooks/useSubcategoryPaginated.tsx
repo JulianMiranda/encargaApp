@@ -14,7 +14,7 @@ export const useSubcategoryPaginated = (id: string) => {
   const loadSubcategories = async () => {
     const body = {
       filter: {category: ['=', id], status: ['=', true]},
-      docsPerPage: 10,
+      docsPerPage: 12,
       sort: 'ASC',
       page: nextPage.current,
       population: [

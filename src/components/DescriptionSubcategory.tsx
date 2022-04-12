@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text} from 'react-native';
 import {Description} from '../interfaces/Subcategory.interface';
@@ -25,14 +26,14 @@ export const DescriptionSubcategory = ({description}: Props) => {
             style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <View
               style={{
-                backgroundColor: index % 2 == 0 ? '#f0f0f0' : '#fafafa',
+                backgroundColor: index % 2 === 0 ? '#f0f0f0' : '#fafafa',
                 flex: 1,
               }}>
               <Text>{item.title}</Text>
             </View>
             <View
               style={{
-                backgroundColor: index % 2 == 0 ? '#fafafa' : '#f0f0f0',
+                backgroundColor: index % 2 === 0 ? '#fafafa' : '#f0f0f0',
                 flex: 1,
               }}>
               <Text
@@ -45,6 +46,7 @@ export const DescriptionSubcategory = ({description}: Props) => {
           </View>
         ))}
       </View>
+      <View style={{backgroundColor: '#FAFAFA', height: 12}} />
     </>
   );
 };

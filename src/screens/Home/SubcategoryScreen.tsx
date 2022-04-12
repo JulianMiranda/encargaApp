@@ -19,6 +19,7 @@ import {SetItemCar} from '../../components/SetItemCar';
 import {Subcategory} from '../../interfaces/Subcategory.interface';
 import {DescriptionSubcategory} from '../../components/DescriptionSubcategory';
 import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory';
+import {useToast} from 'react-native-toast-notifications';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
@@ -44,16 +45,25 @@ export const SubcategoryScreen = (props: Props) => {
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
 
+  const toast = useToast();
+
   const fechaInicio = new Date(updatedAt).getTime();
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
   const days = diff / (1000 * 60 * 60 * 24);
 
   useEffect(() => {
-    if (cantidad === 5) {
-      console.log('aviso de 1 mas');
+    if (cantidad === 5 && priceGalore !== price) {
+      toast.show('Puedes añadir 1 más y obtener precio de por mayor', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
     }
-  }, [cantidad]);
+  }, [cantidad, price, priceGalore, toast]);
 
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     if (cantidadRef > 0) {
@@ -73,20 +83,12 @@ export const SubcategoryScreen = (props: Props) => {
         {days < 24 && (
           <Image
             source={require('../../assets/nuevo.png')}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              alignSelf: 'flex-start',
-              marginLeft: 10,
-              marginTop: -50,
-              height: 75,
-              width: 75,
-            }}
+            style={styles.newImageProduct}
           />
         )}
         <View style={styles.textContainer}>
           <View style={{padding: 5}}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={styles.row}>
               <Text style={styles.name}>{name}</Text>
               <SetItemCar
                 subcategory={subcategory}
@@ -103,8 +105,7 @@ export const SubcategoryScreen = (props: Props) => {
                 <Text style={styles.priceGalore}>
                   Aprovecha por la compra de 6 o más:{' '}
                 </Text>
-                <Text
-                  style={{textDecorationLine: 'line-through', color: 'red'}}>
+                <Text style={styles.textLineThrough}>
                   {formatToCurrency(price)}
                 </Text>
                 <Text style={styles.priceGaloreMoney}>
@@ -115,9 +116,8 @@ export const SubcategoryScreen = (props: Props) => {
           </View>
           <View style={styles.divider} />
           <DescriptionSubcategory description={description} />
-          <View style={styles.divider} />
+
           <AviableSizesSubcategory aviableSizes={aviableSizes} />
-          <View style={styles.divider} />
         </View>
         <ModalImages
           isVisible={isVisible}
@@ -146,6 +146,13 @@ export const SubcategoryScreen = (props: Props) => {
   );
 };
 const styles = StyleSheet.create({
+  newImageProduct: {
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    marginTop: -50,
+    height: 75,
+    width: 75,
+  },
   textContainer: {
     marginTop: 10,
   },
@@ -168,6 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   priceGaloreMoney: {fontSize: 22, color: '#56BF57', fontWeight: 'bold'},
+  row: {flexDirection: 'row', justifyContent: 'space-between'},
   rowText: {
     width: '100%',
   },
@@ -185,4 +193,5 @@ const styles = StyleSheet.create({
   },
   sizeText: {},
   divider: {backgroundColor: '#FAFAFA', height: 12},
+  textLineThrough: {textDecorationLine: 'line-through', color: 'red'},
 });

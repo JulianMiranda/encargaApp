@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {LogBox, StatusBar} from 'react-native';
+import {ToastProvider} from 'react-native-toast-notifications';
 import {StackNavigator} from './src/navigation/Navigation';
 import {AuthProvider} from './src/context/auth/AuthContext';
 import {ThemeProvider} from './src/context/theme/ThemeContext';
@@ -23,17 +24,19 @@ const AppState = ({children}: any) => {
         backgroundColor="transparent"
         barStyle={'dark-content'}
       />
-      <AuthProvider>
-        <ThemeProvider>
-          <ShopProvider>{children}</ShopProvider>
-        </ThemeProvider>
-      </AuthProvider>
+
+      <ToastProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <ShopProvider>{children}</ShopProvider>
+          </ThemeProvider>
+        </AuthProvider>
+      </ToastProvider>
     </>
   );
 };
 
 export const App = () => {
-
   return (
     <AppState>
       <StackNavigator />
