@@ -23,7 +23,7 @@ interface PropsNavigation
 
 const {width} = Dimensions.get('window');
 export const SubcategoryCard = ({item}: Props) => {
-  const {price, images} = item;
+  const {price, images, name} = item;
 
   const navigation = useNavigation<PropsNavigation>();
   return (
@@ -44,7 +44,7 @@ export const SubcategoryCard = ({item}: Props) => {
           /* backgroundColor: 'red' */
         }}>
         <FadeInImage uri={images[0].url} style={styles.productImage} />
-        <Text style={{...styles.name}}>{formatToCurrency(price)}</Text>
+        <Text style={{...styles.name}}>{name}</Text>
       </View>
     </TouchableOpacity>
   );

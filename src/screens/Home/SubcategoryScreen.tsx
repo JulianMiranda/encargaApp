@@ -20,6 +20,8 @@ import {Subcategory} from '../../interfaces/Subcategory.interface';
 import {DescriptionSubcategory} from '../../components/DescriptionSubcategory';
 import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory';
 import {useToast} from 'react-native-toast-notifications';
+import {Loading} from '../../components/Loading';
+import ScreenLoading from '../../components/LoadingSafe';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
@@ -37,7 +39,8 @@ export const SubcategoryScreen = (props: Props) => {
     aviableSizes,
     weight,
   } = subcategory;
-  const {setItem} = useContext(ShopContext);
+  const {errorAddCar, clearErrorAdd, addCarLoading, setItem} =
+    useContext(ShopContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -51,6 +54,20 @@ export const SubcategoryScreen = (props: Props) => {
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
   const days = diff / (1000 * 60 * 60 * 24);
+
+  useEffect(() => {
+    if (errorAddCar) {
+      toast.show(errorAddCar, {
+        type: 'danger',
+        placement: 'top',
+        duration: 3000,
+        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+      clearErrorAdd();
+    }
+  }, [clearErrorAdd, errorAddCar, toast]);
 
   useEffect(() => {
     if (cantidad === 5 && priceGalore !== price) {
@@ -142,6 +159,11 @@ export const SubcategoryScreen = (props: Props) => {
           {cantidad > 1 && <Text>({cantidad})</Text>} Añadir al carrito
         </Text>
       </TouchableOpacity>
+      {addCarLoading && (
+        <View style={styles.loadingContainer}>
+          <ScreenLoading size={32} text="" />
+        </View>
+      )}
     </>
   );
 };
@@ -194,4 +216,14 @@ const styles = StyleSheet.create({
   sizeText: {},
   divider: {backgroundColor: '#FAFAFA', height: 12},
   textLineThrough: {textDecorationLine: 'line-through', color: 'red'},
+  loadingContainer: {
+    position: 'absolute',
+    flex: 1,
+    top: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: '100%',
+    width: '100%',
+  },
 });

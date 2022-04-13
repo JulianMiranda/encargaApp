@@ -8,17 +8,22 @@ import {AuthContext} from '../auth/AuthContext';
 import {User} from '../../interfaces/User.interface';
 
 type ShopContextProps = {
+  addCarLoading: boolean;
   car: CarItemProps[];
   message: string;
+  errorAddCar: string;
   setItem: (item: CarItemProps) => void;
   unsetItem: (item: Subcategory) => void;
   emptyCar: () => void;
   removeAlert: () => void;
+  clearErrorAdd: () => void;
   makeShop: (total: number, description: string) => void;
 };
 const shopInicialState: ShopState = {
   car: [],
   message: '',
+  errorAddCar: '',
+  addCarLoading: false,
 };
 
 export const ShopContext = createContext({} as ShopContextProps);
@@ -34,37 +39,59 @@ export const ShopProvider = ({children}: any) => {
   }, [status]);
   const checkCar = async () => {
     try {
+      console.log('checkCar');
+
       const resp = await api.get<Array<MyShopResponse>>('/shop/getMyShop');
       if (resp.data.length && resp.data[0].car.length > 0) {
-        resp.data[0].car.map(item => setItem(item));
+        resp.data[0].car.map(item =>
+          dispatch({type: 'set_item', payload: item}),
+        );
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const setItem = (item: CarItemProps) => {
+  const setItem = async (item: CarItemProps) => {
     try {
+      console.log('setItem');
+      dispatch({type: 'add_car_loading', payload: true});
       const subcategoriesCar = state.car.map(carItem => carItem.subcategory.id);
       if (subcategoriesCar.includes(item.subcategory.id)) {
         const newState = state.car.filter(
           carItem => carItem.subcategory.id !== item.subcategory.id,
         );
-        api.post('/shop/setMyShop', {user: user!.id, car: [...newState, item]});
+        await api.post('/shop/setMyShop', {
+          user: user!.id,
+          car: [...newState, item],
+        });
         dispatch({type: 'update_item', payload: item});
+        dispatch({type: 'add_car_loading', payload: false});
       } else {
-        api.post('/shop/setMyShop', {
+        await api.post('/shop/setMyShop', {
           user: user!.id,
           car: [...state.car, item],
         });
         dispatch({type: 'set_item', payload: item});
+        dispatch({type: 'add_car_loading', payload: false});
       }
     } catch (error) {
       console.log(error);
+      dispatch({type: 'add_car_loading', payload: false});
+      dispatch({
+        type: 'error_add_car',
+        payload: 'Error al agregar al carrito, por favor intente nuevamente',
+      });
     }
+  };
+
+  const clearErrorAdd = () => {
+    dispatch({type: 'error_add_car', payload: ''});
   };
 
   const unsetItem = (item: Subcategory) => {
     try {
+      console.log('deletin item');
+
       const newState = state.car.filter(
         carItem => carItem.subcategory.id !== item.id,
       );
@@ -120,6 +147,7 @@ export const ShopProvider = ({children}: any) => {
         emptyCar,
         makeShop,
         removeAlert,
+        clearErrorAdd,
       }}>
       {children}
     </ShopContext.Provider>
