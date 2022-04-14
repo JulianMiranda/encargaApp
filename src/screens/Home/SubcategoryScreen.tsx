@@ -20,7 +20,6 @@ import {Subcategory} from '../../interfaces/Subcategory.interface';
 import {DescriptionSubcategory} from '../../components/DescriptionSubcategory';
 import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory';
 import {useToast} from 'react-native-toast-notifications';
-import {Loading} from '../../components/Loading';
 import ScreenLoading from '../../components/LoadingSafe';
 
 interface Props
@@ -120,7 +119,7 @@ export const SubcategoryScreen = (props: Props) => {
             {priceGalore !== price && (
               <View style={styles.rowText}>
                 <Text style={styles.priceGalore}>
-                  Aprovecha por la compra de 6 o más:{' '}
+                  Aprovecha el descuento por la compra de 5 paquetes o más:{' '}
                 </Text>
                 <Text style={styles.textLineThrough}>
                   {formatToCurrency(price)}

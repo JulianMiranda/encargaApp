@@ -20,6 +20,7 @@ import {ModalComponent} from '../../components/ModalComponent';
 import {AuthContext} from '../../context/auth/AuthContext';
 import {ProductShop} from '../../components/ProductShop';
 import {Factura} from '../../components/Factura';
+import JDtest from '../../components/DropShop';
 
 export const ShopScreen = () => {
   const {
