@@ -3,8 +3,10 @@ import React, {useContext} from 'react';
 import {Text, View} from 'react-native';
 import {ShopContext} from '../context/shop/ShopContext';
 import {formatToCurrency} from '../utils/formatToCurrency';
-
-export const Factura = () => {
+interface Props {
+  cantPaq: number;
+}
+export const Factura = ({cantPaq}: Props) => {
   const {car} = useContext(ShopContext);
   return (
     <>
@@ -30,7 +32,7 @@ export const Factura = () => {
             <Text style={{flex: 1, marginLeft: 5}}>{cantidad}</Text>
             <Text style={{flex: 6}}>{subcategory.name}</Text>
             <Text style={{flex: 2}}>
-              {cantidad < 6
+              {cantPaq < 5
                 ? formatToCurrency(subcategory.price)
                 : formatToCurrency(subcategory.priceGalore)}
             </Text>
@@ -38,7 +40,7 @@ export const Factura = () => {
               style={{
                 flex: 2,
               }}>
-              {cantidad < 6
+              {cantPaq < 5
                 ? formatToCurrency(subcategory.price * cantidad)
                 : formatToCurrency(subcategory.priceGalore * cantidad)}
             </Text>

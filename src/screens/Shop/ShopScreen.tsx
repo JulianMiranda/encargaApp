@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
   Alert,
   Linking,
   Image,
+  Animated,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ShopContext} from '../../context/shop/ShopContext';
@@ -20,13 +21,17 @@ import {ModalComponent} from '../../components/ModalComponent';
 import {AuthContext} from '../../context/auth/AuthContext';
 import {ProductShop} from '../../components/ProductShop';
 import {Factura} from '../../components/Factura';
-import JDtest from '../../components/DropShop';
+import CircularSlider from 'react-native-circular-slider';
+import {G, Path} from 'react-native-svg';
+
+const HEADER_MAX_HEIGHT = 75;
+const HEADER_MIN_HEIGHT = 70;
+const PROFILE_IMAGE_MIN_HEIGHT = 40;
 
 export const ShopScreen = () => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-  const color = colors.primary;
   const {top} = useSafeAreaInsets();
 
   const {car, message, emptyCar, makeShop, removeAlert} =
@@ -34,18 +39,43 @@ export const ShopScreen = () => {
   const {sendPrice} = useContext(AuthContext);
   const [total, setTotal] = useState(0);
   const [cantPaq, setCantPaq] = useState(1);
+  const [weigth, setWeigth] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [handleOpt, setHandleOpt] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [description, setDescription] = useState('');
   const [isLoading, setisLoading] = useState(false);
+
+  const WAKE_ICON = (
+    <G>
+      <Path
+        d="M2,12.9h1.7h3h2.7h3H14c0.4,0,0.7-0.3,0.7-0.7c0-0.4-0.3-0.7-0.7-0.7c-0.9,0-1.7-0.7-1.7-1.7v-4
+        c0-2.1-1.5-3.8-3.4-4.2C9,1.6,9,1.4,9,1.3c0-0.5-0.4-1-1-1c-0.5,0-1,0.4-1,1c0,0.2,0,0.3,0.1,0.4c-2,0.4-3.4,2.1-3.4,4.2v4
+        c0,0.9-0.7,1.7-1.7,1.7c-0.4,0-0.7,0.3-0.7,0.7C1.3,12.6,1.6,12.9,2,12.9z"
+      />
+      <Path d="M8,15.7c1.1,0,2.1-0.9,2.1-2.1H5.9C5.9,14.8,6.9,15.7,8,15.7z" />
+    </G>
+  );
+
+  const BEDTIME_ICON = (
+    <G>
+      <Path
+        d="M11.7,10.5c-3.6,0-6.4-2.9-6.4-6.4c0-0.7,0.1-1.4,0.4-2.1C3.1,2.9,1.2,5.3,1.2,8.1c0,3.6,2.9,6.4,6.4,6.4
+        c2.8,0,5.2-1.8,6.1-4.4C13.1,10.4,12.4,10.5,11.7,10.5z"
+      />
+      <Path d="M8,7.6l2-2.5H8V4.4H11v0.6L9,7.6h2v0.7H8V7.6z" />
+      <Path d="M11.7,5.4l1.5-1.9h-1.4V3h2.2v0.5l-1.5,1.9h1.5v0.5h-2.2V5.4z" />
+      <Path d="M9.4,3l1.1-1.4h-1V1.3H11v0.4L9.9,3H11v0.4H9.4V3z" />
+    </G>
+  );
 
   useEffect(() => {
     let totalCalc = 0;
     let totalWeight = 1;
     car.forEach(function (item) {
-      if (item.cantidad < 6) {
+      if (cantPaq < 5) {
         const valor = item.cantidad * item.subcategory.price;
         totalCalc += valor;
       } else {
@@ -55,6 +85,10 @@ export const ShopScreen = () => {
       totalWeight += item.cantidad * item.subcategory.weight;
     });
     setTotal(totalCalc);
+    for (let i = weigth; i <= totalWeight; i++) {
+      setWeigth(i);
+    }
+
     if (totalWeight > 0) {
       const cant = totalWeight / 1440;
       if (totalWeight < 1400) {
@@ -65,7 +99,31 @@ export const ShopScreen = () => {
         setCantPaq(Math.ceil(cant));
       }
     }
-  }, [car]);
+  }, [cantPaq, car]);
+
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+    extrapolate: 'clamp',
+  });
+  const headerZindex = scrollY.interpolate({
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 75],
+    outputRange: [0, 0, 1000],
+    extrapolate: 'clamp',
+  });
+
+  const headerTitleBottom = scrollY.interpolate({
+    inputRange: [
+      0,
+      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT,
+      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 5 + PROFILE_IMAGE_MIN_HEIGHT,
+      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 5 + PROFILE_IMAGE_MIN_HEIGHT + 26,
+    ],
+    outputRange: [-30, -30, -30, 5],
+    extrapolate: 'clamp',
+  });
 
   const confirmModal = () => {
     switch (handleOpt) {
@@ -132,11 +190,102 @@ export const ShopScreen = () => {
       },
     ]);
   }, [message, removeAlert]);
+  const sliders = [];
+  for (let i = 0; i < cantPaq; i++) {
+    sliders.push(
+      <View
+        key={i}
+        style={{
+          margin: 10,
+        }}>
+        <Text
+          style={{
+            position: 'absolute',
+            top: 25,
+            alignSelf: 'center',
+          }}>
+          {i + 1}
+        </Text>
+        <CircularSlider
+          startAngle={0}
+          angleLength={
+            cantPaq !== i + 1
+              ? 2 * Math.PI - 0.1
+              : (Math.PI * 2 * (weigth - i * 1440)) / 1440
+          }
+          segments={4}
+          strokeWidth={15}
+          radius={30}
+          gradientColorFrom="#DAFCF4"
+          gradientColorTo="#2684FD"
+          clockFaceColor="green"
+          bgCircleColor="#EFFFFB"
+          startIcon={
+            <G scale="1.1" transform={{translate: '-8, -8'}}>
+              {BEDTIME_ICON}
+            </G>
+          }
+          stopIcon={
+            <G scale="1.1" transform={{translate: '-8, -8'}}>
+              {WAKE_ICON}
+            </G>
+          }
+        />
+
+        {/*  <Slider
+          value={weigth - i * 1440}
+          disabled
+          style={{width: 200, height: 40}}
+          minimumValue={0}
+          maximumValue={1440}
+          minimumTrackTintColor="skyblue"
+          maximumTrackTintColor="#2684FD"
+        /> */}
+      </View>,
+    );
+  }
 
   return (
     <>
-      <ScrollView style={{flex: 1, marginBottom: 120}}>
-        <View
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: 'lightskyblue',
+          height: headerHeight,
+          zIndex: headerZindex,
+          elevation: headerZindex, //required for android
+          alignItems: 'center',
+        }}>
+        <Animated.View
+          style={{
+            position: 'absolute',
+            bottom: headerTitleBottom,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 22,
+              fontWeight: 'bold',
+            }}>
+            Mi Compra
+          </Text>
+        </Animated.View>
+      </Animated.View>
+      <ScrollView
+        style={{flex: 1, marginBottom: 120}}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: false},
+        )}>
+        {/* <View
           style={{
             ...styles.headerContainer,
             overflow: 'hidden',
@@ -155,9 +304,44 @@ export const ShopScreen = () => {
               Mi Compra
             </Text>
           </LinearGradient>
+        </View> */}
+
+        {/* <View style={{alignItems: 'center'}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 32,
+              paddingLeft: 10,
+              marginTop: 50,
+              marginBottom: 25,
+            }}>
+            Mi Compra
+          </Text>
+        </View> */}
+
+        <View
+          style={{
+            ...styles.headerContainer,
+            overflow: 'hidden',
+          }}>
+          <LinearGradient
+            style={{
+              flex: 1,
+              width: '100%',
+            }}
+            colors={['#2684FD', 'lightskyblue']}>
+            <Text
+              style={{
+                ...styles.titleList,
+                top: top + 40,
+                alignSelf: 'center',
+              }}>
+              Mi Compra
+            </Text>
+          </LinearGradient>
         </View>
 
-        <View style={{marginLeft: 7, marginTop: 20}}>
+        <View style={{marginLeft: 7}}>
           {car.map((carItem, index) => (
             <ProductShop
               key={index}
@@ -186,7 +370,15 @@ export const ShopScreen = () => {
             </>
           )}
         </View>
-
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
+            padding: 10,
+          }}>
+          {sliders}
+        </View>
         {car.length > 0 && (
           <>
             <View
@@ -280,7 +472,7 @@ export const ShopScreen = () => {
                   {formatToCurrency(total)}
                 </Text>
               </View>
-              <Factura />
+              <Factura cantPaq={cantPaq} />
               <View
                 style={{
                   flexDirection: 'row',
@@ -376,8 +568,6 @@ const styles = StyleSheet.create({
   titleList: {
     color: 'white',
     fontSize: 40,
-    alignSelf: 'flex-start',
-    left: 70,
   },
   itemContainer: {
     flexDirection: 'row',
