@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Image, FlatList, Dimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {CategoryCard} from '../../components/CategoryCard';
@@ -7,19 +7,57 @@ import {homeStyles} from '../../styles/homeTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
 import {SearchInputBar} from '../../components/SearchInputBar';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import api from '../../api/api';
+import {AuthContext} from '../../context/auth/AuthContext';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width} = Dimensions.get('window');
 export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
+
+  const {user} = useContext(AuthContext);
   const {categoryList, isLoading} = useCategoryPaginated();
   const [openHeader, setOpenHeader] = useState(true);
 
   useEffect(() => {
     if (!isLoading) {
       SplashScreen.hide();
+      PushNotification.configure({
+        onRegister: function (token) {
+          if (token.token) {
+          }
+          console.log('TOKEN:', token);
+          api.put(`/users/update/${user!.id}`, {
+            notificationTokens: token.token,
+          });
+        },
+
+        onNotification: function (notification) {
+          console.log('NOTIFICATION:', notification);
+          notification.finish(PushNotificationIOS.FetchResult.NoData);
+        },
+        onAction: function (notification) {
+          console.log('ACTION:', notification.action);
+          console.log('NOTIFICATION:', notification);
+        },
+        onRegistrationError: function (err) {
+          console.error(err.message, err);
+        },
+
+        permissions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+
+        popInitialNotification: true,
+
+        requestPermissions: true,
+      });
     }
-  }, [isLoading]);
+  }, [isLoading, user]);
 
   return (
     <>
