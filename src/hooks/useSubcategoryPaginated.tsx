@@ -31,6 +31,7 @@ export const useSubcategoryPaginated = (id: string) => {
           fields: {
             url: true,
           },
+          options: {sort: {updatedAt: 1}},
         },
       ],
     };

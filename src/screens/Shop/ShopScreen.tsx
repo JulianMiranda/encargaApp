@@ -24,7 +24,7 @@ import {Factura} from '../../components/Factura';
 import CircularSlider from 'react-native-circular-slider';
 import {G, Path} from 'react-native-svg';
 
-const HEADER_MAX_HEIGHT = 75;
+const HEADER_MAX_HEIGHT = 120;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
 
@@ -109,7 +109,7 @@ export const ShopScreen = () => {
     extrapolate: 'clamp',
   });
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 75],
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 120],
     outputRange: [0, 0, 1000],
     extrapolate: 'clamp',
   });
@@ -322,9 +322,19 @@ export const ShopScreen = () => {
         <View
           style={{
             ...styles.headerContainer,
+            height: 150,
             overflow: 'hidden',
           }}>
-          <LinearGradient
+          <Text
+            style={{
+              ...styles.titleList,
+              color: 'white',
+              alignSelf: 'center',
+              marginTop: 40,
+            }}>
+            Mi Compra
+          </Text>
+          {/* <LinearGradient
             style={{
               flex: 1,
               width: '100%',
@@ -338,7 +348,7 @@ export const ShopScreen = () => {
               }}>
               Mi Compra
             </Text>
-          </LinearGradient>
+          </LinearGradient> */}
         </View>
 
         <View style={{marginLeft: 7}}>
