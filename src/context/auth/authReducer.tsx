@@ -1,17 +1,16 @@
+import {Prices} from '../../interfaces/Prices.interface';
 import {User} from '../../interfaces/User.interface';
-import {CountryCode, Country} from '../../utils/countryTypes';
+import {CountryCode} from '../../utils/countryTypes';
 
 export interface AuthState {
   status: 'checking' | 'authenticated' | 'not-authenticated';
-  utility: 'choose' |'shop' | 'money';
+  utility: 'choose' | 'shop' | 'money';
   user: User | null;
   errorMessage: string;
   wait: boolean;
-  sendPrice: number;
   countryCode: CountryCode;
   countryCallCode: string;
-  mn: number;
-  mlc: number;
+  prices: Prices;
 }
 
 type AuthAction =
@@ -21,7 +20,6 @@ type AuthAction =
   | {type: 'utilityChoose'}
   | {type: 'signUp'; payload: {user: User}}
   | {type: 'addError'; payload: string}
-  | {type: 'setPrice'; payload: number}
   | {type: 'setCountryCode'; payload: CountryCode}
   | {type: 'setCountryCallCode'; payload: string}
   | {type: 'removeError'}
@@ -30,8 +28,7 @@ type AuthAction =
   | {type: 'logout'}
   | {type: 'initCheck'}
   | {type: 'loginB'}
-  | {type: 'setMN'; payload: number}
-  | {type: 'setMLC'; payload: number};
+  | {type: 'setPrices'; payload: Prices};
 
 export const authReducer = (
   state: AuthState,
@@ -53,46 +50,37 @@ export const authReducer = (
         ...state,
         utility: 'money',
       };
-     case 'utilityChoose':
-        return {
-          ...state,
-          utility: 'choose',
-        };
-    case 'setPrice':
+    case 'utilityChoose':
       return {
         ...state,
-        sendPrice: action.payload,
-        };
-    case 'setMN':
-        return {
+        utility: 'choose',
+      };
+
+    case 'setPrices':
+      return {
         ...state,
-        mn: action.payload,
-       };
-    case 'setMLC':
-        return {
-        ...state,
-        mlc: action.payload,
-          };
+        prices: action.payload,
+      };
     case 'setCountryCode':
       return {
         ...state,
         countryCode: action.payload,
       };
     case 'setCountryCallCode':
-        return {
-          ...state,
-          countryCallCode: action.payload,
-        };
+      return {
+        ...state,
+        countryCallCode: action.payload,
+      };
     case 'deleteCode':
-        return {
-          ...state,
-          user: action.payload.user,
-        };
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     case 'setCode':
-         return {
-          ...state,
-          user: action.payload.user,
-          };
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     case 'logout':
     case 'notAuthenticated':
       return {

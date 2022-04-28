@@ -18,7 +18,7 @@ import {ModalComponentMoney} from '../../components/ModalComponentMoney';
 import api from '../../api/api';
 
 export const MoneyScreen = () => {
-  const {mn, mlc, user, countryCode} = useContext(AuthContext);
+  const {prices, user, countryCode} = useContext(AuthContext);
   const {top} = useSafeAreaInsets();
   const {
     setSenderFunction,
@@ -183,10 +183,10 @@ export const MoneyScreen = () => {
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{fontSize: 14, fontWeight: '700'}}>
-              1.00 USD - {formatToCurrency(mn).slice(1)} CUP
+              1.00 USD - {formatToCurrency(prices.mn).slice(1)} CUP
             </Text>
             <Text style={{fontSize: 14, fontWeight: '700'}}>
-              1.00 USD - {formatToCurrency(100 / mlc).slice(1)} MLC
+              1.00 USD - {formatToCurrency(100 / prices.mlc).slice(1)} MLC
             </Text>
           </View>
           <View
@@ -206,7 +206,7 @@ export const MoneyScreen = () => {
             }}>
             <Text style={{fontSize: 16, fontWeight: '400'}}>100 USD</Text>
             <Text style={{fontSize: 16, fontWeight: '400', color: '#0cb415'}}>
-              {mn * 100} CUP
+              {prices.mn * 100} CUP
             </Text>
           </View>
           <View
@@ -215,7 +215,9 @@ export const MoneyScreen = () => {
               justifyContent: 'space-between',
               marginTop: 10,
             }}>
-            <Text style={{fontSize: 16, fontWeight: '400'}}>{mlc} USD</Text>
+            <Text style={{fontSize: 16, fontWeight: '400'}}>
+              {prices.mlc} USD
+            </Text>
             <Text style={{fontSize: 16, fontWeight: '400', color: '#0cb415'}}>
               100 MLC
             </Text>

@@ -11,6 +11,8 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import api from '../../api/api';
 import {AuthContext} from '../../context/auth/AuthContext';
+import {SliderBox} from 'react-native-image-slider-box';
+import {useHome} from '../../hooks/useHome';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width} = Dimensions.get('window');
@@ -18,13 +20,20 @@ export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
 
   const {user} = useContext(AuthContext);
-  const {categoryList, isLoading} = useCategoryPaginated();
+  const {categoryList} = useCategoryPaginated();
+  const {isLoading, imagesPromo} = useHome();
   const [openHeader, setOpenHeader] = useState(true);
+  /* const images = [
+    'https://source.unsplash.com/1024x768/?nature',
+    'https://source.unsplash.com/1024x768/?water',
+    'https://source.unsplash.com/1024x768/?girl',
+    'https://source.unsplash.com/1024x768/?tree',
+  ]; */
 
   useEffect(() => {
     if (!isLoading) {
       SplashScreen.hide();
-      PushNotification.configure({
+      /* PushNotification.configure({
         onRegister: function (token) {
           if (token.token) {
           }
@@ -55,7 +64,7 @@ export const HomeScreen = () => {
         popInitialNotification: true,
 
         requestPermissions: true,
-      });
+      }); */
     }
   }, [isLoading, user]);
 
@@ -122,15 +131,52 @@ export const HomeScreen = () => {
           onContentSizeChange={()=> flat.current .scrollToEnd()} */
           // Header
           ListHeaderComponent={
-            <View
-              style={{
-                ...homeStyles.globalMargin,
-                top: top,
-                marginBottom: top + 60,
-                paddingBottom: 10,
-              }}>
-              {/* <PackubaName /> */}
-            </View>
+            <>
+              {imagesPromo.length > 0 ? (
+                <SliderBox
+                  images={imagesPromo}
+                  sliderBoxHeight={150}
+                  onCurrentImagePressed={(index: any) =>
+                    console.warn(`image ${index} pressed`)
+                  }
+                  dotColor="#fb2331"
+                  imageLoadingColor="#fb2331"
+                  inactiveDotColor="#90A4AE"
+                  paginationBoxVerticalPadding={20}
+                  autoplay
+                  circleLoop
+                  autoplayInterval={10000}
+                  resizeMethod={'resize'}
+                  resizeMode={'cover'}
+                  paginationBoxStyle={{
+                    position: 'absolute',
+                    bottom: 0,
+                    padding: 0,
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    paddingVertical: 10,
+                  }}
+                  dotStyle={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    marginHorizontal: 0,
+                    padding: 0,
+                    margin: 0,
+                    backgroundColor: 'rgba(128, 128, 128, 0.92)',
+                  }}
+                  ImageComponentStyle={{
+                    borderRadius: 15,
+                    width: '97%',
+                    marginTop: 90,
+                    marginBottom: 10,
+                  }}
+                />
+              ) : (
+                <View style={{height: 100}} />
+              )}
+            </>
           }
           renderItem={({item}) => <CategoryCard category={item} />}
           // infinite scroll

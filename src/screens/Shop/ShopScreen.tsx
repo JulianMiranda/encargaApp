@@ -36,7 +36,7 @@ export const ShopScreen = () => {
 
   const {car, message, emptyCar, makeShop, removeAlert} =
     useContext(ShopContext);
-  const {sendPrice} = useContext(AuthContext);
+  const {prices} = useContext(AuthContext);
   const [total, setTotal] = useState(0);
   const [cantPaq, setCantPaq] = useState(1);
   const [weigth, setWeigth] = useState(1);
@@ -411,7 +411,7 @@ export const ShopScreen = () => {
                     fontWeight: '400',
                   }}>
                   *Para su envío, la compra se embalará en paquetes de 1.5 kg
-                  con un costo de ${sendPrice} por paquete.
+                  con un costo de ${prices.oneandhalfkgPrice} por paquete.
                 </Text>
               </View>
               <View
@@ -502,7 +502,7 @@ export const ShopScreen = () => {
                     fontSize: 26,
                     fontWeight: '600',
                   }}>
-                  {formatToCurrency(cantPaq * sendPrice)}
+                  {formatToCurrency(cantPaq * prices.oneandhalfkgPrice)}
                 </Text>
               </View>
               <View
@@ -524,7 +524,7 @@ export const ShopScreen = () => {
                     fontSize: 28,
                     fontWeight: '600',
                   }}>
-                  {formatToCurrency(total + cantPaq * sendPrice)}
+                  {formatToCurrency(total + cantPaq * prices.oneandhalfkgPrice)}
                 </Text>
               </View>
             </View>

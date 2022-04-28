@@ -10,6 +10,7 @@ import {Login} from '../../interfaces/Login.interface';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceCountry from 'react-native-device-country';
+import {Prices, PricesResponse} from '../../interfaces/Prices.interface';
 
 type AuthContextProps = {
   status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -28,11 +29,9 @@ type AuthContextProps = {
   loginB: () => void;
   setShop: () => void;
   setMoney: () => void;
-  sendPrice: number;
+  prices: Prices;
   countryCode: CountryCode;
   countryCallCode: string;
-  mn: number;
-  mlc: number;
 };
 
 const authInicialState: AuthState = {
@@ -41,11 +40,22 @@ const authInicialState: AuthState = {
   wait: false,
   user: null,
   errorMessage: '',
-  sendPrice: 0,
   countryCode: 'CU',
   countryCallCode: '+53',
-  mn: 60,
-  mlc: 130,
+  prices: {
+    mlc: 125,
+    mn: 100,
+    oneandhalfkgPrice: 21,
+    twokgPrice: 25,
+    threekgPrice: 30,
+    fourkgPrice: 37,
+    fivekgPrice: 46,
+    sixkgPrice: 52,
+    sevenkgPrice: 58,
+    eigthkgPrice: 61,
+    ninekgPrice: 70,
+    tenkgPrice: 80,
+  },
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -73,18 +83,10 @@ export const AuthProvider = ({children}: any) => {
   const checkToken = async (isLogin = false) => {
     /*  const headers = await getHeaders(); */
     try {
-      //const sendPrice = await api.get<number>('/orders/getPrice');
+      const prices = await api.get<PricesResponse>('/prices/getPrices');
+      console.log(prices.data.prices);
 
-      const [sendPrice, mn, mlc] = await Promise.all([
-        api.get<number>('/orders/getPrice'),
-        api.get<number>('/orders/getMN'),
-        api.get<number>('/orders/getMLC'),
-      ]);
-      /*  const  sendPrice = await api.get<number>('/orders/getPrice'); */
-
-      dispatch({type: 'setPrice', payload: sendPrice.data});
-      dispatch({type: 'setMN', payload: mn.data});
-      dispatch({type: 'setMLC', payload: mlc.data});
+      dispatch({type: 'setPrices', payload: prices.data.prices});
     } catch (error) {
       console.log('dio err el ip');
     }
