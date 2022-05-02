@@ -29,9 +29,10 @@ export const useHome = () => {
       const promos = await api.post<PromoResponse>('/promotions/getList', body);
       const images = promos.data.data.map((promo: Datum) => promo.image.url);
       setImagesPromo(images);
-      setMostSale(resp.data.data[0]);
-      setMostSaleLastMonth(resp.data.data[1]);
-      setLastSubcategories(resp.data.data[2]);
+
+      setMostSale(resp.data[0]);
+      setMostSaleLastMonth(resp.data[1]);
+      setLastSubcategories(resp.data[2]);
 
       setIsLoading(false);
     } catch (error) {
