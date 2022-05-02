@@ -3,7 +3,7 @@ import {User} from '../../interfaces/User.interface';
 import {CountryCode} from '../../utils/countryTypes';
 
 export interface AuthState {
-  status: 'checking' | 'authenticated' | 'not-authenticated';
+  status: 'checking' | 'authenticated' | 'not-authenticated' | 'not-internet';
   utility: 'choose' | 'shop' | 'money';
   user: User | null;
   errorMessage: string;
@@ -15,6 +15,7 @@ export interface AuthState {
 
 type AuthAction =
   | {type: 'notAuthenticated'}
+  | {type: 'notInternet'}
   | {type: 'utilityShop'}
   | {type: 'utilityMoney'}
   | {type: 'utilityChoose'}
@@ -35,6 +36,12 @@ export const authReducer = (
   action: AuthAction,
 ): AuthState => {
   switch (action.type) {
+    case 'notInternet':
+      return {
+        ...state,
+        status: 'not-internet',
+        wait: false,
+      };
     case 'loginB':
       return {
         ...state,

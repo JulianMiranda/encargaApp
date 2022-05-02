@@ -1,9 +1,8 @@
 import React, {createContext, useEffect, useReducer} from 'react';
 
-import axios from 'axios';
 import api from '../../api/api';
-import {User, LoginData, RegisterData} from '../../interfaces/User.interface';
-import {CountryCode, Country} from '../../utils/countryTypes';
+import {User} from '../../interfaces/User.interface';
+import {CountryCode} from '../../utils/countryTypes';
 
 import {authReducer, AuthState} from './authReducer';
 import {Login} from '../../interfaces/Login.interface';
@@ -13,7 +12,7 @@ import DeviceCountry from 'react-native-device-country';
 import {Prices, PricesResponse} from '../../interfaces/Prices.interface';
 
 type AuthContextProps = {
-  status: 'checking' | 'authenticated' | 'not-authenticated';
+  status: 'checking' | 'authenticated' | 'not-authenticated' | 'not-internet';
   utility: 'choose' | 'shop' | 'money';
   wait: boolean;
   user: User | null;
@@ -29,6 +28,7 @@ type AuthContextProps = {
   loginB: () => void;
   setShop: () => void;
   setMoney: () => void;
+  refreshApp: () => void;
   prices: Prices;
   countryCode: CountryCode;
   countryCallCode: string;
@@ -115,7 +115,12 @@ export const AuthProvider = ({children}: any) => {
         },
       });
     } catch (error) {
-      return dispatch({type: 'notAuthenticated'});
+      console.log(error.message);
+      if (error.message === 'Network Error') {
+        dispatch({type: 'notInternet'});
+      }
+
+      // return dispatch({type: 'notAuthenticated'});
     }
   };
 
@@ -208,6 +213,10 @@ export const AuthProvider = ({children}: any) => {
     dispatch({type: 'utilityShop'});
   };
 
+  const refreshApp = () => {
+    checkToken();
+  };
+
   const setMoney = () => {
     dispatch({type: 'utilityMoney'});
   };
@@ -226,6 +235,7 @@ export const AuthProvider = ({children}: any) => {
         setCode,
         setShop,
         setMoney,
+        refreshApp,
       }}>
       {children}
     </AuthContext.Provider>
