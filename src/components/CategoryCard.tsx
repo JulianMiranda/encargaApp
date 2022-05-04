@@ -1,6 +1,12 @@
 import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/core';
-import {Text, View, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 
 import {ThemeContext} from '../context/theme/ThemeContext';
 
@@ -43,9 +49,9 @@ export const CategoryCard = ({category}: Props) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginHorizontal: 20,
-    height: width*0.38,
-    width: width*0.38,
+    marginHorizontal: 10,
+    height: width * 0.38,
+    width: width * 0.38,
     marginBottom: 60,
     borderRadius: 10,
     shadowColor: '#000',
@@ -64,8 +70,8 @@ const styles = StyleSheet.create({
     left: 10,
   },
   productImage: {
-    height: width*0.38,
-    width: width*0.38,
+    height: width * 0.38,
+    width: width * 0.38,
     borderRadius: 10,
   },
 });

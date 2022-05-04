@@ -44,7 +44,12 @@ export const SubcategoryCard = ({item}: Props) => {
           /* backgroundColor: 'red' */
         }}>
         <FadeInImage uri={images[0].url} style={styles.productImage} />
-        <Text style={{...styles.name}}>{name}</Text>
+        <View style={{...styles.textContainer}}>
+          <Text style={{...styles.name}} numberOfLines={1}>
+            {name}
+          </Text>
+          <Text style={{...styles.price}}>{formatToCurrency(price)}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -53,8 +58,8 @@ export const SubcategoryCard = ({item}: Props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 5,
-    height: width * 0.31,
-    width: width * 0.31,
+    height: width * 0.35,
+    width: width * 0.47,
     marginBottom: 60,
     borderRadius: 10,
     shadowColor: '#000',
@@ -67,16 +72,28 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   name: {
-    fontSize: 18,
+    fontSize: 16,
     top: 4,
     left: 10,
     color: 'black',
     fontWeight: '500',
+    maxWidth: '75%',
+  },
+  price: {
+    fontSize: 12,
+    top: 8,
+    right: 3,
+    color: 'black',
+    fontWeight: '500',
   },
   productImage: {
-    height: width * 0.31,
-    width: width * 0.31,
+    height: width * 0.35,
+    width: width * 0.47,
     borderRadius: 10,
   },
 });

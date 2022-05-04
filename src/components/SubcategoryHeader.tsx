@@ -149,7 +149,7 @@ export const SubcategoryHeader = ({id, name, image}: Props) => {
         }
         keyExtractor={(subcategory, index) => index.toString()}
         showsVerticalScrollIndicator={false}
-        numColumns={3}
+        numColumns={2}
         renderItem={({item}) => <SubcategoryCard item={item} />}
         onEndReached={loadSubcategories}
         onEndReachedThreshold={0.4}

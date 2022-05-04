@@ -12,18 +12,18 @@ import {loginStyles} from '../../styles/loginTheme';
 import CountryPicker from 'react-native-country-picker-modal';
 
 import {CountryCode, Country} from '../../utils/countryTypes';
-import { AuthContext } from '../../context/auth/AuthContext';
+import {AuthContext} from '../../context/auth/AuthContext';
 
 export default function PhoneNumber(props: any) {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-  const {countryCode, countryCallCode, setCountryCode} = useContext(AuthContext);
+  const {countryCode, countryCallCode, setCountryCode} =
+    useContext(AuthContext);
   const inputRef = useRef<any>();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  
+
   const onChangePhone = (number: string) => {
     if (inputRef.current.isValidNumber()) {
       inputRef.current.blur();
@@ -71,7 +71,9 @@ export default function PhoneNumber(props: any) {
               initialCountry={countryCode.toLocaleLowerCase()}
               textProps={{
                 placeholder: '0962914922',
+                autoFocus: true,
               }}
+              autoFormat
               flagStyle={loginStyles.flagStyle}
               textStyle={loginStyles.flagInputText}
               style={{height: 45}}
@@ -94,7 +96,14 @@ export default function PhoneNumber(props: any) {
             alignSelf: 'center',
             marginTop: 30,
           }}
-          onPress={phoneNumber ? () => {setLoading(true);props.onSubmit(phoneNumber)} : () => {}}>
+          onPress={
+            phoneNumber
+              ? () => {
+                  setLoading(true);
+                  props.onSubmit(phoneNumber);
+                }
+              : () => {}
+          }>
           <Text style={loginStyles.textButton}>Continuar</Text>
         </TouchableOpacity>
       )}

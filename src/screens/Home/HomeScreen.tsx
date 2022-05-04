@@ -88,7 +88,6 @@ export const HomeScreen = () => {
 
       <View
         style={{
-          ...homeStyles.globalMargin,
           position: 'absolute',
           zIndex: 9999999,
           width: width,
@@ -113,45 +112,29 @@ export const HomeScreen = () => {
         <AutoSlider imagesPromo={imagesPromo} />
 
         <View style={{marginTop: 10, padding: 10}}>
-          <Text style={{marginLeft: 5, fontSize: 24, fontWeight: 'bold'}}>
-            Categorías
-          </Text>
+          <Text style={homeStyles.carouselTitles}>Categorías</Text>
           <CategoryCarousel data={categoryList} />
         </View>
 
         <View style={{marginTop: 10}}>
-          <Text style={{marginLeft: 5, fontSize: 24, fontWeight: 'bold'}}>
-            Lo más vendido
-          </Text>
+          <Text style={homeStyles.carouselTitles}>Lo más vendido</Text>
           <CarouselComponent data={mostSale} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={{marginLeft: 5, fontSize: 24, fontWeight: 'bold'}}>
+          <Text style={homeStyles.carouselTitles}>
             Lo más vendido el último mes
           </Text>
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={{marginLeft: 5, fontSize: 24, fontWeight: 'bold'}}>
-            Lo más reciente
-          </Text>
+          <Text style={homeStyles.carouselTitles}>Lo más reciente</Text>
           <SubcategoryCarousel data={lastSubcategories} />
         </View>
 
         <View style={{height: 100}} />
       </ScrollView>
       {isLoading && (
-        <View
-          style={{
-            flex: 1,
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            zIndex: 9999999999,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#fafafa',
-          }}>
+        <View style={homeStyles.loading}>
           <ActivityIndicator color={'red'} size={26} />
         </View>
       )}
