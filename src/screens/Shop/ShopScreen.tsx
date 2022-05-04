@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   Animated,
+  Image,
 } from 'react-native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {ModalComponent} from '../../components/ModalComponent';
@@ -70,10 +71,74 @@ export const ShopScreen = () => {
   });
 
   const sliders = [];
-  for (let i = 0; i < cantPaq; i++) {
+  for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
     sliders.push(
-      <CircularSliderComponent i={i} cantPaq={cantPaq} weigth={weigth} />,
+      <CircularSliderComponent
+        i={i}
+        cantPaq={cantPaqOS.oneandhalfkgPrice}
+        weigth={weigth}
+      />,
     );
+  }
+  /* for (let i = 0; i < totalPaqReCalc - cantPaqOS.oneandhalfkgPrice; i++) {
+    sliders.push(
+      <View
+        style={{
+          margin: 15,
+        }}>
+        <Image
+          source={require('../../assets/box.jpg')}
+          style={{height: 60, width: 60}}
+        />
+      </View>,
+    );
+  } */
+  for (const paq in cantPaqOS) {
+    if (paq !== 'oneandhalfkgPrice') {
+      let kg = 2;
+      if (paq === 'twoandhalfkgPrice') {
+        kg = 2;
+      } else if (paq === 'threekgPrice') {
+        kg = 3;
+      } else if (paq === 'fourkgPrice') {
+        kg = 4;
+      } else if (paq === 'fivekgPrice') {
+        kg = 5;
+      } else if (paq === 'sixkgPrice') {
+        kg = 6;
+      } else if (paq === 'sevenkgPrice') {
+        kg = 7;
+      } else if (paq === 'eightkgPrice') {
+        kg = 8;
+      } else if (paq === 'ninekgPrice') {
+        kg = 9;
+      } else {
+        kg = 10;
+      }
+
+      for (let i = 0; i < cantPaqOS[paq]; i++) {
+        sliders.push(
+          <View
+            style={{
+              margin: 15,
+            }}>
+            <Text
+              style={{
+                position: 'absolute',
+                top: 30,
+                alignSelf: 'center',
+                zIndex: 1000,
+              }}>
+              {kg} Kg
+            </Text>
+            <Image
+              source={require('../../assets/box.jpg')}
+              style={{height: 60, width: 60}}
+            />
+          </View>,
+        );
+      }
+    }
   }
 
   return (
@@ -153,6 +218,7 @@ export const ShopScreen = () => {
           }}>
           {sliders}
         </View>
+
         {car.length > 0 && (
           <DetailsShop
             cantPaqOS={cantPaqOS}
