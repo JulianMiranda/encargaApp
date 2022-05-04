@@ -21,14 +21,14 @@ export interface Category {
 }
 
 export interface CantPaq {
-  oneandhalf: number;
-  twoKg: number;
-  threeKg: number;
-  fourKg: number;
-  fiveKg: number;
-  sixKg: number;
-  sevenKg: number;
-  eightKg: number;
-  nineKg: number;
-  tenKg: number;
+  oneandhalfkgPrice: number;
+  twokgPrice: number;
+  threekgPrice: number;
+  fourkgPrice: number;
+  fivekgPrice: number;
+  sixkgPrice: number;
+  sevenkgPrice: number;
+  eigthkgPrice: number;
+  ninekgPrice: number;
+  tenkgPrice: number;
 }

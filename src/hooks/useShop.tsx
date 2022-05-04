@@ -7,19 +7,20 @@ export const useShop = () => {
   const {car, emptyCar, makeShop} = useContext(ShopContext);
   const {prices} = useContext(AuthContext);
   const [total, setTotal] = useState(0);
-  let totalReCalc = 0;
-  const [cantPaq, setCantPaq1] = useState(1);
+  let totalPaqReCalc = 0;
+  let totalMoneyReCalc = 0;
+  let totalProductMoney = 0;
   const [cantPaqOS, setCantPaqOS] = useState({
-    oneandhalf: 0,
-    twoKg: 0,
-    threeKg: 0,
-    fourKg: 0,
-    fiveKg: 0,
-    sixKg: 0,
-    sevenKg: 0,
-    eightKg: 0,
-    nineKg: 0,
-    tenKg: 0,
+    oneandhalfkgPrice: 0,
+    twokgPrice: 0,
+    threekgPrice: 0,
+    fourkgPrice: 0,
+    fivekgPrice: 0,
+    sixkgPrice: 0,
+    sevenkgPrice: 0,
+    eigthkgPrice: 0,
+    ninekgPrice: 0,
+    tenkgPrice: 0,
   });
 
   const [weigth, setWeigth] = useState(1);
@@ -77,55 +78,54 @@ export const useShop = () => {
     let totalCalc = 0;
     let totalWeight = 1;
     let kilos = {
-      oneandhalf: 0,
-      twoKg: 0,
-      threeKg: 0,
-      fourKg: 0,
-      fiveKg: 0,
-      sixKg: 0,
-      sevenKg: 0,
-      eightKg: 0,
-      nineKg: 0,
-      tenKg: 0,
+      oneandhalfkgPrice: 0,
+      twokgPrice: 0,
+      threekgPrice: 0,
+      fourkgPrice: 0,
+      fivekgPrice: 0,
+      sixkgPrice: 0,
+      sevenkgPrice: 0,
+      eigthkgPrice: 0,
+      ninekgPrice: 0,
+      tenkgPrice: 0,
     };
     car.forEach(function (item) {
+      if (totalPaqReCalc < 5) {
+        const valor = item.cantidad * item.subcategory.price;
+        totalCalc += valor;
+      } else {
+        const valor = item.cantidad * item.subcategory.priceGalore;
+        totalCalc += valor;
+      }
       if (item.subcategory.weight < 1440) {
-        console.log('menor 1.5');
-        if (cantPaq < 5) {
-          const valor = item.cantidad * item.subcategory.price;
-          totalCalc += valor;
-        } else {
-          const valor = item.cantidad * item.subcategory.priceGalore;
-          totalCalc += valor;
-        }
         totalWeight += item.cantidad * item.subcategory.weight;
       } else {
         if (item.subcategory.weight > 1440 && item.subcategory.weight < 2000) {
-          kilos.twoKg = kilos.twoKg + item.cantidad;
+          kilos.twokgPrice = kilos.twokgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 1999 && item.subcategory.weight < 3000) {
-          kilos.threeKg = kilos.threeKg + item.cantidad;
+          kilos.threekgPrice = kilos.threekgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 2999 && item.subcategory.weight < 4000) {
-          kilos.fourKg = kilos.fourKg + item.cantidad;
+          kilos.fourkgPrice = kilos.fourkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 3999 && item.subcategory.weight < 5000) {
-          kilos.fiveKg = kilos.fiveKg + item.cantidad;
+          kilos.fivekgPrice = kilos.fivekgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 4999 && item.subcategory.weight < 6000) {
-          kilos.sixKg = kilos.sixKg + item.cantidad;
+          kilos.sixkgPrice = kilos.sixkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 5999 && item.subcategory.weight < 7000) {
-          kilos.sevenKg = kilos.sevenKg + item.cantidad;
+          kilos.sevenkgPrice = kilos.sevenkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 6999 && item.subcategory.weight < 8000) {
-          kilos.eightKg = kilos.eightKg + item.cantidad;
+          kilos.eigthkgPrice = kilos.eigthkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 7999 && item.subcategory.weight < 9000) {
-          kilos.nineKg = kilos.nineKg + item.cantidad;
+          kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 8999) {
-          kilos.tenKg = kilos.tenKg + item.cantidad;
+          kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
         }
       }
     });
@@ -136,33 +136,32 @@ export const useShop = () => {
     if (totalWeight > 0) {
       const cant = totalWeight / 1440;
       if (totalWeight < 1400) {
-        kilos.oneandhalf = 1;
-        setCantPaq1(1);
+        kilos.oneandhalfkgPrice = 1;
       } else if (cant < 2) {
-        kilos.oneandhalf = 2;
-        setCantPaq1(2);
+        kilos.oneandhalfkgPrice = 2;
       } else {
-        kilos.oneandhalf = Math.ceil(cant);
-        setCantPaq1(Math.ceil(cant));
+        kilos.oneandhalfkgPrice = Math.ceil(cant);
       }
     }
     setCantPaqOS(kilos);
-  }, [cantPaq, car, weigth]);
+  }, [totalPaqReCalc, car, weigth]);
 
   for (const property in cantPaqOS) {
-    totalReCalc = totalReCalc + cantPaqOS[property];
+    totalPaqReCalc = totalPaqReCalc + cantPaqOS[property];
+    totalMoneyReCalc =
+      totalMoneyReCalc + prices[property] * cantPaqOS[property];
   }
-
-  console.log('totalReCalc', totalReCalc);
+  totalProductMoney = total;
   return {
     isLoading,
     cantPaqOS,
     total,
-    cantPaq,
     weigth,
     openModal,
     title,
-    totalReCalc,
+    totalPaqReCalc,
+    totalMoneyReCalc,
+    totalProductMoney,
     body,
     handleOpt,
     description,

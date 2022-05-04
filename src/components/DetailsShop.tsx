@@ -7,17 +7,17 @@ import {Factura} from './Factura';
 
 interface Props {
   total: number;
-  cantPaq: number;
-  totalReCalc: number;
+  totalPaqReCalc: number;
+  totalMoneyReCalc: number;
   prices: Prices;
   cantPaqOS: CantPaq;
 }
 export const DetailsShop = ({
-  cantPaq,
   total,
   prices,
   cantPaqOS,
-  totalReCalc,
+  totalPaqReCalc,
+  totalMoneyReCalc,
 }: Props) => {
   return (
     <View style={styles.container}>
@@ -30,67 +30,67 @@ export const DetailsShop = ({
       <View style={styles.secContainer}>
         <Text style={styles.txtPaq}>
           Cantidad aproximada de paquetes:{'  '}
-          <Text style={styles.txtPaq}> {totalReCalc}</Text>
+          <Text style={styles.txtPaq}> {totalPaqReCalc}</Text>
         </Text>
       </View>
-      {cantPaqOS.oneandhalf !== 0 && (
+      {cantPaqOS.oneandhalfkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>1.5 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.oneandhalf}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.oneandhalfkgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.twoKg !== 0 && (
+      {cantPaqOS.twokgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>2 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.twoKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.twokgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.threeKg !== 0 && (
+      {cantPaqOS.threekgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>3 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.threeKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.threekgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.fourKg !== 0 && (
+      {cantPaqOS.fourkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>4 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.fourKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.fourkgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.fiveKg !== 0 && (
+      {cantPaqOS.fivekgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>5 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.fiveKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.fivekgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.sixKg !== 0 && (
+      {cantPaqOS.sixkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>6 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.sixKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.sixkgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.sevenKg !== 0 && (
+      {cantPaqOS.sevenkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>7 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.sevenKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.sevenkgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.eightKg !== 0 && (
+      {cantPaqOS.eigthkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>8 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.eightKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.eigthkgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.nineKg !== 0 && (
+      {cantPaqOS.ninekgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>9 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.nineKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.ninekgPrice}</Text>
         </View>
       )}
-      {cantPaqOS.tenKg !== 0 && (
+      {cantPaqOS.tenkgPrice !== 0 && (
         <View style={styles.boxCant}>
           <Text style={styles.txtPaq}>10 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.tenKg}</Text>
+          <Text style={styles.txtPaq}>{cantPaqOS.tenkgPrice}</Text>
         </View>
       )}
 
@@ -108,17 +108,17 @@ export const DetailsShop = ({
         <Text style={styles.priceProd}>Precio productos:</Text>
         <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
       </View>
-      <Factura cantPaq={cantPaq} />
+      <Factura totalPaqReCalc={totalPaqReCalc} />
       <View style={styles.sendPrice}>
         <Text style={styles.sendPriceTxt}>Precio envío:</Text>
         <Text style={styles.sendPriceTxtCalc}>
-          {formatToCurrency(cantPaq * prices.oneandhalfkgPrice)}
+          {formatToCurrency(totalMoneyReCalc)}
         </Text>
       </View>
       <View style={styles.total}>
         <Text style={styles.totalTitle}>Total:</Text>
         <Text style={styles.totalTxt}>
-          {formatToCurrency(total + cantPaq * prices.oneandhalfkgPrice)}
+          {formatToCurrency(total + totalMoneyReCalc)}
         </Text>
       </View>
     </View>

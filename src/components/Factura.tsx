@@ -4,9 +4,9 @@ import {Text, View} from 'react-native';
 import {ShopContext} from '../context/shop/ShopContext';
 import {formatToCurrency} from '../utils/formatToCurrency';
 interface Props {
-  cantPaq: number;
+  totalPaqReCalc: number;
 }
-export const Factura = ({cantPaq}: Props) => {
+export const Factura = ({totalPaqReCalc}: Props) => {
   const {car} = useContext(ShopContext);
   return (
     <>
@@ -18,7 +18,7 @@ export const Factura = ({cantPaq}: Props) => {
             justifyContent: 'space-around',
           }}>
           <Text style={{flex: 1, fontWeight: 'bold'}}>Cant</Text>
-          <Text style={{flex: 6, marginLeft: 5, fontWeight: 'bold'}}>
+          <Text style={{flex: 5, marginLeft: 5, fontWeight: 'bold'}}>
             Producto
           </Text>
           <Text style={{flex: 2, fontWeight: 'bold'}}>Precio</Text>
@@ -38,28 +38,28 @@ export const Factura = ({cantPaq}: Props) => {
         {car.map(({cantidad, subcategory}, index) => (
           <View
             key={index}
-            style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}>
             <Text style={{flex: 1, marginLeft: 5}}>{cantidad}</Text>
-            <Text style={{flex: 6}}>{subcategory.name}</Text>
+            <Text style={{flex: 5, marginRight: 3}}>{subcategory.name}</Text>
             <Text style={{flex: 2}}>
-              {cantPaq < 5
+              {totalPaqReCalc < 5
                 ? formatToCurrency(subcategory.price)
                 : formatToCurrency(subcategory.priceGalore)}
             </Text>
-            <View
+
+            <Text
               style={{
                 flex: 2,
                 alignItems: 'center',
               }}>
-              <Text
-                style={{
-                  flex: 2,
-                }}>
-                {cantPaq < 5
-                  ? formatToCurrency(subcategory.price * cantidad)
-                  : formatToCurrency(subcategory.priceGalore * cantidad)}
-              </Text>
-            </View>
+              {totalPaqReCalc < 5
+                ? formatToCurrency(subcategory.price * cantidad)
+                : formatToCurrency(subcategory.priceGalore * cantidad)}
+            </Text>
           </View>
         ))}
       </View>

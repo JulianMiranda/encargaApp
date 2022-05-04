@@ -31,8 +31,8 @@ export const ShopScreen = () => {
   const {
     isLoading,
     total,
-    totalReCalc,
-    cantPaq,
+    totalPaqReCalc,
+    totalMoneyReCalc,
     cantPaqOS,
     weigth,
     openModal,
@@ -155,11 +155,11 @@ export const ShopScreen = () => {
         </View>
         {car.length > 0 && (
           <DetailsShop
-            cantPaq={cantPaq}
             cantPaqOS={cantPaqOS}
             prices={prices}
             total={total}
-            totalReCalc={totalReCalc}
+            totalPaqReCalc={totalPaqReCalc}
+            totalMoneyReCalc={totalMoneyReCalc}
           />
         )}
       </ScrollView>
