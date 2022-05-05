@@ -19,7 +19,7 @@ export const MainScreen = () => {
         colors={colorsBG}
         text={`Elija un servicio`}
         backButton={false}
-        height={210}
+        height={170}
       />
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <TouchableOpacity activeOpacity={0.8} onPress={() => setMoney()}>

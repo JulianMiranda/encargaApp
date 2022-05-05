@@ -38,11 +38,9 @@ export default function Name(props: any) {
         <TouchableOpacity
           activeOpacity={name.trim().length > 2 ? 0.8 : 1}
           style={{
-
-
             padding: 1,
             paddingHorizontal: 10,
-            borderRadius: 6,
+            borderRadius: 50,
             marginTop: 30,
             backgroundColor: name.trim().length > 2 ? '#b80204' : '#f1b2b3',
             alignSelf: 'center',

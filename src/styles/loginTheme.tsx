@@ -50,9 +50,18 @@ export const loginStyles = StyleSheet.create({
     backgroundColor: '#f1f1f1' /* 
     borderBottomColor: 'rgba(0,0,0,0.92)',
     borderBottomWidth: 2, */,
-    borderRadius: 10,
+    borderRadius: 50,
     height: 40,
     marginRight: 50,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   flagStyle: {
     width: 1,
