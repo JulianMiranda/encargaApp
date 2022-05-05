@@ -3,21 +3,21 @@ import {StyleSheet} from 'react-native';
 export const loginStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    margin: 10,
-    marginTop: 50,
+    marginTop: 30,
     marginVertical: 15,
   },
   title: {
     color: 'black',
-    marginTop: 60,
-    marginBottom: 60,
-    fontSize: 28,
-    marginRight: 10 /* 
-    textAlign: 'justify', */,
+    alignSelf: 'center',
+    marginTop: 80,
+    fontSize: 26,
+    marginRight: 10,
+    marginLeft: 15,
+    marginBottom: 20,
   },
   text: {
     color: 'black',
-    marginTop: 100,
+    marginTop: 30,
     margin: 30,
     fontSize: 16,
   },
@@ -47,9 +47,7 @@ export const loginStyles = StyleSheet.create({
   flagInputText: {
     color: 'black',
     fontSize: 22,
-    backgroundColor: '#f1f1f1' /* 
-    borderBottomColor: 'rgba(0,0,0,0.92)',
-    borderBottomWidth: 2, */,
+    backgroundColor: '#f1f1f1',
     borderRadius: 50,
     height: 40,
     marginRight: 50,
@@ -60,7 +58,6 @@ export const loginStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   flagStyle: {
@@ -70,15 +67,22 @@ export const loginStyles = StyleSheet.create({
   },
   backButton: {position: 'absolute', zIndex: 999999999, left: 20},
   inputName: {
-    /* 
-    borderBottomColor: 'black',
-    borderBottomWidth: 2, */
-    borderRadius: 10,
+    width: '85%',
+    alignSelf: 'center',
+    borderRadius: 50,
     marginHorizontal: 10,
     marginBottom: 20,
     backgroundColor: '#f1f1f1',
     height: 50,
     fontSize: 22,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   button: {
     marginTop: 20,
@@ -88,10 +92,9 @@ export const loginStyles = StyleSheet.create({
     borderRadius: 6,
   },
   textButton: {
-    textAlign: 'center',
-    margin: 7,
-    fontSize: 18,
+    alignSelf: 'center',
     color: 'white',
-    marginHorizontal: 20,
+    fontSize: 20,
+    marginHorizontal: 15,
   },
 });

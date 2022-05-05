@@ -36,12 +36,17 @@ export const CategoryCard = ({category}: Props) => {
       <View
         style={{
           ...styles.cardContainer,
+
           /* justifyContent: 'flex-end', */
           /* width: windowWidth * 0.6, */
           /* backgroundColor: 'red' */
         }}>
-        <FadeInImage uri={category.image.url} style={styles.productImage} />
-        <Text style={{...styles.name, color: '#3f3e3d'}}>{category.name}</Text>
+        <View style={{backgroundColor: '#f1f1f1', borderRadius: 10}}>
+          <FadeInImage uri={category.image.url} style={styles.productImage} />
+          <Text style={{...styles.name, color: 'black', marginBottom: 10}}>
+            {category.name}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -50,8 +55,8 @@ export const CategoryCard = ({category}: Props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 10,
-    height: width * 0.38,
-    width: width * 0.38,
+    height: width * 0.7,
+    width: width * 0.7,
     marginBottom: 60,
     borderRadius: 10,
     shadowColor: '#000',
@@ -70,8 +75,10 @@ const styles = StyleSheet.create({
     left: 10,
   },
   productImage: {
-    height: width * 0.38,
-    width: width * 0.38,
-    borderRadius: 10,
+    height: width * 0.7,
+    width: width * 0.7,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    resizeMode: 'cover',
   },
 });

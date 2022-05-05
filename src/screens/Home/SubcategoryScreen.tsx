@@ -98,7 +98,7 @@ export const SubcategoryScreen = (props: Props) => {
         />
         {days < 24 && (
           <Image
-            source={require('../../assets/nuevo.png')}
+            source={require('../../assets/nuevo_producto3.png')}
             style={styles.newImageProduct}
           />
         )}

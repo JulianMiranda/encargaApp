@@ -49,6 +49,7 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
 const styles = StyleSheet.create({
   buttonRow: {flexDirection: 'row', marginRight: 5},
   leftContainer: {
+    backgroundColor: '#f1f1f1',
     borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
   },
   number: {fontSize: 16, fontWeight: '600'},
   addContainer: {
+    backgroundColor: '#f1f1f1',
     borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,

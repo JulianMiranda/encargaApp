@@ -71,7 +71,7 @@ export const ShopScreen = () => {
   });
 
   const sliders = [];
-  for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
+  /* for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
     sliders.push(
       <CircularSliderComponent
         i={i}
@@ -79,20 +79,8 @@ export const ShopScreen = () => {
         weigth={weigth}
       />,
     );
-  }
-  /* for (let i = 0; i < totalPaqReCalc - cantPaqOS.oneandhalfkgPrice; i++) {
-    sliders.push(
-      <View
-        style={{
-          margin: 15,
-        }}>
-        <Image
-          source={require('../../assets/box.jpg')}
-          style={{height: 60, width: 60}}
-        />
-      </View>,
-    );
   } */
+
   for (const paq in cantPaqOS) {
     if (paq !== 'oneandhalfkgPrice') {
       let kg = 2;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import {SubcategoryCard} from './SubcategoryCard';
+import {SubcategoryCardHome} from './SubcategoryCardHome';
 interface Props {
   data: any[];
 }
@@ -12,7 +12,7 @@ export const CarouselComponent = ({data}: Props) => {
         keyExtractor={(category, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         horizontal
-        renderItem={({item}) => <SubcategoryCard item={item._id} />}
+        renderItem={({item}) => <SubcategoryCardHome item={item._id} />}
       />
     </>
   );

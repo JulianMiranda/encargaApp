@@ -136,7 +136,13 @@ export const TandC = () => {
       <Text style={{...styles.text, fontSize: 20, textAlign: 'right'}}>
         Agradecemos su confianza
       </Text>
-      <Text style={{...styles.text, fontSize: 20, textAlign: 'right'}}>
+      <Text
+        style={{
+          ...styles.text,
+          fontSize: 20,
+          textAlign: 'right',
+          marginBottom: 70,
+        }}>
         Gracias por preferir enCarga
       </Text>
     </ScrollView>

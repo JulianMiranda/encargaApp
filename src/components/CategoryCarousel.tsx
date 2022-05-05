@@ -11,33 +11,6 @@ interface Props {
   data: Category[];
 }
 export const CategoryCarousel = ({data}: Props) => {
-  const renderItem = (item: Category) => {
-    return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderRadius: 5,
-        }}>
-        <FadeInImage
-          uri={item.image.url}
-          style={{
-            width: '100%',
-            height: 150,
-            resizeMode: 'cover',
-            borderRadius: 5,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 18,
-            marginBottom: 5,
-            alignSelf: 'center',
-          }}>
-          {item.name}
-        </Text>
-      </View>
-    );
-  };
   return (
     <>
       <FlatList
@@ -47,14 +20,6 @@ export const CategoryCarousel = ({data}: Props) => {
         horizontal
         renderItem={({item}) => <CategoryCard category={item} />}
       />
-      {/* <Carousel
-      data={data}
-      firstItem={1}
-      layout={'default'}
-      renderItem={({item}) => renderItem(item)}
-      sliderWidth={viewportWidth}
-      itemWidth={viewportWidth * 0.6}
-    /> */}
     </>
   );
 };

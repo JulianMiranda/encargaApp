@@ -12,13 +12,13 @@ export const AutoSlider = ({imagesPromo}: Props) => {
       onCurrentImagePressed={(index: any) =>
         console.warn(`image ${index} pressed`)
       }
-      dotColor="#fb2331"
+      dotColor="white"
       imageLoadingColor="#fb2331"
-      inactiveDotColor="#90A4AE"
+      inactiveDotColor="#f1f1f1"
       paginationBoxVerticalPadding={20}
       autoplay
       circleLoop
-      autoplayInterval={10000}
+      autoplayInterval={7000}
       resizeMethod={'resize'}
       resizeMode={'cover'}
       paginationBoxStyle={styles.paginationBox}
@@ -47,8 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(128, 128, 128, 0.92)',
   },
   image: {
-    borderRadius: 8,
-    width: '97%',
+    width: '100%',
     marginTop: 90,
     marginBottom: 10,
   },

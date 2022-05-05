@@ -42,8 +42,8 @@ export const Slider = ({images, setIsVisible, setImageIndex}: Props) => {
     <AppIntroSlider
       showPrevButton={false}
       showNextButton={false}
-      activeDotStyle={{backgroundColor: 'black'}}
-      dotStyle={{backgroundColor: '#E5E5E5'}}
+      activeDotStyle={{backgroundColor: 'white'}}
+      dotStyle={{backgroundColor: '#f1f1f1'}}
       renderItem={_renderItem}
       data={slides}
       onDone={undefined}

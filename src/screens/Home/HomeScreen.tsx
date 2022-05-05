@@ -81,10 +81,6 @@ export const HomeScreen = () => {
   return (
     <>
       <SearchInputBar setOpenHeader={setOpenHeader} />
-      <Image
-        source={require('../../assets/bandera.jpg')}
-        style={homeStyles.imageBG}
-      />
 
       <View
         style={{
@@ -111,23 +107,21 @@ export const HomeScreen = () => {
       <ScrollView>
         <AutoSlider imagesPromo={imagesPromo} />
 
-        <View style={{marginTop: 10, padding: 10}}>
+        <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Categorías</Text>
           <CategoryCarousel data={categoryList} />
         </View>
 
-        <View style={{marginTop: 10}}>
+        {/* <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Lo más vendido</Text>
           <CarouselComponent data={mostSale} />
-        </View>
+        </View> */}
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>
-            Lo más vendido el último mes
-          </Text>
+          <Text style={homeStyles.carouselTitles}>Top Ventas 🔥</Text>
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>Lo más reciente</Text>
+          <Text style={homeStyles.carouselTitles}>Lo último ⚡</Text>
           <SubcategoryCarousel data={lastSubcategories} />
         </View>
 

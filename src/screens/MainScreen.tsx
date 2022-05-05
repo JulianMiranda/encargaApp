@@ -5,9 +5,13 @@ import SplashScreen from 'react-native-splash-screen';
 import {ChooseCard} from '../components/ChooseCard';
 import {ChooseCard2} from '../components/ChooseCard2';
 import {TopScreen} from '../components/TopScreen';
+import {ThemeContext} from '../context/theme/ThemeContext';
 
 export const MainScreen = () => {
   const {setMoney, setShop} = useContext(AuthContext);
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   const colorsBG = ['#2684FD', '#bae6f7'];
   useEffect(() => {
     SplashScreen.hide();
@@ -17,11 +21,16 @@ export const MainScreen = () => {
     <>
       <TopScreen
         colors={colorsBG}
-        text={`Elija un servicio`}
+        text={'Elija un servicio'}
         backButton={false}
         height={170}
       />
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        }}>
         <TouchableOpacity activeOpacity={0.8} onPress={() => setMoney()}>
           <ChooseCard2 />
         </TouchableOpacity>
@@ -30,10 +39,20 @@ export const MainScreen = () => {
           <ChooseCard />
         </TouchableOpacity>
       </View>
-      <Image
-        source={require('../assets/encarga4.png')}
-        style={{height: 50, width: 80, alignSelf: 'center', marginTop: -50}}
-      />
+
+      <View
+        style={{
+          height: 90,
+          width: '100%',
+          backgroundColor: 'lightskyblue',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image
+          source={require('../assets/encarga4.png')}
+          style={{height: 50, width: 80, alignSelf: 'center'}}
+        />
+      </View>
     </>
   );
 };

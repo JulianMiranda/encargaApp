@@ -22,14 +22,14 @@ interface PropsNavigation
   extends StackNavigationProp<RootStackParams, 'SubcategoryScreen'> {}
 
 const {width} = Dimensions.get('window');
-export const SubcategoryCard = ({item}: Props) => {
+export const SubcategoryCardHome = ({item}: Props) => {
   const {priceGalore, images, name} = item;
 
   const navigation = useNavigation<PropsNavigation>();
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      style={{marginBottom: 40}}
+      style={{marginBottom: 40, marginLeft: 5}}
       onPress={() => {
         console.log('subcat');
 
@@ -60,8 +60,8 @@ export const SubcategoryCard = ({item}: Props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 5,
-    height: width * 0.47,
-    width: width * 0.47,
+    height: width * 0.37,
+    width: width * 0.37,
     marginBottom: 60,
     borderRadius: 10,
     shadowColor: '#000',
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   productImage: {
-    height: width * 0.47,
-    width: width * 0.47,
+    height: width * 0.37,
+    width: width * 0.37,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
   },
