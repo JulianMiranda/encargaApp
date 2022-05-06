@@ -1,21 +1,39 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 interface Props {
   aviableSizes: string[];
+  sizeSelected: any;
+  setSizeSelected: any;
 }
-export const AviableSizesSubcategory = ({aviableSizes}: Props) => {
+export const AviableSizesSubcategory = ({
+  aviableSizes,
+  sizeSelected,
+  setSizeSelected,
+}: Props) => {
+  useEffect(() => {
+    if (aviableSizes && aviableSizes.length > 0) {
+      setSizeSelected(aviableSizes[0]);
+    }
+  }, []);
   if (!aviableSizes || aviableSizes.length === 0) {
     return null;
   }
+
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>Tallas Disponibles:</Text>
+        <Text style={styles.title}>Tallas</Text>
         <View style={styles.wrapContainer}>
           {aviableSizes.map((item, index) => (
-            <View key={index} style={styles.textBox}>
+            <TouchableOpacity
+              onPress={() => setSizeSelected(item)}
+              key={index}
+              style={{
+                ...styles.textBox,
+                borderColor: sizeSelected !== item ? '#F3F3F3' : 'black',
+              }}>
               <Text>{item}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
@@ -27,10 +45,10 @@ export const AviableSizesSubcategory = ({aviableSizes}: Props) => {
 const styles = StyleSheet.create({
   container: {
     padding: 5,
-    margin: 10,
+    marginHorizontal: 10,
     borderRadius: 2,
   },
-  title: {fontSize: 20, marginBottom: 5},
+  title: {fontSize: 20, marginBottom: 10},
   wrapContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -38,7 +56,7 @@ const styles = StyleSheet.create({
   textBox: {
     marginRight: 15,
     padding: 5,
-    borderRadius: 8,
+    borderRadius: 50,
     width: 50,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image as Imagen} from '../interfaces/Image.interface';
-import {Modal, ActivityIndicator} from 'react-native';
+import {Modal, ActivityIndicator, Text} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 interface Props {

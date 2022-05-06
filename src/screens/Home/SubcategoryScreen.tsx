@@ -46,6 +46,7 @@ export const SubcategoryScreen = (props: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
+  const [sizeSelected, setSizeSelected] = useState();
 
   const toast = useToast();
 
@@ -112,29 +113,62 @@ export const SubcategoryScreen = (props: Props) => {
                 updateCantidad={updateCantidad}
               />
             </View>
-            <Text style={styles.aviableSizes}>
-              Peso: <Text style={styles.gramos}>{weight} gramos</Text>
+            <Text style={{...styles.price, color: colors.primary}}>
+              {formatToCurrency(priceGalore)}
             </Text>
-            <Text style={styles.price}>US {formatToCurrency(price)}</Text>
             {priceGalore !== price && (
-              <View style={styles.rowText}>
-                <Text style={styles.priceGalore}>
-                  Aprovecha el descuento por la compra de 5 paquetes o más:{' '}
-                </Text>
-                <Text style={styles.textLineThrough}>
-                  {formatToCurrency(price)}
-                </Text>
-                <Text style={styles.priceGaloreMoney}>
-                  {formatToCurrency(priceGalore)}
-                </Text>
+              <View
+                style={{
+                  backgroundColor: '#fafafa',
+                  padding: 3,
+                }}>
+                <Text style={{}}>Precio por mayor</Text>
               </View>
             )}
+            {priceGalore !== price && (
+              <Text
+                style={{
+                  ...styles.price,
+                  color: 'black',
+                  fontSize: 18,
+                  marginTop: 15,
+                }}>
+                {formatToCurrency(price)}
+              </Text>
+            )}
+            {priceGalore !== price && (
+              <View
+                style={{
+                  backgroundColor: '#fafafa',
+                  padding: 3,
+                  marginBottom: 15,
+                }}>
+                <Text style={{}}>Precio por unidad</Text>
+              </View>
+            )}
+            <View style={{position: 'absolute', right: 30, top: 118}}>
+              <Text
+                style={{
+                  ...styles.aviableSizes,
+                  alignSelf: 'center',
+                  fontWeight: 'bold',
+                }}>
+                Peso
+              </Text>
+              <Text style={{...styles.aviableSizes, alignSelf: 'center'}}>
+                <Text style={styles.gramos}>{weight} gramos</Text>
+              </Text>
+            </View>
           </View>
           <View style={styles.divider} />
-          <DescriptionSubcategory description={description} />
 
-          <AviableSizesSubcategory aviableSizes={aviableSizes} />
+          <AviableSizesSubcategory
+            aviableSizes={aviableSizes}
+            sizeSelected={sizeSelected}
+            setSizeSelected={setSizeSelected}
+          />
         </View>
+        <DescriptionSubcategory description={description} />
         <ModalImages
           isVisible={isVisible}
           setIsVisible={setIsVisible}
@@ -150,13 +184,48 @@ export const SubcategoryScreen = (props: Props) => {
           ...loginStyles.button,
           padding: 5,
           backgroundColor: colors.card,
-          marginBottom: 75,
+          marginBottom: 80,
+
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         }}
         activeOpacity={0.8}
         onPress={() => setItem({subcategory, cantidad})}>
-        <Text style={loginStyles.textButton}>
-          {cantidad > 1 && <Text>({cantidad})</Text>} Añadir al carrito
-        </Text>
+        <View>
+          <View
+            style={{
+              position: 'absolute',
+              right: -25,
+              backgroundColor: 'white',
+              borderRadius: 100,
+              height: 27,
+              borderColor: colors.card,
+              borderWidth: 1,
+              width: 27,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignContent: 'center',
+
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}>
+            <Text style={{color: colors.card}}>{cantidad}</Text>
+          </View>
+
+          <Text style={loginStyles.textButton}>Añadir</Text>
+        </View>
       </TouchableOpacity>
       {addCarLoading && (
         <View style={styles.loadingContainer}>
@@ -168,9 +237,10 @@ export const SubcategoryScreen = (props: Props) => {
 };
 const styles = StyleSheet.create({
   newImageProduct: {
+    position: 'absolute',
+    top: 350,
     alignSelf: 'flex-start',
-    marginLeft: 10,
-    marginTop: -50,
+    marginLeft: 5,
     height: 75,
     width: 75,
   },
@@ -189,14 +259,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   price: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: 'bold',
   },
   priceGalore: {
     fontSize: 18,
   },
   priceGaloreMoney: {fontSize: 22, color: '#56BF57', fontWeight: 'bold'},
-  row: {flexDirection: 'row', justifyContent: 'space-between'},
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   rowText: {
     width: '100%',
   },
