@@ -21,6 +21,8 @@ export interface Subcategory {
   id: string;
   price: number;
   priceGalore: number;
+  priceDiscount: number;
+  priceGaloreDiscount: number;
   weight: number;
   currency: string;
 }

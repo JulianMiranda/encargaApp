@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import SplashScreen from 'react-native-splash-screen';
@@ -16,6 +16,10 @@ export const InfoScreen = () => {
 
   return (
     <>
+      <Image
+        source={require('../../assets/info.jpg')}
+        style={{width: '100%', height: '100%'}}
+      />
       <TouchableOpacity
         style={{...styles.button, backgroundColor: colors.primary}}
         activeOpacity={0.8}

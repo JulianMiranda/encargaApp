@@ -6,7 +6,7 @@ import {Datum, PromoResponse} from '../interfaces/Promo.interface';
 
 export const useHome = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [mostSale, setMostSale] = useState<any[]>([]);
+  const [offers, setOffers] = useState<any[]>([]);
   const [mostSaleLastMonth, setMostSaleLastMonth] = useState<any[]>([]);
   const [lastSubcategories, setLastSubcategories] = useState<any[]>([]);
   const [imagesPromo, setImagesPromo] = useState<string[]>([]);
@@ -30,7 +30,7 @@ export const useHome = () => {
       const images = promos.data.data.map((promo: Datum) => promo.image.url);
       setImagesPromo(images);
 
-      setMostSale(resp.data[0]);
+      setOffers(resp.data[0]);
       setMostSaleLastMonth(resp.data[1]);
       setLastSubcategories(resp.data[2]);
 
@@ -46,7 +46,7 @@ export const useHome = () => {
 
   return {
     isLoading,
-    mostSale,
+    offers,
     mostSaleLastMonth,
     lastSubcategories,
     imagesPromo,

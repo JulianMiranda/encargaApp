@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {StackScreenProps} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {
   Text,
   View,
@@ -21,18 +21,25 @@ import {DescriptionSubcategory} from '../../components/DescriptionSubcategory';
 import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory';
 import {useToast} from 'react-native-toast-notifications';
 import ScreenLoading from '../../components/LoadingSafe';
+import {BackButton} from '../../components/BackButton';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
 
+interface PropsNavigation
+  extends StackNavigationProp<RootStackParams, 'SubcategoryScreen'> {}
+
 export const SubcategoryScreen = (props: Props) => {
-  const {route} = props;
+  const {route, navigation} = props;
   const {subcategory} = route.params;
   const {
     name,
     images,
     price,
     priceGalore,
+    priceDiscount,
+    priceGaloreDiscount,
     updatedAt,
     description,
     aviableSizes,
@@ -49,6 +56,7 @@ export const SubcategoryScreen = (props: Props) => {
   const [sizeSelected, setSizeSelected] = useState();
 
   const toast = useToast();
+  /*  const navigation = useNavigation<Props>(); */
 
   const fechaInicio = new Date(updatedAt).getTime();
   const fechaFin = new Date().getTime();
@@ -91,6 +99,7 @@ export const SubcategoryScreen = (props: Props) => {
 
   return (
     <>
+      <BackButton navigation={navigation} />
       <ScrollView>
         <Slider
           images={images}
@@ -113,9 +122,28 @@ export const SubcategoryScreen = (props: Props) => {
                 updateCantidad={updateCantidad}
               />
             </View>
-            <Text style={{...styles.price, color: colors.primary}}>
-              {formatToCurrency(priceGalore)}
-            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text
+                style={{
+                  ...styles.price,
+                  color: colors.primary,
+                  textDecorationLine:
+                    priceDiscount !== 0 ? 'line-through' : 'none',
+                }}>
+                {formatToCurrency(priceGalore)}
+              </Text>
+              {priceDiscount !== 0 && (
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    ...styles.price,
+                    color: colors.primary,
+                  }}>
+                  {formatToCurrency(priceDiscount)}
+                </Text>
+              )}
+            </View>
+
             {priceGalore !== price && (
               <View
                 style={{
@@ -125,17 +153,34 @@ export const SubcategoryScreen = (props: Props) => {
                 <Text style={{}}>Precio por mayor</Text>
               </View>
             )}
-            {priceGalore !== price && (
-              <Text
-                style={{
-                  ...styles.price,
-                  color: 'black',
-                  fontSize: 18,
-                  marginTop: 15,
-                }}>
-                {formatToCurrency(price)}
-              </Text>
-            )}
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {priceGalore !== price && (
+                <Text
+                  style={{
+                    ...styles.price,
+                    color: 'black',
+                    fontSize: 18,
+                    marginTop: 15,
+                    textDecorationLine:
+                      priceGaloreDiscount !== 0 ? 'line-through' : 'none',
+                  }}>
+                  {formatToCurrency(price)}
+                </Text>
+              )}
+              {priceGaloreDiscount !== 0 && (
+                <Text
+                  style={{
+                    ...styles.price,
+                    color: 'black',
+                    fontSize: 18,
+                    marginTop: 15,
+                    marginLeft: 10,
+                  }}>
+                  {formatToCurrency(priceGaloreDiscount)}
+                </Text>
+              )}
+            </View>
+
             {priceGalore !== price && (
               <View
                 style={{

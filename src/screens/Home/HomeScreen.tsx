@@ -23,6 +23,7 @@ import {SubcategoryCarousel} from '../../components/SubcategoryCarousel';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import api from '../../api/api';
+import {OfferCard} from '../../components/OfferCard';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width} = Dimensions.get('window');
@@ -31,13 +32,8 @@ export const HomeScreen = () => {
 
   const {user} = useContext(AuthContext);
   const {categoryList} = useCategoryPaginated();
-  const {
-    isLoading,
-    imagesPromo,
-    mostSale,
-    mostSaleLastMonth,
-    lastSubcategories,
-  } = useHome();
+  const {isLoading, imagesPromo, offers, mostSaleLastMonth, lastSubcategories} =
+    useHome();
   const [openHeader, setOpenHeader] = useState(true);
 
   useEffect(() => {
@@ -111,7 +107,12 @@ export const HomeScreen = () => {
           <Text style={homeStyles.carouselTitles}>Categorías</Text>
           <CategoryCarousel data={categoryList} />
         </View>
-
+        <View style={{marginTop: 10}}>
+          <Text style={homeStyles.carouselTitles}>En Oferta 😜</Text>
+          {offers.map(offer => (
+            <OfferCard offer={offer} key={offer.id} />
+          ))}
+        </View>
         {/* <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Lo más vendido</Text>
           <CarouselComponent data={mostSale} />
