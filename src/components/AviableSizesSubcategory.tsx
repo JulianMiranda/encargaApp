@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {AviableSize} from '../interfaces/Subcategory.interface';
 interface Props {
-  aviableSizes: string[];
+  aviableSizes: AviableSize[];
   sizeSelected: any;
   setSizeSelected: any;
 }
@@ -16,7 +17,16 @@ export const AviableSizesSubcategory = ({
     }
   }, []);
   if (!aviableSizes || aviableSizes.length === 0) {
-    return null;
+    return (
+      <>
+        <View style={styles.container}>
+          <View style={styles.wrapContainer}>
+            <Text>Talla única</Text>
+          </View>
+        </View>
+        <View style={styles.divider} />
+      </>
+    );
   }
 
   return (
@@ -32,7 +42,7 @@ export const AviableSizesSubcategory = ({
                 ...styles.textBox,
                 borderColor: sizeSelected !== item ? '#F3F3F3' : 'black',
               }}>
-              <Text>{item}</Text>
+              <Text>{item.talla}</Text>
             </TouchableOpacity>
           ))}
         </View>

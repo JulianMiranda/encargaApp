@@ -7,8 +7,6 @@ interface Props {
   description: Description[];
 }
 export const DescriptionSubcategory = ({description}: Props) => {
-  console.log('description', description);
-
   if (!description || description.length === 0) {
     return null;
   }

@@ -16,7 +16,7 @@ import {Slider} from '../../components/Slider';
 import {loginStyles} from '../../styles/loginTheme';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {SetItemCar} from '../../components/SetItemCar';
-import {Subcategory} from '../../interfaces/Subcategory.interface';
+import {AviableSize, Subcategory} from '../../interfaces/Subcategory.interface';
 import {DescriptionSubcategory} from '../../components/DescriptionSubcategory';
 import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory';
 import {useToast} from 'react-native-toast-notifications';
@@ -53,7 +53,7 @@ export const SubcategoryScreen = (props: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
-  const [sizeSelected, setSizeSelected] = useState();
+  const [sizeSelected, setSizeSelected] = useState<AviableSize>();
 
   const toast = useToast();
   /*  const navigation = useNavigation<Props>(); */
@@ -90,12 +90,26 @@ export const SubcategoryScreen = (props: Props) => {
     }
   }, [cantidad, price, priceGalore, toast]);
 
+  useEffect(() => {
+    if (sizeSelected) {
+      console.log('sizeSelected', sizeSelected);
+    }
+  }, [sizeSelected]);
+
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     if (cantidadRef > 0) {
       setCantidad(cantidadRef);
     }
   };
-  console.log(description);
+  const handleButton = () => {
+    const subcategoryUpd = {...subcategory};
+
+    if (sizeSelected) {
+      subcategoryUpd.weight = sizeSelected.peso;
+    }
+    console.log('subcategoryUpd', subcategoryUpd);
+    setItem({subcategory: subcategoryUpd, cantidad});
+  };
 
   return (
     <>
@@ -122,8 +136,9 @@ export const SubcategoryScreen = (props: Props) => {
                 updateCantidad={updateCantidad}
               />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.rowView}>
               <Text
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   ...styles.price,
                   color: colors.primary,
@@ -134,6 +149,7 @@ export const SubcategoryScreen = (props: Props) => {
               </Text>
               {priceDiscount !== 0 && (
                 <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     marginLeft: 10,
                     ...styles.price,
@@ -145,17 +161,14 @@ export const SubcategoryScreen = (props: Props) => {
             </View>
 
             {priceGalore !== price && (
-              <View
-                style={{
-                  backgroundColor: '#fafafa',
-                  padding: 3,
-                }}>
+              <View style={styles.viewGalorePrice}>
                 <Text style={{}}>Precio por mayor</Text>
               </View>
             )}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.rowView}>
               {priceGalore !== price && (
                 <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     ...styles.price,
                     color: 'black',
@@ -169,6 +182,7 @@ export const SubcategoryScreen = (props: Props) => {
               )}
               {priceGaloreDiscount !== 0 && (
                 <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     ...styles.price,
                     color: 'black',
@@ -182,17 +196,13 @@ export const SubcategoryScreen = (props: Props) => {
             </View>
 
             {priceGalore !== price && (
-              <View
-                style={{
-                  backgroundColor: '#fafafa',
-                  padding: 3,
-                  marginBottom: 15,
-                }}>
+              <View style={styles.viewUnitPrice}>
                 <Text style={{}}>Precio por unidad</Text>
               </View>
             )}
-            <View style={{position: 'absolute', right: 30, top: 118}}>
+            <View style={styles.viewWeight}>
               <Text
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   ...styles.aviableSizes,
                   alignSelf: 'center',
@@ -201,14 +211,18 @@ export const SubcategoryScreen = (props: Props) => {
                 Peso
               </Text>
               <Text style={{...styles.aviableSizes, alignSelf: 'center'}}>
-                <Text style={styles.gramos}>{weight} gramos</Text>
+                <Text style={styles.gramos}>
+                  {sizeSelected ? sizeSelected.peso : weight} gramos
+                </Text>
               </Text>
             </View>
           </View>
           <View style={styles.divider} />
 
           <AviableSizesSubcategory
-            aviableSizes={aviableSizes}
+            aviableSizes={
+              aviableSizes && aviableSizes.length > 0 ? aviableSizes : []
+            }
             sizeSelected={sizeSelected}
             setSizeSelected={setSizeSelected}
           />
@@ -224,47 +238,17 @@ export const SubcategoryScreen = (props: Props) => {
         />
       </ScrollView>
       <TouchableOpacity
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...loginStyles.button,
-          padding: 5,
           backgroundColor: colors.card,
-          marginBottom: 80,
-
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
         }}
         activeOpacity={0.8}
-        onPress={() => setItem({subcategory, cantidad})}>
+        onPress={handleButton}>
         <View>
           <View
             style={{
-              position: 'absolute',
-              right: -25,
-              backgroundColor: 'white',
-              borderRadius: 100,
-              height: 27,
               borderColor: colors.card,
-              borderWidth: 1,
-              width: 27,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignContent: 'center',
-
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
+              ...styles.button,
             }}>
             <Text style={{color: colors.card}}>{cantidad}</Text>
           </View>
@@ -292,13 +276,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginTop: 10,
   },
-  newProduct: {
-    position: 'absolute',
-    zIndex: 999999999,
-    height: 100,
-    width: 100,
-    marginRight: 30,
-  },
+
   name: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -310,30 +288,14 @@ const styles = StyleSheet.create({
   priceGalore: {
     fontSize: 18,
   },
-  priceGaloreMoney: {fontSize: 22, color: '#56BF57', fontWeight: 'bold'},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  rowText: {
-    width: '100%',
-  },
-  stock: {fontSize: 18},
   aviableSizes: {fontSize: 18},
   gramos: {fontSize: 16},
-  sizesContainer: {flexDirection: 'row'},
-  sizeTextContainer: {
-    borderColor: 'gray',
-    borderRadius: 10,
-    borderWidth: 1,
-    margin: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 3,
-  },
-  sizeText: {},
   divider: {backgroundColor: '#FAFAFA', height: 12},
-  textLineThrough: {textDecorationLine: 'line-through', color: 'red'},
   loadingContainer: {
     position: 'absolute',
     flex: 1,
@@ -343,5 +305,37 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.6)',
     height: '100%',
     width: '100%',
+  },
+  rowView: {flexDirection: 'row', alignItems: 'center'},
+  viewGalorePrice: {
+    backgroundColor: '#fafafa',
+    padding: 3,
+  },
+  viewUnitPrice: {
+    backgroundColor: '#fafafa',
+    padding: 3,
+    marginBottom: 15,
+  },
+  viewWeight: {position: 'absolute', right: 30, top: 118},
+  button: {
+    position: 'absolute',
+    right: -25,
+    backgroundColor: 'white',
+    borderRadius: 100,
+    height: 27,
+    borderWidth: 1,
+    width: 27,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

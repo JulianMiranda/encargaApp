@@ -17,7 +17,7 @@ export interface Subcategory {
   updatedAt: string;
   images: Image[];
   description: Description[];
-  aviableSizes: string[];
+  aviableSizes?: AviableSize[];
   id: string;
   price: number;
   priceGalore: number;
@@ -30,6 +30,11 @@ export interface Subcategory {
 export interface Category {
   name: string;
   id: string;
+}
+
+export interface AviableSize {
+  talla: string;
+  peso: number;
 }
 
 export interface Description {

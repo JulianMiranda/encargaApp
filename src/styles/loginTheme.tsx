@@ -86,11 +86,21 @@ export const loginStyles = StyleSheet.create({
   },
   button: {
     marginTop: 5,
-    padding: 10,
     paddingHorizontal: 30,
     alignSelf: 'center',
     width: '40%',
     borderRadius: 50,
+    padding: 5,
+    marginBottom: 80,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   textButton: {
     alignSelf: 'center',
