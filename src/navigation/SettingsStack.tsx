@@ -6,10 +6,11 @@ import {OrdersScreen} from '../screens/Settings/OrdersScreen';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {Order} from '../interfaces/Order.interface';
 import {SingleOrderScreen} from '../screens/Settings/SingleOrderScreen';
-import { TandCScreen } from '../screens/Settings/TandCScreen';
-import { AppScreen } from '../screens/Settings/AppScreen';
-import { TrackScreen } from '../screens/Settings/TrackScreen';
-import { SingleTrackScreen } from '../screens/Settings/SingleTackScreen';
+import {TandCScreen} from '../screens/Settings/TandCScreen';
+import {AppScreen} from '../screens/Settings/AppScreen';
+import {TrackScreen} from '../screens/Settings/TrackScreen';
+import {SingleTrackScreen} from '../screens/Settings/SingleTackScreen';
+import {GetTokenScreen} from '../screens/Settings/GetTokenScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,8 @@ export type RootStackParams = {
   TandCScreen: undefined;
   TrackScreen: undefined;
   SingleOrderScreen: {order: Order};
-  SingleTrackScreen: { code: string};
+  SingleTrackScreen: {code: string};
+  GetTokenScreen: undefined;
 };
 
 export const SettingsStack = () => {
@@ -80,7 +82,7 @@ export const SettingsStack = () => {
           headerBackTitleVisible: false, */
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AppScreen"
         component={AppScreen}
         options={{
@@ -101,6 +103,15 @@ export const SettingsStack = () => {
       <Stack.Screen
         name="SingleTrackScreen"
         component={SingleTrackScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="GetTokenScreen"
+        component={GetTokenScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

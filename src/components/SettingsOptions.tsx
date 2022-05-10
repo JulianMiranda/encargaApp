@@ -12,10 +12,18 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../context/auth/AuthContext';
 import {ShopContext} from '../context/shop/ShopContext';
-import { TandC } from './TandC';
-import { ModalComponent } from './ModalComponent';
+import {TandC} from './TandC';
+import {ModalComponent} from './ModalComponent';
 
-type Key = 'historial' | 'whatsapp' | 'logout' | 'about' | 'radar'| 'app'| 'money';
+type Key =
+  | 'historial'
+  | 'whatsapp'
+  | 'logout'
+  | 'about'
+  | 'radar'
+  | 'app'
+  | 'money'
+  | 'token';
 
 export default function SettingsOptions() {
   const navigation = useNavigation();
@@ -27,41 +35,39 @@ export default function SettingsOptions() {
   const [body, setBody] = useState('');
   const [handleOpt, setHandleOpt] = useState(0);
 
-  const confirmModal = ()=>{
+  const confirmModal = () => {
     switch (handleOpt) {
       case 0:
         closeSesion();
         break;
-        case 1:
+      case 1:
         redirectWhatsapp();
-          break;
-        case 2:
-          redirectCorreo();
-          break;
+        break;
+      case 2:
+        redirectCorreo();
+        break;
       default:
         break;
     }
-  }
+  };
 
-  const closeSesion= () => {
-    setOpenModal(false)
+  const closeSesion = () => {
+    setOpenModal(false);
     logOut();
     emptyCar();
-  }
+  };
 
-  const redirectWhatsapp= () => {
-    setOpenModal(false)
+  const redirectWhatsapp = () => {
+    setOpenModal(false);
     Linking.openURL(
       'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593962914922',
-    )
-  }
+    );
+  };
 
-  const redirectCorreo= () => {
-    setOpenModal(false)
-    Linking.openURL(
-      'https://www.correos.cu/rastreador-de-envios/',
-    )
-  }
+  const redirectCorreo = () => {
+    setOpenModal(false);
+    Linking.openURL('https://www.correos.cu/rastreador-de-envios/');
+  };
 
   const sinOut = () => {
     setHandleOpt(0);
@@ -75,38 +81,40 @@ export default function SettingsOptions() {
     setTitle('Rastrear mi Compra');
     setBody('¿Desea ir a la página de Correos de Cuba?');
     setOpenModal(true);
-    };
+  };
 
-    const irWhatsApp = () => {
-      setHandleOpt(1);
-      setTitle('Contáctanos vía WhatsApp');
-      setBody('¿Necesita ayuda de un administrador?');
-      setOpenModal(true);
-
-    };
+  const irWhatsApp = () => {
+    setHandleOpt(1);
+    setTitle('Contáctanos vía WhatsApp');
+    setBody('¿Necesita ayuda de un administrador?');
+    setOpenModal(true);
+  };
   const selectedComponent = (key: Key) => {
     switch (key) {
+      case 'token':
+        navigation.navigate('GetTokenScreen');
+        break;
       case 'historial':
         navigation.navigate('OrdersScreen');
         break;
       case 'about':
         navigation.navigate('TandCScreen');
         break;
-        case 'app':
-          navigation.navigate('AppScreen');
-          break;
+      case 'app':
+        navigation.navigate('AppScreen');
+        break;
       case 'whatsapp':
         irWhatsApp();
-        
+
         break;
-        case 'radar':
-          //navigation.navigate('TrackScreen');
-          rastrearCompra();
+      case 'radar':
+        //navigation.navigate('TrackScreen');
+        rastrearCompra();
         break;
 
-        case 'money':
-          setMoney();
-          break;
+      case 'money':
+        setMoney();
+        break;
 
       case 'logout':
         sinOut();
@@ -153,13 +161,29 @@ export default function SettingsOptions() {
           )}
         </View>
       ))}
-      <ModalComponent isLoading={false} title={title} body={body} openModal={openModal} setOpenModal={setOpenModal} onConfirmModal={confirmModal}/>
+      <ModalComponent
+        isLoading={false}
+        title={title}
+        body={body}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        onConfirmModal={confirmModal}
+      />
     </ScrollView>
   );
 }
 
 function generateOptions(selectedComponent: any) {
   return [
+    {
+      title: 'Obtener mi Token',
+      iconType: 'material-community',
+      iconNameLeft: 'account-star-outline',
+      iconNameRight: 'chevron-right',
+      iconSizeRight: 32,
+      color: '#FF2E00',
+      onPress: () => selectedComponent('token'),
+    },
     {
       title: 'Ver historial de compras',
       iconType: 'material-community',
@@ -215,7 +239,7 @@ function generateOptions(selectedComponent: any) {
       color: '#008d0c',
       onPress: () => selectedComponent('money'),
     },
-    
+
     {
       title: 'Cerrar sesión',
       iconType: 'material-community',
