@@ -23,6 +23,7 @@ import {useToast} from 'react-native-toast-notifications';
 import ScreenLoading from '../../components/LoadingSafe';
 import {BackButton} from '../../components/BackButton';
 import {useNavigation} from '@react-navigation/native';
+import {AviablesColors} from '../../components/AviablesColors';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
@@ -43,6 +44,7 @@ export const SubcategoryScreen = (props: Props) => {
     updatedAt,
     description,
     aviableSizes,
+    aviableColors,
     weight,
   } = subcategory;
   const {errorAddCar, clearErrorAdd, addCarLoading, setItem} =
@@ -54,10 +56,9 @@ export const SubcategoryScreen = (props: Props) => {
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
   const [sizeSelected, setSizeSelected] = useState<AviableSize>();
+  const [colorSelected, setColorSelected] = useState<string[]>([]);
 
   const toast = useToast();
-  /*  const navigation = useNavigation<Props>(); */
-
   const fechaInicio = new Date(updatedAt).getTime();
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
@@ -90,12 +91,6 @@ export const SubcategoryScreen = (props: Props) => {
     }
   }, [cantidad, price, priceGalore, toast]);
 
-  useEffect(() => {
-    if (sizeSelected) {
-      console.log('sizeSelected', sizeSelected);
-    }
-  }, [sizeSelected]);
-
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     if (cantidadRef > 0) {
       setCantidad(cantidadRef);
@@ -106,6 +101,9 @@ export const SubcategoryScreen = (props: Props) => {
 
     if (sizeSelected) {
       subcategoryUpd.weight = sizeSelected.peso;
+    }
+    if (colorSelected.length > 0) {
+      subcategoryUpd.aviableColors = colorSelected;
     }
     console.log('subcategoryUpd', subcategoryUpd);
     setItem({subcategory: subcategoryUpd, cantidad});
@@ -227,6 +225,14 @@ export const SubcategoryScreen = (props: Props) => {
             setSizeSelected={setSizeSelected}
           />
         </View>
+        <AviablesColors
+          aviableColors={
+            aviableColors && aviableColors.length > 0 ? aviableColors : []
+          }
+          cantidad={cantidad}
+          colorSelected={colorSelected}
+          setColorSelected={setColorSelected}
+        />
         <DescriptionSubcategory description={description} />
         <ModalImages
           isVisible={isVisible}

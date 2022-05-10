@@ -25,6 +25,7 @@ export interface Subcategory {
   priceGaloreDiscount: number;
   weight: number;
   currency: string;
+  aviableColors: string[];
 }
 
 export interface Category {
