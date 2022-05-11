@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Linking,
   ScrollView,
-  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -94,9 +93,7 @@ export default function SettingsOptions() {
       case 'token':
         navigation.navigate('GetTokenScreen');
         break;
-      case 'historial':
-        navigation.navigate('OrdersScreen');
-        break;
+
       case 'about':
         navigation.navigate('TandCScreen');
         break;
@@ -183,15 +180,6 @@ function generateOptions(selectedComponent: any) {
       iconSizeRight: 32,
       color: '#FF2E00',
       onPress: () => selectedComponent('token'),
-    },
-    {
-      title: 'Ver historial de compras',
-      iconType: 'material-community',
-      iconNameLeft: 'history',
-      iconNameRight: 'chevron-right',
-      iconSizeRight: 32,
-      color: '#2684FD',
-      onPress: () => selectedComponent('historial'),
     },
     {
       title: 'Rastrear mi compra',

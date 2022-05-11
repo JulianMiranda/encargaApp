@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {TouchableOpacity, View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
-import {RootStackParams} from '../../navigation/SettingsStack';
+import {RootStackParams} from '../../navigation/AccountStack';
 import moment from 'moment';
 import {TopScreen} from '../../components/TopScreen';
-import { formatToCurrency } from '../../utils/formatToCurrency';
+import {formatToCurrency} from '../../utils/formatToCurrency';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SingleOrderScreen'> {}
@@ -71,7 +71,7 @@ export const SingleOrderScreen = (props: Props) => {
             marginRight: 10,
             fontWeight: '300',
           }}>
-         Valor de compra: {formatToCurrency(order.cost)}
+          Valor de compra: {formatToCurrency(order.cost)}
         </Text>
       </ScrollView>
     </>

@@ -1,18 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Animated,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Animated, Keyboard, StyleSheet, View} from 'react-native';
 import {Searchbar} from 'react-native-paper';
-import {SearchInputBar} from '../../components/SearchInputBar';
 import {
-  AnimatedIcon,
   animatedTransition,
-  arrowAnimation,
   inputAnimation,
   inputAnimationWidth,
 } from '../../components/SearchAnimation';
@@ -54,6 +44,7 @@ export const SearchScreen = () => {
   return (
     <>
       <View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           paddingHorizontal: 20,
           marginTop: top + 15,
