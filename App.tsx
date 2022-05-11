@@ -6,9 +6,13 @@ import {StackNavigator} from './src/navigation/Navigation';
 import {AuthProvider} from './src/context/auth/AuthContext';
 import {ThemeProvider} from './src/context/theme/ThemeContext';
 import {ShopProvider} from './src/context/shop/ShopContext';
+import {Amplify} from 'aws-amplify';
+// @ts-ignore
+import config from './src/aws-exports';
 import moment from 'moment';
 import 'moment/locale/es';
 moment.locale('es');
+Amplify.configure(config);
 
 const AppState = ({children}: any) => {
   LogBox.ignoreLogs([

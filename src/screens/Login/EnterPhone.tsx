@@ -8,6 +8,9 @@ import {Login} from '../../interfaces/Login.interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/core';
 
+import {Auth} from 'aws-amplify';
+import {Test} from './Test';
+
 export const EnterPhoneScreen = () => {
   const {signInPhone} = useContext(AuthContext);
   const [name, setName] = useState(false);
@@ -18,7 +21,7 @@ export const EnterPhoneScreen = () => {
 
   async function signIn(phoneNumber: any) {
     try {
-      setIsLoading(true);
+      /* setIsLoading(true);
       api
         .get<Login>('generateToken/' + phoneNumber)
         .then(async resp => {
@@ -46,7 +49,7 @@ export const EnterPhoneScreen = () => {
           ]);
         });
 
-      setIsLoading(false);
+      setIsLoading(false); */
     } catch (error) {
       console.log('dio este eroor', error);
 
@@ -69,6 +72,7 @@ export const EnterPhoneScreen = () => {
         {text: 'OK', onPress: () => navigation.goBack()},
       ],
     );
+  if (true) return <Test />;
   if (name) {
     return <Name user={user} />;
   }
