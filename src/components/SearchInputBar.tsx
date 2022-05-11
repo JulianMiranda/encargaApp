@@ -14,27 +14,21 @@ import {
   inputAnimationWidth,
   animatedTransition,
 } from './SearchAnimation';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {updateSearchHistory} from '../utils/searchHistory';
 import {SearchBody} from './SearchBody';
 
-interface Props {
-  setOpenHeader: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const SearchInputBar = ({setOpenHeader}: Props) => {
+export const SearchInputBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [openInput, setOpenInput] = useState(false);
+  const [openInput, setOpenInput] = useState(true);
   const [findResults, setFindResults] = useState(false);
   const [findResultsQuery, setFindResultsQuery] = useState('');
   const onChangeSearch = (query: string) => setSearchQuery(query);
 
   useEffect(() => {
-    setOpenHeader(!openInput);
     if (openInput) {
       openSearch();
     }
-  }, [openInput, setOpenHeader]);
+  }, [openInput]);
 
   const openSearch = () => {
     animatedTransition.start();
@@ -61,64 +55,36 @@ export const SearchInputBar = ({setOpenHeader}: Props) => {
 
   return (
     <>
-      {openInput ? (
-        <View style={styles.container}>
-          <View style={styles.containerInput}>
-            <AnimatedIcon
-              name="arrow-left"
-              size={20}
-              style={[styles.backArrow, arrowAnimation]}
-              onPress={closeSearch}
+      <View style={styles.container}>
+        <View style={styles.containerInput}>
+          <AnimatedIcon
+            name="arrow-left"
+            size={20}
+            style={[styles.backArrow, arrowAnimation]}
+            onPress={closeSearch}
+          />
+          <Animated.View style={[inputAnimation, {width: inputAnimationWidth}]}>
+            <Searchbar
+              placeholder="Busca tu producto"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+              autoFocus
+              /*  onFocus={openSearch} */
+              onSubmitEditing={onSearch}
             />
-            <Animated.View
-              style={[inputAnimation, {width: inputAnimationWidth}]}>
-              <Searchbar
-                placeholder="Busca tu producto"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-                autoFocus
-                /*  onFocus={openSearch} */
-                onSubmitEditing={onSearch}
-              />
-            </Animated.View>
-          </View>
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              top: 68,
-              backgroundColor: 'red',
-            }}>
-            <SearchBody
-              openBody={openInput}
-              findResults={findResults}
-              findResultsQuery={findResultsQuery}
-              searchQuery={searchQuery}
-              onSearch={onSearch}
-              setSearchQuery={setSearchQuery}
-            />
-          </View>
+          </Animated.View>
         </View>
-      ) : (
         <>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              zIndex: 100000000,
-              right: 10,
-              top: 40,
-              height: 40,
-              width: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => setOpenInput(true)}>
-            <Icon name="search" size={26} color="#fb2331" />
-          </TouchableOpacity>
+          <SearchBody
+            openBody={!openInput}
+            findResults={findResults}
+            findResultsQuery={findResultsQuery}
+            searchQuery={searchQuery}
+            onSearch={onSearch}
+            setSearchQuery={setSearchQuery}
+          />
         </>
-      )}
+      </View>
     </>
   );
 };

@@ -13,6 +13,8 @@ export const SearchResults = ({search}: Props) => {
 
   useEffect(() => {
     (async () => {
+      console.log('search', search);
+
       setProducts(null);
       const response = await searchProductsApi(search);
       setProducts(response);
@@ -51,6 +53,9 @@ export const SearchResults = ({search}: Props) => {
       .catch(() => setProducts(null));
   };
 
+  if (!search) {
+    return null;
+  }
   return (
     <>
       {!products ? (

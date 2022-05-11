@@ -18,7 +18,7 @@ export const arrowAnimation = {
 
 export const inputAnimationWidth = animVal.interpolate({
   inputRange: [0, 1],
-  outputRange: ['0%', '90%'],
+  outputRange: ['0%', '100%'],
 });
 export const inputAnimation = {
   transform: [

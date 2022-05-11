@@ -76,7 +76,7 @@ export const HomeScreen = () => {
 
   return (
     <>
-      <SearchInputBar setOpenHeader={setOpenHeader} />
+      {/* <SearchInputBar setOpenHeader={setOpenHeader} /> */}
 
       <View
         style={{
@@ -86,19 +86,17 @@ export const HomeScreen = () => {
           left: 0,
           backgroundColor: 'rgba(255,255,255,0.92)',
         }}>
-        {openHeader && (
-          <Image
-            source={require('../../assets/encarga4.png')}
-            style={{
-              alignSelf: 'center',
-              marginTop: top + 6,
-              height: 45,
-              width: 100,
-              marginRight: 30,
-              marginBottom: -2,
-            }}
-          />
-        )}
+        <Image
+          source={require('../../assets/encarga4.png')}
+          style={{
+            alignSelf: 'center',
+            marginTop: top + 6,
+            height: 45,
+            width: 100,
+            marginRight: 30,
+            marginBottom: -2,
+          }}
+        />
       </View>
       <ScrollView>
         <AutoSlider imagesPromo={imagesPromo} />

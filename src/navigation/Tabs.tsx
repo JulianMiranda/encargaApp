@@ -12,6 +12,8 @@ import {TabBarAdvancedButton} from '../components/TabBarAdvancedButton';
 import {SettingsStack} from './SettingsStack';
 import {ShopStack} from './ShopStack';
 import {HomeStack} from './HomeStack';
+import {SearchStack} from './SearchStack';
+import {AccountStack} from './AccountStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,13 +55,23 @@ export const Tabs = () => {
       }}>
       <Tab.Screen
         name="Home"
-        
         component={HomeStack}
         options={{
           title: 'Tienda',
-         
+
           tabBarIcon: ({color}) => (
             <FontAws name="store" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchStack}
+        options={{
+          title: 'Buscar',
+
+          tabBarIcon: ({color}) => (
+            <FontAws name="search" size={24} color={color} />
           ),
         }}
       />
@@ -72,6 +84,17 @@ export const Tabs = () => {
           ),
         }}
         component={ShopStack}
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountStack}
+        options={{
+          title: 'Perfil',
+
+          tabBarIcon: ({color}) => (
+            <FontAws name="user" size={24} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Settings"
