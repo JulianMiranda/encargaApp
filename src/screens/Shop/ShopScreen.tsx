@@ -18,6 +18,7 @@ import {useShop} from '../../hooks/useShop';
 import {ShopContext} from '../../context/shop/ShopContext';
 import {EmptyCar} from '../../components/EmptyCar';
 import {DetailsShop} from '../../components/DetailsShop';
+import {useNavigation} from '@react-navigation/native';
 
 const HEADER_MAX_HEIGHT = 120;
 const HEADER_MIN_HEIGHT = 70;
@@ -45,7 +46,7 @@ export const ShopScreen = () => {
     setOpenModal,
     confirmModal,
   } = useShop();
-
+  const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const headerHeight = scrollY.interpolate({
@@ -234,7 +235,15 @@ export const ShopScreen = () => {
             }}>
             <TouchableOpacity
               activeOpacity={car.length < 1 ? 1 : 0.8}
-              onPress={car.length < 1 ? () => {} : makeShopFunction}>
+              /*  onPress={car.length < 1 ? () => {} : makeShopFunction}> */
+              onPress={
+                car.length < 1
+                  ? () => {}
+                  : () =>
+                      navigation.navigate('CarnetScreen', {
+                        paquetes: cantPaqOS.oneandhalfkgPrice,
+                      })
+              }>
               <Text style={{color: 'white', fontSize: 14}}>Comprar</Text>
             </TouchableOpacity>
           </View>

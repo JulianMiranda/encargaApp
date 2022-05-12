@@ -5,6 +5,11 @@ import {CarnetScreen} from '../screens/Shop/CarnetScreen';
 
 const Stack = createStackNavigator();
 
+export type RootStackParams = {
+  ShopScreen: undefined;
+  CarnetScreen: {paquetes: number};
+};
+
 export const ShopStack = () => {
   return (
     <Stack.Navigator>
