@@ -7,7 +7,7 @@ import {TandCScreen} from '../screens/Settings/TandCScreen';
 import {AppScreen} from '../screens/Settings/AppScreen';
 import {TrackScreen} from '../screens/Settings/TrackScreen';
 import {SingleTrackScreen} from '../screens/Settings/SingleTackScreen';
-import {GetTokenScreen} from '../screens/Settings/GetTokenScreen';
+import {NotificationScreen} from '../screens/Settings/NotificationScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +18,7 @@ export type RootStackParams = {
   TandCScreen: undefined;
   TrackScreen: undefined;
   SingleTrackScreen: {code: string};
-  GetTokenScreen: undefined;
+  NotificationScreen: undefined;
 };
 
 export const SettingsStack = () => {
@@ -88,8 +88,8 @@ export const SettingsStack = () => {
         }}
       />
       <Stack.Screen
-        name="GetTokenScreen"
-        component={GetTokenScreen}
+        name="NotificationScreen"
+        component={NotificationScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

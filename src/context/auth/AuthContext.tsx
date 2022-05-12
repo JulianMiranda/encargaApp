@@ -29,6 +29,7 @@ type AuthContextProps = {
   setShop: () => void;
   setMoney: () => void;
   refreshApp: () => void;
+  updateReciveNotifications: (user: User) => void;
   prices: Prices;
   countryCode: CountryCode;
   countryCallCode: string;
@@ -105,6 +106,7 @@ export const AuthProvider = ({children}: any) => {
       if (resp.status !== 200) {
         return dispatch({type: 'notAuthenticated'});
       }
+      console.log('usert', resp.data.user);
 
       await AsyncStorage.setItem('token', resp.data.token);
 
@@ -220,6 +222,10 @@ export const AuthProvider = ({children}: any) => {
   const setMoney = () => {
     dispatch({type: 'utilityMoney'});
   };
+
+  const updateReciveNotifications = (user: User) => {
+    dispatch({type: 'updateReciveNotifications', payload: user});
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -236,6 +242,7 @@ export const AuthProvider = ({children}: any) => {
         setShop,
         setMoney,
         refreshApp,
+        updateReciveNotifications,
       }}>
       {children}
     </AuthContext.Provider>

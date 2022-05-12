@@ -29,7 +29,8 @@ type AuthAction =
   | {type: 'logout'}
   | {type: 'initCheck'}
   | {type: 'loginB'}
-  | {type: 'setPrices'; payload: Prices};
+  | {type: 'setPrices'; payload: Prices}
+  | {type: 'updateReciveNotifications'; payload: User};
 
 export const authReducer = (
   state: AuthState,
@@ -125,6 +126,11 @@ export const authReducer = (
         status: 'authenticated',
         user: action.payload.user,
         wait: false,
+      };
+    case 'updateReciveNotifications':
+      return {
+        ...state,
+        user: action.payload,
       };
 
     default:

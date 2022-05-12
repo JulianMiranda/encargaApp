@@ -11,7 +11,6 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../context/auth/AuthContext';
 import {ShopContext} from '../context/shop/ShopContext';
-import {TandC} from './TandC';
 import {ModalComponent} from './ModalComponent';
 
 type Key =
@@ -91,7 +90,7 @@ export default function SettingsOptions() {
   const selectedComponent = (key: Key) => {
     switch (key) {
       case 'token':
-        navigation.navigate('GetTokenScreen');
+        navigation.navigate('NotificationScreen');
         break;
 
       case 'about':
@@ -123,39 +122,52 @@ export default function SettingsOptions() {
   return (
     <ScrollView>
       {menuOptions.map((menu, index) => (
-        <View
-          key={index.toString()}
-          style={{flexDirection: 'row', marginVertical: 10, marginLeft: 10}}>
-          <Icon name={menu.iconNameLeft} color={menu.color} size={32} />
-          <TouchableOpacity
-            onPress={menu.onPress}
+        <View key={index.toString()}>
+          <View
             style={{
-              width: '80%',
-              alignItems: 'flex-start',
-              justifyContent: 'center',
+              height: 1,
+              width: '90%',
+              alignSelf: 'center',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 10,
               marginLeft: 10,
             }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 20,
-                fontWeight: '500',
-                color: '#615e5e',
-              }}>
-              {menu.title}
-            </Text>
-          </TouchableOpacity>
-          {menu.iconNameLeft !== 'power' && (
+            <Icon name={menu.iconNameLeft} color={menu.color} size={28} />
             <TouchableOpacity
               onPress={menu.onPress}
-              style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Icon
-                name={menu.iconNameRight}
-                color="#ccc"
-                size={menu.iconSizeRight}
-              />
+              style={{
+                width: '80%',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                marginLeft: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
+                  fontWeight: '500',
+                  color: '#615e5e',
+                }}>
+                {menu.title}
+              </Text>
             </TouchableOpacity>
-          )}
+            {menu.iconNameLeft !== 'power' && (
+              <TouchableOpacity
+                onPress={menu.onPress}
+                style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Icon
+                  name={menu.iconNameRight}
+                  color="#ccc"
+                  size={menu.iconSizeRight}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       ))}
       <ModalComponent
@@ -173,9 +185,9 @@ export default function SettingsOptions() {
 function generateOptions(selectedComponent: any) {
   return [
     {
-      title: 'Obtener mi Token',
+      title: 'Notificaciones',
       iconType: 'material-community',
-      iconNameLeft: 'account-star-outline',
+      iconNameLeft: 'bell',
       iconNameRight: 'chevron-right',
       iconSizeRight: 32,
       color: '#FF2E00',
