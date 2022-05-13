@@ -49,21 +49,20 @@ export const ModalImages = ({isVisible, setIsVisible, images}: Props) => {
             </TouchableOpacity>
           )}
           renderImage={(image: ImageViewer) => {
-            console.log(image.source.uri);
             return (
               <View
                 style={{
                   flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  width: width,
+                  height: height,
                 }}>
                 <FadeInImage
                   uri={image.source.uri}
                   style={{
                     flex: 1,
-                    width: width * 0.8,
-                    height: height * 0.8,
-                    resizeMode: 'contain',
+                    width: width,
+                    height: height,
+                    resizeMode: 'stretch',
                   }}
                 />
               </View>

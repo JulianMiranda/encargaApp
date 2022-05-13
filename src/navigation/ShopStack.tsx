@@ -1,13 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ShopScreen} from '../screens/Shop/ShopScreen';
-import {CarnetScreen} from '../screens/Shop/CarnetScreen';
+import {InputCarnetScreen} from '../screens/Shop/InputCarnetScreen';
 
 const Stack = createStackNavigator();
 
 export type RootStackParams = {
   ShopScreen: undefined;
-  CarnetScreen: {paquetes: number};
+  InputCarnetScreen: {paquetes: number};
 };
 
 export const ShopStack = () => {
@@ -23,8 +23,8 @@ export const ShopStack = () => {
         }}
       />
       <Stack.Screen
-        name="CarnetScreen"
-        component={CarnetScreen}
+        name="InputCarnetScreen"
+        component={InputCarnetScreen}
         options={{
           headerShown: false,
           /* 	title: 'Home',

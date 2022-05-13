@@ -1142,7 +1142,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.2.1.tgz"
   "version" "4.2.1"
 
-"@react-native-picker/picker@^1.16.0", "@react-native-picker/picker@>= 1.0":
+"@react-native-picker/picker@^1.16.0", "@react-native-picker/picker@^1.8.3", "@react-native-picker/picker@>= 1.0":
   "integrity" "sha512-kQcL8U5CYQRgmNtlyhEH1BIp06Eaxhj7Lybd7rV4asd4Q90kCEm52b5x5WnE0J6WdVvC6sRzdcbPCb0s9yc4mQ=="
   "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.0.tgz"
   "version" "1.16.0"
@@ -5977,6 +5977,14 @@
     "google-libphonenumber" "^3.2.2"
     "lodash" "^4.17.4"
     "prop-types" "^15.5.10"
+
+"react-native-picker-select@^8.0.4":
+  "integrity" "sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg=="
+  "resolved" "https://registry.npmjs.org/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz"
+  "version" "8.0.4"
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    "lodash.isequal" "^4.5.0"
 
 "react-native-push-notification@^8.1.1":
   "integrity" "sha512-XpBtG/w+a6WXTxu6l1dNYyTiHnbgnvjoc3KxPTxYkaIABRmvuJZkFxqruyGvfCw7ELAlZEAJO+dthdTabCe1XA=="

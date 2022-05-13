@@ -3,9 +3,10 @@ import {Text, View, TextInput} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../../navigation/ShopStack';
 
-interface Props extends StackScreenProps<RootStackParams, 'CarnetScreen'> {}
+interface Props
+  extends StackScreenProps<RootStackParams, 'InputCarnetScreen'> {}
 
-export const CarnetScreen = (props: Props) => {
+export const InputCarnetScreen = (props: Props) => {
   const {route} = props;
   const {paquetes} = route.params;
 
