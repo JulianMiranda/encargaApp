@@ -2,7 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import api from '../api/api';
 import {useDebouncedValue} from '../hooks/useDebouncedValue';
-import {SubcategoryResp} from '../interfaces/Subcategory.interface';
+import {
+  SubcategoryResp,
+  Subcategory,
+} from '../interfaces/Subcategory.interface';
+import {FadeInImage} from './FadeInImage';
 
 interface Props {
   searchQuery: string;
@@ -14,7 +18,7 @@ export const SuggestionsSearch = ({
   onSearch,
   setSearchQuery,
 }: Props) => {
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<Subcategory[]>([]);
 
   const deboncedValue = useDebouncedValue(searchQuery);
 
@@ -24,7 +28,7 @@ export const SuggestionsSearch = ({
 
   const searchSuggestions = async (search: string) => {
     const body = {
-      docsPerPage: 10,
+      docsPerPage: 5,
       sort: 'desc',
       search: {text: search, fields: ['name']},
       population: [
@@ -46,27 +50,43 @@ export const SuggestionsSearch = ({
     };
 
     api.post<SubcategoryResp>('/subcategories/getList', body).then(response => {
-      setSuggestions(response.data.data.map(item => item.name));
+      setSuggestions(response.data.data.map(item => item));
     });
   };
   return (
-    <View style={{flexWrap: 'wrap', marginTop: 10}}>
+    <View style={{marginTop: 20, marginLeft: 5}}>
       {suggestions.map((item, index) => (
-        <TouchableOpacity
-          style={{
-            paddingVertical: 3,
-            marginVertical: 1,
-            backgroundColor: '#F7F7F7',
-          }}
-          key={index}
-          onPress={() => {
-            console.log('pressed');
+        <View key={index} style={{}}>
+          <TouchableOpacity
+            style={{
+              paddingVertical: 3,
+              marginVertical: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              console.log('pressed');
 
-            setSearchQuery(item);
-            onSearch(item);
-          }}>
-          <Text style={{marginHorizontal: 20, fontSize: 16}}>{item}</Text>
-        </TouchableOpacity>
+              setSearchQuery(item.name);
+              onSearch(item.name);
+            }}>
+            <FadeInImage
+              uri={item.images[0].url}
+              style={{height: 50, width: 50, borderRadius: 8}}
+            />
+            <Text style={{marginHorizontal: 20, fontSize: 16}}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              height: 1,
+              width: '90%',
+              alignSelf: 'center',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
+        </View>
       ))}
     </View>
   );

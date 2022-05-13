@@ -106,7 +106,7 @@ export const HomeScreen = () => {
           <CategoryCarousel data={categoryList} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>En Oferta 😜</Text>
+          <Text style={homeStyles.carouselTitles}>Rebajas 🛍 </Text>
           {offers.map(offer => (
             <OfferCard offer={offer} key={offer.id} />
           ))}

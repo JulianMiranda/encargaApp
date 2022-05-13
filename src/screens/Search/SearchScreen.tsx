@@ -60,6 +60,8 @@ export const SearchScreen = () => {
         <Animated.View style={[inputAnimation, {width: inputAnimationWidth}]}>
           <Searchbar
             placeholder="Busca tu producto"
+            autoFocus
+            onPressOut={() => console.log('out')}
             onChangeText={onChangeSearch}
             value={searchQuery}
             onSubmitEditing={onSearch}

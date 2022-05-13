@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {formatToCurrency} from '../../utils/formatToCurrency';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 
-const HEADER_MAX_HEIGHT = 120;
+const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
 export const AccountScreen = () => {
@@ -34,7 +34,7 @@ export const AccountScreen = () => {
     extrapolate: 'clamp',
   });
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 120],
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 170],
     outputRange: [0, 0, 1000],
     extrapolate: 'clamp',
   });
@@ -101,12 +101,12 @@ export const AccountScreen = () => {
               ...styles.titleList,
               color: 'white',
               alignSelf: 'center',
-              marginTop: 40,
+              marginTop: 80,
             }}>
-            Mi Compra
+            Mi Perfil
           </Text>
         </View>
-        <View>
+        <View style={{marginTop: 40}}>
           {orders.map((order, index) => (
             <OrderComponent key={index} singleOrder={order} />
           ))}

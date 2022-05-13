@@ -4,9 +4,14 @@ import {StackScreenProps} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-interface Props extends StackScreenProps<any, any> {}
+/* interface Props extends StackScreenProps<any, any> {} */
+
+interface Props {
+  color: string;
+  navigation: any;
+}
 /* interface Props extends NavigationProp<ParamListBase, string> {} */
-export const BackButton = ({navigation}: Props) => {
+export const BackButton = ({navigation, color = 'white'}: Props) => {
   const {top} = useSafeAreaInsets();
   return (
     <TouchableOpacity
@@ -16,7 +21,7 @@ export const BackButton = ({navigation}: Props) => {
         ...styles.backButton,
         top: top + 5,
       }}>
-      <Icon name="arrow-back-outline" color="white" size={35} />
+      <Icon name="arrow-back-outline" color={color} size={35} />
     </TouchableOpacity>
   );
 };

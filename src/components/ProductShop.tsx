@@ -31,7 +31,9 @@ export const ProductShop = ({subcategory, cantidad}: CarItemProps) => {
       </TouchableOpacity>
       <FadeInImage uri={images[0].url} style={styles.image} />
       <View style={styles.subContainer2}>
-        <Text style={styles.name}>{name}</Text>
+        <Text numberOfLines={1} style={styles.name}>
+          {name}
+        </Text>
         <Text>
           {cantidad < 6
             ? formatToCurrency(price)
@@ -66,14 +68,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 6,
   },
-  image: {height: 100, width: 90, flex: 2},
-  subContainer2: {flex: 4},
-  name: {fontSize: 18},
+  image: {height: 100, width: 90, flex: 2, alignSelf: 'flex-start'},
+  subContainer2: {flex: 6},
+  name: {fontSize: 18, marginRight: 50},
   buttonContainer: {
     flex: 1,
     alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
-    marginBottom: 5,
+    marginTop: -10,
     marginEnd: 5,
   },
 });

@@ -1,19 +1,16 @@
 import React from 'react';
-import { View} from 'react-native';
+import {View} from 'react-native';
 import SettingsOptions from '../../components/SettingsOptions';
 import {TopScreen} from '../../components/TopScreen';
 
 export const SettingsScreen = () => {
-
-
   const colors = ['#2684FD', '#bae6f7'];
-
 
   return (
     <View>
       <TopScreen
         colors={colors}
-        text="Mi Perfil"
+        text="Ajustes"
         backButton={false}
         height={170}
       />

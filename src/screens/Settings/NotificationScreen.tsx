@@ -6,10 +6,13 @@ import {CustomSwitch} from '../../components/CustomSwitch';
 import {loginStyles} from '../../styles/loginTheme';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useToast} from 'react-native-toast-notifications';
+import {useNavigation} from '@react-navigation/native';
+import {BackButton} from '../../components/BackButton';
 
 export const NotificationScreen = () => {
   const {user, updateReciveNotifications} = useContext(AuthContext);
   const toast = useToast();
+  const navigation = useNavigation();
 
   const {
     theme: {colors},
@@ -78,6 +81,8 @@ export const NotificationScreen = () => {
   };
   return (
     <>
+      <BackButton navigation={navigation} color="black" />
+
       <Text
         style={{
           color: 'black',
@@ -88,8 +93,7 @@ export const NotificationScreen = () => {
           marginLeft: 15,
           marginBottom: 20,
         }}>
-        ¿Te gustaría recibir notificaciones de enCarga para mantenerte
-        informado?
+        enCarga quiere mantenerte informado
       </Text>
       <View
         style={{
@@ -128,11 +132,11 @@ export const NotificationScreen = () => {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            bottom: 0,
+            bottom: 10,
             paddingHorizontal: 30,
             alignSelf: 'center',
-            width: '90%',
-            borderRadius: 50,
+            width: '60%',
+            borderRadius: 100,
             padding: 5,
             marginBottom: 80,
 

@@ -9,6 +9,7 @@ import {
   Platform,
   Animated,
   Image,
+  Dimensions,
 } from 'react-native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {ModalComponent} from '../../components/ModalComponent';
@@ -16,14 +17,15 @@ import {ProductShop} from '../../components/ProductShop';
 import {CircularSliderComponent} from '../../components/CircularSlider';
 import {useShop} from '../../hooks/useShop';
 import {ShopContext} from '../../context/shop/ShopContext';
-import {EmptyCar} from '../../components/EmptyCar';
 import {DetailsShop} from '../../components/DetailsShop';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {FadeInImage} from '../../components/FadeInImage';
 
-const HEADER_MAX_HEIGHT = 120;
+const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
-
+const {height} = Dimensions.get('window');
 export const ShopScreen = () => {
   const {
     theme: {colors},
@@ -55,7 +57,7 @@ export const ShopScreen = () => {
     extrapolate: 'clamp',
   });
   const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 120],
+    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 170],
     outputRange: [0, 0, 1000],
     extrapolate: 'clamp',
   });
@@ -138,7 +140,7 @@ export const ShopScreen = () => {
           top: 0,
           left: 0,
           right: 0,
-          backgroundColor: 'lightskyblue',
+          backgroundColor: '#FFB0A5',
           height: headerHeight,
           zIndex: headerZindex,
           elevation: headerZindex, //required for android
@@ -181,13 +183,13 @@ export const ShopScreen = () => {
               ...styles.titleList,
               color: 'white',
               alignSelf: 'center',
-              marginTop: 40,
+              marginTop: 80,
             }}>
             Mi Compra
           </Text>
         </View>
 
-        <View style={{marginLeft: 7}}>
+        <View style={{marginLeft: 7, marginTop: 30}}>
           {car.map((carItem, index) => (
             <ProductShop
               key={index}
@@ -196,7 +198,66 @@ export const ShopScreen = () => {
             />
           ))}
 
-          {car.length < 1 && <EmptyCar />}
+          {car.length < 1 && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+                alignSelf: 'center',
+                height: height - 250,
+              }}>
+              <Image
+                source={require('../../assets/cart.png')}
+                style={{height: 90, width: 110}}
+              />
+              <Text style={{marginTop: 10, fontSize: 16}}>
+                Tu carrito de compras está vacío
+              </Text>
+
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('HomeScreen')}
+                style={{
+                  backgroundColor: colors.card,
+                  position: 'absolute',
+                  bottom: 10,
+                  flexDirection: 'row',
+                  marginTop: 1,
+                  padding: 10,
+                  paddingHorizontal: 50,
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 50,
+                  marginBottom: 15,
+                  width: '80%',
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    color: 'white',
+                    fontSize: 20,
+                    marginHorizontal: 15,
+                  }}>
+                  Ir a la tienda
+                </Text>
+                <Icon
+                  name="arrow-right"
+                  color="white"
+                  size={24}
+                  style={{position: 'absolute', right: 14, top: 10}}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
         <View
           style={{

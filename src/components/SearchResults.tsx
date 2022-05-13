@@ -17,6 +17,7 @@ export const SearchResults = ({search}: Props) => {
 
       setProducts(null);
       const response = await searchProductsApi(search);
+      console.log(response, 'response');
       setProducts(response);
     })();
   }, [search]);
@@ -25,7 +26,7 @@ export const SearchResults = ({search}: Props) => {
     const body = {
       docsPerPage: 10,
       sort: 'desc',
-      search: {text: searchWord, fields: ['name']},
+      search: {text: searchWord.trim(), fields: ['name']},
       population: [
         {
           path: 'category',
@@ -43,11 +44,12 @@ export const SearchResults = ({search}: Props) => {
         },
       ],
     };
-
+    console.log('body', body);
     api
       .post<SubcategoryResp>('/subcategories/getList', body)
 
       .then(response => {
+        console.log(response.data.data, 'responseApi');
         setProducts(response.data.data);
       })
       .catch(() => setProducts(null));
@@ -68,18 +70,20 @@ export const SearchResults = ({search}: Props) => {
           style={{
             flex: 1,
             alignSelf: 'center',
-            justifyContent: 'center',
+            marginTop: 250,
             alignItems: 'center',
           }}>
-          <Text>No se encontraron resultados para: "{search}"</Text>
           <Image
-            source={require('../assets/buscador.jpg')}
+            source={require('../assets/perch.png')}
             style={{
-              height: 250,
-              width: 250,
-              borderRadius: 100,
+              height: 80,
+              width: 120,
             }}
           />
+          <Text>
+            <Text style={{fontWeight: 'bold'}}>"{search}"</Text> No coincide con
+            ningún producto
+          </Text>
         </View>
       ) : (
         <View style={{margin: 5}}>

@@ -17,7 +17,7 @@ export const AviableSizesSubcategory = ({
     }
   }, []);
   if (!aviableSizes || aviableSizes.length === 0) {
-    return (
+    return null; /* (
       <>
         <View style={styles.container}>
           <View style={styles.wrapContainer}>
@@ -26,7 +26,7 @@ export const AviableSizesSubcategory = ({
         </View>
         <View style={styles.divider} />
       </>
-    );
+    ); */
   }
 
   return (
@@ -35,15 +35,23 @@ export const AviableSizesSubcategory = ({
         <Text style={styles.title}>Tallas</Text>
         <View style={styles.wrapContainer}>
           {aviableSizes.map((item, index) => (
-            <TouchableOpacity
-              onPress={() => setSizeSelected(item)}
-              key={index}
-              style={{
-                ...styles.textBox,
-                borderColor: sizeSelected !== item ? '#F3F3F3' : 'black',
-              }}>
-              <Text>{item.talla}</Text>
-            </TouchableOpacity>
+            <View key={index}>
+              {item.talla === 'Talla Única' ? (
+                <View
+                  style={{...styles.textBox, width: 100, borderColor: 'black'}}>
+                  <Text>Talla Única</Text>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => setSizeSelected(item)}
+                  style={{
+                    ...styles.textBox,
+                    borderColor: sizeSelected !== item ? '#F3F3F3' : 'black',
+                  }}>
+                  <Text>{item.talla}</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           ))}
         </View>
       </View>

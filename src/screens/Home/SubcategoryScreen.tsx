@@ -47,6 +47,14 @@ export const SubcategoryScreen = (props: Props) => {
     aviableColors,
     weight,
   } = subcategory;
+  console.log(
+    name,
+    images,
+    price,
+    priceGalore,
+    priceDiscount,
+    priceGaloreDiscount,
+  );
   const {errorAddCar, clearErrorAdd, addCarLoading, setItem} =
     useContext(ShopContext);
   const {
@@ -139,9 +147,16 @@ export const SubcategoryScreen = (props: Props) => {
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   ...styles.price,
-                  color: colors.primary,
+
+                  fontSize: priceDiscount !== 0 ? 18 : 26,
+
                   textDecorationLine:
                     priceDiscount !== 0 ? 'line-through' : 'none',
+                  color: priceDiscount !== 0 ? '#c0c0c0' : colors.primary,
+                  /* 
+                  textDecorationColor: priceDiscount !== 0 ? 'red' : 'blue',
+                  textDecorationStyle:
+                    priceDiscount !== 0 ? 'dotted' : 'double', */
                 }}>
                 {formatToCurrency(priceGalore)}
               </Text>
@@ -169,9 +184,9 @@ export const SubcategoryScreen = (props: Props) => {
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     ...styles.price,
-                    color: 'black',
                     fontSize: 18,
                     marginTop: 15,
+                    color: priceGaloreDiscount !== 0 ? '#c0c0c0' : 'black',
                     textDecorationLine:
                       priceGaloreDiscount !== 0 ? 'line-through' : 'none',
                   }}>
@@ -288,7 +303,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   price: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   priceGalore: {

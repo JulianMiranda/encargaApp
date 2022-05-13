@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ThemeContext} from '../context/theme/ThemeContext';
 
 interface Props {
   aviableColors: string[];
@@ -13,6 +14,9 @@ export const AviablesColors = ({
   setColorSelected,
   cantidad,
 }: Props) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   useEffect(() => {
     if (cantidad === 6) {
       return setColorSelected(aviableColors);
@@ -56,7 +60,9 @@ export const AviablesColors = ({
               style={{
                 ...styles.textBox,
                 backgroundColor: item,
-                borderColor: !colorSelected.includes(item) ? '#F3F3F3' : 'blue',
+                borderColor: !colorSelected.includes(item)
+                  ? '#F3F3F3'
+                  : '#4b4b4b',
               }}
             />
           ))}
@@ -82,8 +88,8 @@ const styles = StyleSheet.create({
     marginRight: 15,
 
     borderRadius: 100,
-    height: 25,
-    width: 25,
+    height: 30,
+    width: 30,
 
     justifyContent: 'center',
     alignItems: 'center',

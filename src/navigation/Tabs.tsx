@@ -100,7 +100,7 @@ export const Tabs = () => {
         name="Settings"
         component={SettingsStack}
         options={{
-          title: 'Perfil',
+          title: 'Ajustes',
           tabBarIcon: ({color}) => <Icon name="bars" size={24} color={color} />,
         }}
       />

@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   mainName: {
-    color: 'black',
+    color: 'white',
     fontSize: 40,
     alignSelf: 'flex-start',
   },

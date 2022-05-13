@@ -70,21 +70,21 @@ export default function SettingsOptions() {
   const sinOut = () => {
     setHandleOpt(0);
     setTitle('Cerrar sesión');
-    setBody('¿Estás seguro que deseas cerrar sesión?');
+    setBody('¿Deseas cerrar sesión?');
     setOpenModal(true);
   };
 
   const rastrearCompra = () => {
     setHandleOpt(2);
     setTitle('Rastrear mi Compra');
-    setBody('¿Desea ir a la página de Correos de Cuba?');
+    setBody('¿Desea visitar Correos de Cuba?');
     setOpenModal(true);
   };
 
   const irWhatsApp = () => {
     setHandleOpt(1);
     setTitle('Contáctanos vía WhatsApp');
-    setBody('¿Necesita ayuda de un administrador?');
+    setBody('¿Necesita ayuda de enCarga?');
     setOpenModal(true);
   };
   const selectedComponent = (key: Key) => {

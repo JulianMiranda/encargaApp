@@ -26,24 +26,42 @@ export default function SearchHistory(props: any) {
         showHistory ? styles.history : styles.hidden,
         {top: containerHeight},
       ]}>
+      <Text
+        style={{
+          color: '#000000',
+          fontSize: 16,
+          fontWeight: 'bold',
+          marginLeft: 10,
+          marginTop: 15,
+        }}>
+        Búsquedas Recientes
+      </Text>
       {history &&
         history.map((item: any, index: any) => (
-          <TouchableWithoutFeedback
-            key={index}
-            onPress={() => onSearch(item.search)}>
-            <View style={styles.historyItem}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <AwesomeIcon name="history" size={16} color={'#53005f'} />
-                <Text style={styles.text}>{item.search}</Text>
+          <View key={index}>
+            <TouchableWithoutFeedback onPress={() => onSearch(item.search)}>
+              <View style={styles.historyItem}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <AwesomeIcon name="history" size={16} color={'#000000'} />
+                  <Text style={styles.text}>{item.search}</Text>
+                </View>
+                <AwesomeIcon name="chevron-right" size={16} />
               </View>
-              <AwesomeIcon name="arrow-right" size={16} />
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+            <View
+              style={{
+                height: 1,
+                width: '90%',
+                alignSelf: 'center',
+                backgroundColor: '#f1f1f1',
+              }}
+            />
+          </View>
         ))}
     </View>
   );
@@ -72,9 +90,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#53005f',
+    color: '#000000',
     fontSize: 16,
-    fontWeight: 'bold',
     marginLeft: 5,
   },
 });
