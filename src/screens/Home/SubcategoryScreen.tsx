@@ -39,27 +39,20 @@ export const SubcategoryScreen = (props: Props) => {
     images,
     price,
     priceGalore,
-    priceDiscount,
     priceGaloreDiscount,
+    priceDiscount,
     updatedAt,
     description,
     aviableSizes,
     aviableColors,
     weight,
   } = subcategory;
-  console.log(
-    name,
-    images,
-    price,
-    priceGalore,
-    priceDiscount,
-    priceGaloreDiscount,
-  );
   const {errorAddCar, clearErrorAdd, addCarLoading, setItem} =
     useContext(ShopContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  /* const priceDiscount = undefined; */
   const [isVisible, setIsVisible] = useState(false);
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
@@ -71,7 +64,6 @@ export const SubcategoryScreen = (props: Props) => {
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
   const days = diff / (1000 * 60 * 60 * 24);
-
   useEffect(() => {
     if (errorAddCar) {
       toast.show(errorAddCar, {
@@ -148,11 +140,18 @@ export const SubcategoryScreen = (props: Props) => {
                 style={{
                   ...styles.price,
 
-                  fontSize: priceDiscount !== 0 ? 18 : 26,
+                  fontSize: priceGaloreDiscount !== 0 ? 18 : 26,
 
                   textDecorationLine:
-                    priceDiscount !== 0 ? 'line-through' : 'none',
-                  color: priceDiscount !== 0 ? '#c0c0c0' : colors.primary,
+                    priceGaloreDiscount !== 0 &&
+                    typeof priceGaloreDiscount === 'number'
+                      ? 'line-through'
+                      : 'none',
+                  color:
+                    priceGaloreDiscount !== 0 &&
+                    typeof priceGaloreDiscount === 'number'
+                      ? '#c0c0c0'
+                      : colors.primary,
                   /* 
                   textDecorationColor: priceDiscount !== 0 ? 'red' : 'blue',
                   textDecorationStyle:
@@ -160,17 +159,18 @@ export const SubcategoryScreen = (props: Props) => {
                 }}>
                 {formatToCurrency(priceGalore)}
               </Text>
-              {priceDiscount !== 0 && (
-                <Text
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  style={{
-                    marginLeft: 10,
-                    ...styles.price,
-                    color: colors.primary,
-                  }}>
-                  {formatToCurrency(priceDiscount)}
-                </Text>
-              )}
+              {priceGaloreDiscount !== 0 &&
+                typeof priceGaloreDiscount === 'number' && (
+                  <Text
+                    // eslint-disable-next-line react-native/no-inline-styles
+                    style={{
+                      marginLeft: 10,
+                      ...styles.price,
+                      color: colors.primary,
+                    }}>
+                    {formatToCurrency(priceGaloreDiscount)}
+                  </Text>
+                )}
             </View>
 
             {priceGalore !== price && (
@@ -186,14 +186,19 @@ export const SubcategoryScreen = (props: Props) => {
                     ...styles.price,
                     fontSize: 18,
                     marginTop: 15,
-                    color: priceGaloreDiscount !== 0 ? '#c0c0c0' : 'black',
+                    color:
+                      priceDiscount !== 0 && typeof priceDiscount === 'number'
+                        ? '#c0c0c0'
+                        : 'black',
                     textDecorationLine:
-                      priceGaloreDiscount !== 0 ? 'line-through' : 'none',
+                      priceDiscount !== 0 && typeof priceDiscount === 'number'
+                        ? 'line-through'
+                        : 'none',
                   }}>
                   {formatToCurrency(price)}
                 </Text>
               )}
-              {priceGaloreDiscount !== 0 && (
+              {priceDiscount !== 0 && typeof priceDiscount === 'number' && (
                 <Text
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
@@ -203,7 +208,7 @@ export const SubcategoryScreen = (props: Props) => {
                     marginTop: 15,
                     marginLeft: 10,
                   }}>
-                  {formatToCurrency(priceGaloreDiscount)}
+                  {formatToCurrency(priceDiscount)}
                 </Text>
               )}
             </View>

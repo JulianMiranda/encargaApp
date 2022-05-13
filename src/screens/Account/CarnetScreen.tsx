@@ -7,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {BackButton} from '../../components/BackButton';
@@ -148,6 +147,7 @@ export const CarnetScreen = () => {
           right: 20,
         }}
       />
+
       <ModalAddCarnet
         title={title}
         body={body}
