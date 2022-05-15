@@ -31,8 +31,8 @@ const {width, height} = Dimensions.get('window');
 export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
 
-  const {user} = useContext(AuthContext);
-  const {categoryList} = useCategoryPaginated();
+  const {user} = useContext(AuthContext); /* 
+  const {categoryList} = useCategoryPaginated(); */
   const {
     isLoading,
     imagesPromo,
@@ -47,7 +47,7 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (!isLoading) {
       SplashScreen.hide();
-      PushNotification.configure({
+      /* PushNotification.configure({
         onRegister: function (token) {
           if (token.token) {
           }
@@ -78,7 +78,7 @@ export const HomeScreen = () => {
         popInitialNotification: true,
 
         requestPermissions: true,
-      });
+      }); */
     }
   }, [isLoading, user]);
 
@@ -115,7 +115,7 @@ export const HomeScreen = () => {
 
         <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Categorías</Text>
-          <CategoryCarousel data={categoryList} />
+          <CategoryCarousel />
         </View>
         <View style={{marginTop: 10}}>
           {offers.length > 0 && (

@@ -17,7 +17,7 @@ interface Props {
   category: Category;
 }
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 export const CategoryCard = ({category}: Props) => {
   const {
     theme: {colors},
@@ -36,16 +36,10 @@ export const CategoryCard = ({category}: Props) => {
       <View
         style={{
           ...styles.cardContainer,
-
-          /* justifyContent: 'flex-end', */
-          /* width: windowWidth * 0.6, */
-          /* backgroundColor: 'red' */
         }}>
-        <View style={{backgroundColor: '#f1f1f1', borderRadius: 10}}>
+        <View style={styles.cardInside}>
           <FadeInImage uri={category.image.url} style={styles.productImage} />
-          <Text style={{...styles.name, color: 'black', marginBottom: 10}}>
-            {category.name}
-          </Text>
+          <Text style={{...styles.name}}>{category.name}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -73,6 +67,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     top: 4,
     left: 10,
+    color: 'black',
+    marginBottom: 10,
   },
   productImage: {
     height: width * 0.7,
@@ -81,4 +77,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     resizeMode: 'cover',
   },
+  cardInside: {backgroundColor: '#f1f1f1', borderRadius: 10},
 });
