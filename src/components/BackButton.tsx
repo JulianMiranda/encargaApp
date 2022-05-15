@@ -15,7 +15,7 @@ export const BackButton = ({navigation, color = 'white'}: Props) => {
   const {top} = useSafeAreaInsets();
   return (
     <TouchableOpacity
-      onPress={() => navigation.pop()}
+      onPress={() => navigation.goBack()}
       activeOpacity={0.8}
       style={{
         ...styles.backButton,

@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useCategoryPaginated} from '../../hooks/useCategoryPaginated';
@@ -26,14 +27,21 @@ import api from '../../api/api';
 import {OfferCard} from '../../components/OfferCard';
 
 interface Props extends StackScreenProps<any, any> {}
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
 
   const {user} = useContext(AuthContext);
   const {categoryList} = useCategoryPaginated();
-  const {isLoading, imagesPromo, offers, mostSaleLastMonth, lastSubcategories} =
-    useHome();
+  const {
+    isLoading,
+    imagesPromo,
+    offers,
+    mostSaleLastMonth,
+    lastSubcategories,
+    errorHome,
+    loadHome,
+  } = useHome();
   const [openHeader, setOpenHeader] = useState(true);
 
   useEffect(() => {
@@ -99,14 +107,20 @@ export const HomeScreen = () => {
         />
       </View>
       <ScrollView>
-        <AutoSlider imagesPromo={imagesPromo} />
+        {imagesPromo.length > 0 ? (
+          <AutoSlider imagesPromo={imagesPromo} />
+        ) : (
+          <View style={{height: 100}} />
+        )}
 
         <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Categorías</Text>
           <CategoryCarousel data={categoryList} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>Rebajas 🛍 </Text>
+          {offers.length > 0 && (
+            <Text style={homeStyles.carouselTitles}>Rebajas 🛍 </Text>
+          )}
           {offers.map(offer => (
             <OfferCard offer={offer} key={offer.id} />
           ))}
@@ -116,21 +130,69 @@ export const HomeScreen = () => {
           <CarouselComponent data={mostSale} />
         </View> */}
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>Top Ventas 🔥</Text>
+          {mostSaleLastMonth.length > 0 && (
+            <Text style={homeStyles.carouselTitles}>Top Ventas 🔥</Text>
+          )}
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>Lo último ⚡</Text>
+          {lastSubcategories.length > 0 && (
+            <Text style={homeStyles.carouselTitles}>Lo último ⚡</Text>
+          )}
           <SubcategoryCarousel data={lastSubcategories} />
         </View>
 
         <View style={{height: 100}} />
+        {errorHome && (
+          <View
+            style={{
+              backgroundColor: 'transparent',
+            }}>
+            <Text style={{alignSelf: 'center', fontSize: 16}}>
+              No se pudo Cargar las rebajas
+            </Text>
+            <TouchableOpacity
+              onPress={loadHome}
+              style={{
+                height: 45,
+                width: 220,
+                marginTop: 15,
+                backgroundColor: '#fb2331',
+                borderRadius: 8,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 3,
+                },
+                shadowOpacity: 0.27,
+                elevation: 6,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Recargar
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {isLoading && (
+          <View
+            style={{
+              ...homeStyles.loading,
+              backgroundColor: 'white',
+              height: height,
+            }}>
+            <ActivityIndicator color={'red'} size={26} />
+          </View>
+        )}
       </ScrollView>
-      {isLoading && (
-        <View style={homeStyles.loading}>
-          <ActivityIndicator color={'red'} size={26} />
-        </View>
-      )}
     </>
   );
 };

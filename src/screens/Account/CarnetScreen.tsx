@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -7,36 +7,48 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {BackButton} from '../../components/BackButton';
+import {CarnetComponent} from '../../components/CarnetComponent';
 import {Fab} from '../../components/Fab';
 import {ModalAddCarnet} from '../../components/ModalAddCarnet';
+import {ModalEditCarnet} from '../../components/ModalEditCarnet';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useCarnets} from '../../hooks/useCarnets';
+import {Carnet} from '../../interfaces/CarnetResponse.interface';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
 export const CarnetScreen = () => {
-  const {carnets, isLoading} = useCarnets();
+  const {carnets, loadCarnets, deleteCarnet, isLoading} = useCarnets();
   const {
     theme: {colors},
   } = useContext(ThemeContext);
   const navigation = useNavigation();
 
   const [openModal, setOpenModal] = useState(false);
-  const [loadingModal, setLoadingModal] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [carnetEdit, setCarnetEdit] = useState<Partial<Carnet>>({});
 
   const addCarnet = () => {
     setTitle('Datos');
     setBody('');
+
     setOpenModal(true);
   };
+  const editCarnet = () => {
+    setOpenModalEdit(true);
+  };
+
   const confirmModal = () => {
     setOpenModal(false);
+    setOpenModalEdit(false);
+    setCarnetEdit({});
   };
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -120,12 +132,47 @@ export const CarnetScreen = () => {
             Carnets
           </Text>
         </View>
-        {/* <View style={{marginTop: 40}}>
-          {orders.map((order, index) => (
-            <OrderComponent key={index} singleOrder={order} />
+        <View
+          style={{
+            marginTop: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {carnets.map((carnet, index) => (
+            <View
+              key={index}
+              style={{
+                width: '90%',
+              }}>
+              <CarnetComponent carnet={carnet} />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => deleteCarnet(carnet.id)}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  padding: 5,
+                  backgroundColor: 'blue',
+                }}>
+                <Text style={{marginLeft: 3, fontSize: 18, color: 'red'}}>
+                  X
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  setCarnetEdit(carnet);
+                  editCarnet();
+                }}
+                style={{position: 'absolute', bottom: 3, right: 5}}>
+                <Text style={{marginLeft: 3, fontSize: 18, color: 'blue'}}>
+                  Editar...
+                </Text>
+              </TouchableOpacity>
+            </View>
           ))}
-          
-        </View> */}
+        </View>
         {isLoading && (
           <View
             style={{
@@ -153,9 +200,16 @@ export const CarnetScreen = () => {
         body={body}
         setBody={setBody}
         openModal={openModal}
-        isLoading={loadingModal}
         setOpenModal={setOpenModal}
         onConfirmModal={confirmModal}
+        loadCarnets={loadCarnets}
+      />
+
+      <ModalEditCarnet
+        carnetEdit={carnetEdit}
+        openModal={openModalEdit}
+        setOpenModal={setOpenModalEdit}
+        loadCarnets={loadCarnets}
       />
     </>
   );

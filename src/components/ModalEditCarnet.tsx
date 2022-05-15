@@ -20,24 +20,18 @@ import api from '../api/api';
 import {AuthContext} from '../context/auth/AuthContext';
 
 interface Props {
-  title: string;
-  body: string;
   openModal: boolean;
   setOpenModal: (action: boolean) => void;
-  onConfirmModal: () => void;
   loadCarnets: () => void;
-  setBody: (action: string) => void;
+  carnetEdit: Partial<Carnet>;
 }
 
 const {height, width} = Dimensions.get('window');
 
-export const ModalAddCarnet = ({
-  title,
-  body,
-  setBody,
+export const ModalEditCarnet = ({
+  carnetEdit,
   openModal,
   setOpenModal,
-  onConfirmModal,
   loadCarnets,
 }: Props) => {
   const {
@@ -45,6 +39,9 @@ export const ModalAddCarnet = ({
   } = useContext(ThemeContext);
 
   const {user} = useContext(AuthContext);
+  useEffect(() => {
+    console.log('carnetEdit', carnetEdit);
+  }, [carnetEdit]);
   const {
     name,
     firstLastName,
@@ -62,21 +59,22 @@ export const ModalAddCarnet = ({
     reparto,
     onChange,
   } = useForm<Partial<Carnet>>({
-    name: '',
-    firstLastName: '',
-    secondLastName: '',
-    carnet: '',
-    phoneNumber: '',
-    address: '',
-    municipio: '',
-    number: '',
-    provincia: '',
-    deparment: '',
-    firstAccross: '',
-    secondAccross: '',
-    floor: '',
-    reparto: '',
+    name: carnetEdit.name ? carnetEdit.name : 'Algo',
+    firstLastName: carnetEdit.firstLastName ? carnetEdit.firstLastName : '',
+    secondLastName: carnetEdit.secondLastName ? carnetEdit.secondLastName : '',
+    carnet: carnetEdit.carnet ? carnetEdit.carnet : '',
+    phoneNumber: carnetEdit.phoneNumber ? carnetEdit.phoneNumber : '',
+    address: carnetEdit.address ? carnetEdit.address : '',
+    municipio: carnetEdit.municipio ? carnetEdit.municipio : '',
+    number: carnetEdit.number ? carnetEdit.number : '',
+    provincia: carnetEdit.provincia ? carnetEdit.provincia : '',
+    deparment: carnetEdit.deparment ? carnetEdit.deparment : '',
+    firstAccross: carnetEdit.firstAccross ? carnetEdit.firstAccross : '',
+    secondAccross: carnetEdit.secondAccross ? carnetEdit.secondAccross : '',
+    floor: carnetEdit.floor ? carnetEdit.floor : '',
+    reparto: carnetEdit.reparto ? carnetEdit.reparto : '',
   });
+
   const uno = useRef<any>();
   const dos = useRef<any>();
   const tres = useRef<any>();
@@ -212,7 +210,7 @@ export const ModalAddCarnet = ({
           <ScrollView>
             {/* <View style={{flex: 1}}> */}
             <View style={{marginTop: 3}}>
-              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.title}>Datos</Text>
               <Text style={{fontSize: 14}}>Nombre(s)*</Text>
               <TextInput
                 placeholder="Jorge"

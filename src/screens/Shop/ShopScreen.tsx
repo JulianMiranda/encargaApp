@@ -21,6 +21,8 @@ import {DetailsShop} from '../../components/DetailsShop';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {FadeInImage} from '../../components/FadeInImage';
+import api from '../../api/api';
+import {useToast} from 'react-native-toast-notifications';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
@@ -49,6 +51,7 @@ export const ShopScreen = () => {
     confirmModal,
   } = useShop();
   const navigation = useNavigation();
+  const toast = useToast();
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const headerHeight = scrollY.interpolate({
@@ -72,7 +75,23 @@ export const ShopScreen = () => {
     outputRange: [-30, -30, -30, 5],
     extrapolate: 'clamp',
   });
-
+  const navigateSubcategory = async (id: string) => {
+    try {
+      const subcategory = await api.get(`/subcategories/getOne/${id}`);
+      navigation.navigate('SubcategoryScreen', {
+        subcategory: subcategory.data,
+      });
+    } catch (error) {
+      toast.show('Error al navegar al Producto', {
+        type: 'danger',
+        placement: 'top',
+        duration: 3000,
+        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+    }
+  };
   const sliders = [];
   /* for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
     sliders.push(
@@ -191,11 +210,15 @@ export const ShopScreen = () => {
 
         <View style={{marginLeft: 7, marginTop: 30}}>
           {car.map((carItem, index) => (
-            <ProductShop
+            <TouchableOpacity
               key={index}
-              subcategory={carItem.subcategory}
-              cantidad={carItem.cantidad}
-            />
+              activeOpacity={0.8}
+              onPress={() => navigateSubcategory(carItem.subcategory.id)}>
+              <ProductShop
+                subcategory={carItem.subcategory}
+                cantidad={carItem.cantidad}
+              />
+            </TouchableOpacity>
           ))}
 
           {car.length < 1 && (

@@ -11,11 +11,6 @@ export const AviableSizesSubcategory = ({
   sizeSelected,
   setSizeSelected,
 }: Props) => {
-  useEffect(() => {
-    if (aviableSizes && aviableSizes.length > 0) {
-      setSizeSelected(aviableSizes[0]);
-    }
-  }, []);
   if (!aviableSizes || aviableSizes.length === 0) {
     return null; /* (
       <>

@@ -10,13 +10,27 @@ export const useCarnets = () => {
 
   const loadCarnets = async () => {
     const body = {
-      filter: {user: ['=', user?.id]},
+      filter: {user: ['=', user?.id], status: ['=', true]},
     };
     try {
       const resp = await api.post<CarnetResponse>('/carnets/getList', body);
       setCarnets(resp.data.data);
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteCarnet = async (id: string) => {
+    setIsLoading(true);
+    try {
+      const resp = await api.put<boolean>(`/carnets/update/${id}`, {
+        status: false,
+      });
+      loadCarnets();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
       setIsLoading(false);
     }
   };
@@ -28,5 +42,7 @@ export const useCarnets = () => {
   return {
     isLoading,
     carnets,
+    loadCarnets,
+    deleteCarnet,
   };
 };

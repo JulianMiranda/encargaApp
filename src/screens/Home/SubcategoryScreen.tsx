@@ -64,6 +64,7 @@ export const SubcategoryScreen = (props: Props) => {
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
   const days = diff / (1000 * 60 * 60 * 24);
+
   useEffect(() => {
     if (errorAddCar) {
       toast.show(errorAddCar, {
@@ -78,7 +79,7 @@ export const SubcategoryScreen = (props: Props) => {
     }
   }, [clearErrorAdd, errorAddCar, toast]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (cantidad === 5 && priceGalore !== price) {
       toast.show('Puedes añadir 1 más y obtener precio de por mayor', {
         type: 'normal',
@@ -89,7 +90,7 @@ export const SubcategoryScreen = (props: Props) => {
         animationType: 'slide-in',
       });
     }
-  }, [cantidad, price, priceGalore, toast]);
+  }, [cantidad, price, priceGalore, toast]); */
 
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     if (cantidadRef > 0) {
@@ -97,16 +98,48 @@ export const SubcategoryScreen = (props: Props) => {
     }
   };
   const handleButton = () => {
-    const subcategoryUpd = {...subcategory};
+    if (
+      aviableSizes &&
+      aviableSizes.length > 0 &&
+      aviableSizes[0].talla !== 'Talla Única' &&
+      sizeSelected === undefined
+    ) {
+      toast.show('Seleccione al menos una Talla', {
+        type: 'danger',
+        placement: 'top',
+        duration: 3000,
+        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+      console.log('seleccione un Tamaño');
+    } else if (
+      aviableColors &&
+      aviableColors.length > 0 &&
+      colorSelected.length === 0
+    ) {
+      toast.show('Seleccione al menos un Color', {
+        type: 'danger',
+        placement: 'top',
+        duration: 3000,
+        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+      console.log('seleccione un color');
+    } else {
+      console.log('añadir');
 
-    if (sizeSelected) {
-      subcategoryUpd.weight = sizeSelected.peso;
+      const subcategoryUpd = {...subcategory};
+
+      if (sizeSelected) {
+        subcategoryUpd.weight = sizeSelected.peso;
+      }
+      if (colorSelected.length > 0) {
+        subcategoryUpd.aviableColors = colorSelected;
+      }
+      setItem({subcategory: subcategoryUpd, cantidad});
     }
-    if (colorSelected.length > 0) {
-      subcategoryUpd.aviableColors = colorSelected;
-    }
-    console.log('subcategoryUpd', subcategoryUpd);
-    setItem({subcategory: subcategoryUpd, cantidad});
   };
 
   return (
@@ -152,10 +185,6 @@ export const SubcategoryScreen = (props: Props) => {
                     typeof priceGaloreDiscount === 'number'
                       ? '#c0c0c0'
                       : colors.primary,
-                  /* 
-                  textDecorationColor: priceDiscount !== 0 ? 'red' : 'blue',
-                  textDecorationStyle:
-                    priceDiscount !== 0 ? 'dotted' : 'double', */
                 }}>
                 {formatToCurrency(priceGalore)}
               </Text>

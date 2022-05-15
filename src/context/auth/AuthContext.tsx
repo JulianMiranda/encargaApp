@@ -106,8 +106,6 @@ export const AuthProvider = ({children}: any) => {
       if (resp.status !== 200) {
         return dispatch({type: 'notAuthenticated'});
       }
-      console.log('usert', resp.data.user);
-
       await AsyncStorage.setItem('token', resp.data.token);
 
       dispatch({

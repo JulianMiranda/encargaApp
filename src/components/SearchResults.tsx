@@ -49,7 +49,6 @@ export const SearchResults = ({search}: Props) => {
       .post<SubcategoryResp>('/subcategories/getList', body)
 
       .then(response => {
-        console.log(response.data.data, 'responseApi');
         setProducts(response.data.data);
       })
       .catch(() => setProducts(null));

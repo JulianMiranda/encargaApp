@@ -10,10 +10,11 @@ export const useHome = () => {
   const [mostSaleLastMonth, setMostSaleLastMonth] = useState<any[]>([]);
   const [lastSubcategories, setLastSubcategories] = useState<any[]>([]);
   const [imagesPromo, setImagesPromo] = useState<string[]>([]);
+  const [errorHome, setErrorHome] = useState<boolean>(false);
 
   const loadHome = async () => {
     setIsLoading(true);
-
+    setErrorHome(false);
     try {
       const resp = await api.post<any>('/queries/home');
       const body = {
@@ -36,6 +37,7 @@ export const useHome = () => {
 
       setIsLoading(false);
     } catch (error) {
+      setErrorHome(true);
       setIsLoading(false);
     }
   };
@@ -51,5 +53,6 @@ export const useHome = () => {
     lastSubcategories,
     imagesPromo,
     loadHome,
+    errorHome,
   };
 };

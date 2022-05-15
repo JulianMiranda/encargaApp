@@ -12,7 +12,9 @@ export const CarouselComponent = ({data}: Props) => {
         keyExtractor={(category, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         horizontal
-        renderItem={({item}) => <SubcategoryCardHome item={item._id} />}
+        renderItem={({item}) => (
+          <SubcategoryCardHome item={item.mostSaleSubcategory} />
+        )}
       />
     </>
   );

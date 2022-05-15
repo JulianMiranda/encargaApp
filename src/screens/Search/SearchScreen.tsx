@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Animated, Keyboard, StyleSheet, View} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {
-  animatedTransition,
+  AnimatedIcon,
+  arrowAnimation,
   inputAnimation,
   inputAnimationWidth,
+  animatedTransition,
 } from '../../components/SearchAnimation';
 import {updateSearchHistory} from '../../utils/searchHistory';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -40,23 +42,26 @@ export const SearchScreen = () => {
     setFindResultsQuery(isReuse ? reuseSearch : searchQuery);
     setShowResults(true);
   };
-
+  const closeSearch = () => {
+    animatedTransition.reset();
+    Keyboard.dismiss();
+  };
   return (
     <>
       <View
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
-          paddingHorizontal: 20,
+          paddingHorizontal: 30,
           marginTop: top + 15,
         }}>
-        {/*   <AnimatedIcon
+        <AnimatedIcon
           name="arrow-left"
           size={20}
           style={[styles.backArrow, arrowAnimation]}
           onPress={() => {
-            console.log('back');
+            closeSearch();
           }}
-        /> */}
+        />
         <Animated.View style={[inputAnimation, {width: inputAnimationWidth}]}>
           <Searchbar
             placeholder="Busca tu producto"
