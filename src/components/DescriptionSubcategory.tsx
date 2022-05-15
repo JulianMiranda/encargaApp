@@ -63,7 +63,6 @@ export const DescriptionSubcategory = ({description}: Props) => {
           </View>
         ))}
       </View>
-      <View style={{backgroundColor: '#FAFAFA', height: 12}} />
     </>
   );
 };

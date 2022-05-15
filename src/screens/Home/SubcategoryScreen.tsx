@@ -24,6 +24,7 @@ import ScreenLoading from '../../components/LoadingSafe';
 import {BackButton} from '../../components/BackButton';
 import {useNavigation} from '@react-navigation/native';
 import {AviablesColors} from '../../components/AviablesColors';
+import {PricesView} from '../../components/PricesView';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SubcategoryScreen'> {}
@@ -78,6 +79,12 @@ export const SubcategoryScreen = (props: Props) => {
       clearErrorAdd();
     }
   }, [clearErrorAdd, errorAddCar, toast]);
+
+  useEffect(() => {
+    if (aviableSizes && aviableSizes.length > 0) {
+      setSizeSelected(aviableSizes[0]);
+    }
+  }, []);
 
   /* useEffect(() => {
     if (cantidad === 5 && priceGalore !== price) {
@@ -167,104 +174,16 @@ export const SubcategoryScreen = (props: Props) => {
                 updateCantidad={updateCantidad}
               />
             </View>
-            <View style={styles.rowView}>
-              <Text
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{
-                  ...styles.price,
-
-                  fontSize: priceGaloreDiscount !== 0 ? 18 : 26,
-
-                  textDecorationLine:
-                    priceGaloreDiscount !== 0 &&
-                    typeof priceGaloreDiscount === 'number'
-                      ? 'line-through'
-                      : 'none',
-                  color:
-                    priceGaloreDiscount !== 0 &&
-                    typeof priceGaloreDiscount === 'number'
-                      ? '#c0c0c0'
-                      : colors.primary,
-                }}>
-                {formatToCurrency(priceGalore)}
-              </Text>
-              {priceGaloreDiscount !== 0 &&
-                typeof priceGaloreDiscount === 'number' && (
-                  <Text
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    style={{
-                      marginLeft: 10,
-                      ...styles.price,
-                      color: colors.primary,
-                    }}>
-                    {formatToCurrency(priceGaloreDiscount)}
-                  </Text>
-                )}
-            </View>
-
-            {priceGalore !== price && (
-              <View style={styles.viewGalorePrice}>
-                <Text style={{}}>Precio por mayor</Text>
-              </View>
-            )}
-            <View style={styles.rowView}>
-              {priceGalore !== price && (
-                <Text
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  style={{
-                    ...styles.price,
-                    fontSize: 18,
-                    marginTop: 15,
-                    color:
-                      priceDiscount !== 0 && typeof priceDiscount === 'number'
-                        ? '#c0c0c0'
-                        : 'black',
-                    textDecorationLine:
-                      priceDiscount !== 0 && typeof priceDiscount === 'number'
-                        ? 'line-through'
-                        : 'none',
-                  }}>
-                  {formatToCurrency(price)}
-                </Text>
-              )}
-              {priceDiscount !== 0 && typeof priceDiscount === 'number' && (
-                <Text
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  style={{
-                    ...styles.price,
-                    color: 'black',
-                    fontSize: 18,
-                    marginTop: 15,
-                    marginLeft: 10,
-                  }}>
-                  {formatToCurrency(priceDiscount)}
-                </Text>
-              )}
-            </View>
-
-            {priceGalore !== price && (
-              <View style={styles.viewUnitPrice}>
-                <Text style={{}}>Precio por unidad</Text>
-              </View>
-            )}
-            <View style={styles.viewWeight}>
-              <Text
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{
-                  ...styles.aviableSizes,
-                  alignSelf: 'center',
-                  fontWeight: 'bold',
-                }}>
-                Peso
-              </Text>
-              <Text style={{...styles.aviableSizes, alignSelf: 'center'}}>
-                <Text style={styles.gramos}>
-                  {sizeSelected ? sizeSelected.peso : weight} gramos
-                </Text>
-              </Text>
-            </View>
+            <PricesView
+              price={price}
+              priceGalore={priceGalore}
+              priceGaloreDiscount={priceGaloreDiscount}
+              priceDiscount={priceDiscount}
+              sizeSelected={sizeSelected}
+              weight={weight}
+            />
           </View>
-          <View style={styles.divider} />
+          {/* <View style={styles.divider} /> */}
 
           <AviableSizesSubcategory
             aviableSizes={
@@ -335,21 +254,15 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginLeft: 5,
   },
-  price: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  priceGalore: {
-    fontSize: 18,
-  },
+
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 5,
   },
-  aviableSizes: {fontSize: 18},
-  gramos: {fontSize: 16},
   divider: {backgroundColor: '#FAFAFA', height: 12},
   loadingContainer: {
     position: 'absolute',
@@ -361,17 +274,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  rowView: {flexDirection: 'row', alignItems: 'center'},
-  viewGalorePrice: {
-    backgroundColor: '#fafafa',
-    padding: 3,
-  },
-  viewUnitPrice: {
-    backgroundColor: '#fafafa',
-    padding: 3,
-    marginBottom: 15,
-  },
-  viewWeight: {position: 'absolute', right: 30, top: 118},
   button: {
     position: 'absolute',
     right: -25,

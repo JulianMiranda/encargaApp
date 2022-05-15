@@ -98,5 +98,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     marginBottom: 5,
   },
-  divider: {backgroundColor: '#FAFAFA', height: 12},
+  divider: {
+    height: 2,
+    width: '99%',
+    alignSelf: 'center',
+    backgroundColor: '#f1f1f1',
+  },
 });

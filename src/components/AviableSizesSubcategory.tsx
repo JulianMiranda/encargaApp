@@ -12,16 +12,7 @@ export const AviableSizesSubcategory = ({
   setSizeSelected,
 }: Props) => {
   if (!aviableSizes || aviableSizes.length === 0) {
-    return null; /* (
-      <>
-        <View style={styles.container}>
-          <View style={styles.wrapContainer}>
-            <Text>Talla única</Text>
-          </View>
-        </View>
-        <View style={styles.divider} />
-      </>
-    ); */
+    return null;
   }
 
   return (
@@ -78,5 +69,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     marginBottom: 5,
   },
-  divider: {backgroundColor: '#FAFAFA', height: 12},
+  divider: {
+    height: 2,
+    width: '99%',
+    alignSelf: 'center',
+    backgroundColor: '#f1f1f1',
+  },
 });
