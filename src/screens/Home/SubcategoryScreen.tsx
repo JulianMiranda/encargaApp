@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
+    maxWidth: '70%',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 5,

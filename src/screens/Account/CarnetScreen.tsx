@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BackButton} from '../../components/BackButton';
 import {CarnetComponent} from '../../components/CarnetComponent';
 import {Fab} from '../../components/Fab';
@@ -153,11 +154,13 @@ export const CarnetScreen = () => {
                   top: 0,
                   right: 0,
                   padding: 5,
-                  backgroundColor: 'blue',
                 }}>
-                <Text style={{marginLeft: 3, fontSize: 18, color: 'red'}}>
-                  X
-                </Text>
+                <Icon
+                  name="close-circle-outline"
+                  size={26}
+                  color="red"
+                  style={{position: 'absolute', top: 5, right: 5}}
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}

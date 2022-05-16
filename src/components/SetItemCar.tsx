@@ -85,8 +85,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   leftContainer: {
-    backgroundColor: 'white',
-    borderColor: 'gray',
     paddingHorizontal: 12,
     paddingVertical: 3,
     borderTopLeftRadius: 20,
@@ -103,11 +101,11 @@ const styles = StyleSheet.create({
   },
   left: {fontSize: 22, fontWeight: 'bold', color: 'white'},
   numberContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
     borderWidth: 1,
-    paddingHorizontal: 7,
+    paddingHorizontal: 8,
     paddingVertical: 3,
-
+    marginHorizontal: -1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

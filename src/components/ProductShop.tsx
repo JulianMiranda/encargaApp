@@ -2,13 +2,21 @@ import React, {useContext} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {FadeInImage} from './FadeInImage';
 import {formatToCurrency} from '../utils/formatToCurrency';
-import {CarItemProps} from '../interfaces/Shop.Interface';
 import {SetItemCar} from './SetItemCar';
 import {Subcategory} from '../interfaces/Subcategory.interface';
 import {ShopContext} from '../context/shop/ShopContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const ProductShop = ({subcategory, cantidad}: CarItemProps) => {
+interface Props {
+  cantidad: number;
+  subcategory: Subcategory;
+  navigateSubcategory: (id: string) => void;
+}
+export const ProductShop = ({
+  subcategory,
+  cantidad,
+  navigateSubcategory,
+}: Props) => {
   const {price, priceGalore, images, name, weight} = subcategory;
 
   const {setItem, unsetItem} = useContext(ShopContext);
@@ -25,21 +33,38 @@ export const ProductShop = ({subcategory, cantidad}: CarItemProps) => {
           top: 0,
           right: 10,
           zIndex: 1,
+          padding: 20,
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
         }}
         onPress={() => unsetItem(subcategory)}>
-        <Icon name="close-circle-outline" size={26} color="red" />
+        <Icon
+          name="close-circle-outline"
+          size={26}
+          color="red"
+          style={{position: 'absolute', top: 5, right: 5}}
+        />
       </TouchableOpacity>
-      <FadeInImage uri={images[0].url} style={styles.image} />
+
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigateSubcategory(subcategory.id)}>
+        <FadeInImage uri={images[0].url} style={styles.image} />
+      </TouchableOpacity>
       <View style={styles.subContainer2}>
-        <Text numberOfLines={1} style={styles.name}>
-          {name}
-        </Text>
-        <Text>
-          {cantidad < 6
-            ? formatToCurrency(price)
-            : formatToCurrency(priceGalore)}
-        </Text>
-        <Text>{weight} g</Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigateSubcategory(subcategory.id)}>
+          <Text numberOfLines={1} style={styles.name}>
+            {name}
+          </Text>
+          <Text>
+            {cantidad < 6
+              ? formatToCurrency(price)
+              : formatToCurrency(priceGalore)}
+          </Text>
+          <Text>{weight} g</Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <SetItemCar
             subcategory={subcategory}
@@ -69,9 +94,10 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   image: {height: 100, width: 90, flex: 2, alignSelf: 'flex-start'},
-  subContainer2: {flex: 6},
+  subContainer2: {flex: 6, paddingLeft: 5},
   name: {fontSize: 18, marginRight: 50},
   buttonContainer: {
+    zIndex: 999999999,
     flex: 1,
     alignSelf: 'flex-end',
     marginTop: -10,

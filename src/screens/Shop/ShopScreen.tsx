@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -93,15 +93,16 @@ export const ShopScreen = () => {
     }
   };
   const sliders = [];
-  /* for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
+  for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
     sliders.push(
       <CircularSliderComponent
+        key={i + 'oneandhalfkgPrice'}
         i={i}
         cantPaq={cantPaqOS.oneandhalfkgPrice}
         weigth={weigth}
       />,
     );
-  } */
+  }
 
   for (const paq in cantPaqOS) {
     if (paq !== 'oneandhalfkgPrice') {
@@ -129,6 +130,7 @@ export const ShopScreen = () => {
       for (let i = 0; i < cantPaqOS[paq]; i++) {
         sliders.push(
           <View
+            key={i + paq}
             style={{
               margin: 15,
             }}>
@@ -210,15 +212,12 @@ export const ShopScreen = () => {
 
         <View style={{marginLeft: 7, marginTop: 30}}>
           {car.map((carItem, index) => (
-            <TouchableOpacity
+            <ProductShop
               key={index}
-              activeOpacity={0.8}
-              onPress={() => navigateSubcategory(carItem.subcategory.id)}>
-              <ProductShop
-                subcategory={carItem.subcategory}
-                cantidad={carItem.cantidad}
-              />
-            </TouchableOpacity>
+              subcategory={carItem.subcategory}
+              cantidad={carItem.cantidad}
+              navigateSubcategory={navigateSubcategory}
+            />
           ))}
 
           {car.length < 1 && (
@@ -324,7 +323,7 @@ export const ShopScreen = () => {
                 car.length < 1
                   ? () => {}
                   : () =>
-                      navigation.navigate('CarnetScreen', {
+                      navigation.navigate('InputCarnetScreen', {
                         paquetes: cantPaqOS.oneandhalfkgPrice,
                       })
               }>
