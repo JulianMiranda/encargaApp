@@ -24,7 +24,7 @@ export const InfoScreen = () => {
         style={{...styles.button, backgroundColor: colors.primary}}
         activeOpacity={0.8}
         onPress={() => navigation.navigate('EnterPhoneScreen')}>
-        <Text style={styles.buttonText}>Comencemos</Text>
+        <Text style={styles.buttonText}>Comenzar</Text>
 
         <Icon name="arrow-right" color="white" size={24} style={styles.icon} />
       </TouchableOpacity>

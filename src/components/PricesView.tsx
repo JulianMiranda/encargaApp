@@ -117,7 +117,7 @@ export const PricesView = ({
 
           <View style={styles.viewGalorePrice}>
             <Text style={{color: 'black'}}>Precio por mayor</Text>
-            <Text
+            {/* <Text
               style={{
                 ...styles.aviableSizes,
                 marginRight: 25,
@@ -125,6 +125,36 @@ export const PricesView = ({
               }}>
               Peso
             </Text>
+            <Text
+              style={{
+                ...styles.aviableSizes,
+              }}>
+              <Text style={styles.gramos}>
+                {sizeSelected
+                  ? formatWeight(sizeSelected.peso)
+                  : formatWeight(weight)}
+              </Text>
+            </Text> */}
+            <View
+              style={{
+                position: 'absolute',
+                right: 10,
+                alignItems: 'center',
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  ...styles.aviableSizes,
+                  fontWeight: 'bold',
+                }}>
+                Peso: {''}
+              </Text>
+              <Text style={styles.gramos}>
+                {sizeSelected
+                  ? formatWeight(sizeSelected.peso)
+                  : formatWeight(weight)}
+              </Text>
+            </View>
           </View>
 
           <View style={styles.divider} />
@@ -156,7 +186,7 @@ export const PricesView = ({
                 {formatToCurrency(priceDiscount)}
               </Text>
             )}
-            <Text
+            {/* <Text
               style={{
                 ...styles.aviableSizes,
                 alignSelf: 'flex-end',
@@ -168,7 +198,7 @@ export const PricesView = ({
                   ? formatWeight(sizeSelected.peso)
                   : formatWeight(weight)}
               </Text>
-            </Text>
+            </Text> */}
           </View>
 
           <View style={styles.viewUnitPrice}>

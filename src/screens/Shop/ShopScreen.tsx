@@ -95,13 +95,37 @@ export const ShopScreen = () => {
   const sliders = [];
   for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
     sliders.push(
+      <View
+        key={i}
+        style={{
+          margin: 15,
+        }}>
+        <Image
+          source={require('../../assets/jaba.png')}
+          style={{height: 60, width: 60}}
+        />
+        <Text
+          style={{
+            alignSelf: 'center',
+            zIndex: 1000,
+            marginBottom: 3,
+
+            backgroundColor: '#f1f1f1',
+            borderBottomStartRadius: 10,
+            borderBottomEndRadius: 10,
+          }}>
+          1.5 Kg
+        </Text>
+      </View>,
+    );
+    /* sliders.push(
       <CircularSliderComponent
         key={i + 'oneandhalfkgPrice'}
         i={i}
         cantPaq={cantPaqOS.oneandhalfkgPrice}
         weigth={weigth}
       />,
-    );
+    ); */
   }
 
   for (const paq in cantPaqOS) {
@@ -133,20 +157,22 @@ export const ShopScreen = () => {
             key={i + paq}
             style={{
               margin: 15,
+              backgroundColor: '#f1f1f1',
+              borderBottomStartRadius: 10,
+              borderBottomEndRadius: 10,
             }}>
+            <Image
+              source={require('../../assets/boxclose.jpg')}
+              style={{height: 60, width: 60}}
+            />
             <Text
               style={{
-                position: 'absolute',
-                top: 30,
                 alignSelf: 'center',
                 zIndex: 1000,
+                marginBottom: 3,
               }}>
               {kg} Kg
             </Text>
-            <Image
-              source={require('../../assets/box.jpg')}
-              style={{height: 60, width: 60}}
-            />
           </View>,
         );
       }
@@ -187,7 +213,7 @@ export const ShopScreen = () => {
         </Animated.View>
       </Animated.View>
       <ScrollView
-        style={{flex: 1, marginBottom: 120}}
+        style={{flex: 1}}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
@@ -217,6 +243,7 @@ export const ShopScreen = () => {
               subcategory={carItem.subcategory}
               cantidad={carItem.cantidad}
               navigateSubcategory={navigateSubcategory}
+              totalPaqReCalc={totalPaqReCalc}
             />
           ))}
 
@@ -300,38 +327,51 @@ export const ShopScreen = () => {
             totalMoneyReCalc={totalMoneyReCalc}
           />
         )}
+        {car.length > 0 && (
+          <>
+            <TouchableOpacity
+              style={{...styles.button, backgroundColor: colors.card}}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('EnterPhoneScreen')}>
+              <Text style={styles.buttonText}>Continuar</Text>
+
+              <Icon
+                name="arrow-right"
+                color="white"
+                size={24}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+            {/* <View style={styles.emptyButton}>
+              <TouchableOpacity onPress={emptyCarConfirm}>
+                <Text style={{color: colors.card, fontSize: 14}}>Vaciar</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                ...styles.shopButton,
+                backgroundColor: colors.card,
+                marginLeft: 50,
+              }}>
+              <TouchableOpacity
+                activeOpacity={car.length < 1 ? 1 : 0.8}
+                onPress={
+                  car.length < 1
+                    ? () => {}
+                    : () =>
+                        navigation.navigate('InputCarnetScreen', {
+                          paquetes: cantPaqOS.oneandhalfkgPrice,
+                        })
+                }>
+                <Text style={{color: 'white', fontSize: 14}}>Comprar</Text>
+              </TouchableOpacity>
+            </View> */}
+          </>
+        )}
+        <View style={{height: 80}} />
       </ScrollView>
 
-      {car.length > 0 && (
-        <>
-          <View style={styles.emptyButton}>
-            <TouchableOpacity onPress={emptyCarConfirm}>
-              <Text style={{color: colors.card, fontSize: 14}}>Vaciar</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{
-              ...styles.shopButton,
-              backgroundColor: colors.card,
-              marginLeft: 50,
-            }}>
-            <TouchableOpacity
-              activeOpacity={car.length < 1 ? 1 : 0.8}
-              /*  onPress={car.length < 1 ? () => {} : makeShopFunction}> */
-              onPress={
-                car.length < 1
-                  ? () => {}
-                  : () =>
-                      navigation.navigate('InputCarnetScreen', {
-                        paquetes: cantPaqOS.oneandhalfkgPrice,
-                      })
-              }>
-              <Text style={{color: 'white', fontSize: 14}}>Comprar</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
       <ModalComponent
         title={title}
         body={body}
@@ -371,10 +411,6 @@ const styles = StyleSheet.create({
   shopButton: {
     width: 115,
     justifyContent: 'center',
-    position: 'absolute',
-    zIndex: 99999,
-    bottom: 75,
-    right: 50,
     alignContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -384,10 +420,7 @@ const styles = StyleSheet.create({
   emptyButton: {
     width: 115,
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 75,
     zIndex: 99999,
-    left: 50,
     alignContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -401,5 +434,31 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 26,
     fontWeight: '600',
+  },
+  icon: {position: 'absolute', right: 14, top: 10},
+  button: {
+    flexDirection: 'row',
+    marginTop: 1,
+    padding: 10,
+    paddingHorizontal: 50,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    marginBottom: 15,
+    width: '80%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    alignSelf: 'center',
+    color: 'white',
+    fontSize: 20,
+    marginHorizontal: 15,
   },
 });

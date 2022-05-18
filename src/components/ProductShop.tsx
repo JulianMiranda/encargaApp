@@ -6,9 +6,11 @@ import {SetItemCar} from './SetItemCar';
 import {Subcategory} from '../interfaces/Subcategory.interface';
 import {ShopContext} from '../context/shop/ShopContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {formatWeight} from '../utils/formatWeight';
 
 interface Props {
   cantidad: number;
+  totalPaqReCalc: number;
   subcategory: Subcategory;
   navigateSubcategory: (id: string) => void;
 }
@@ -16,6 +18,8 @@ export const ProductShop = ({
   subcategory,
   cantidad,
   navigateSubcategory,
+
+  totalPaqReCalc,
 }: Props) => {
   const {price, priceGalore, images, name, weight} = subcategory;
 
@@ -24,6 +28,7 @@ export const ProductShop = ({
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     setItem({subcategory: subcategoryRef, cantidad: cantidadRef});
   };
+  console.log(subcategory);
 
   return (
     <View style={styles.container}>
@@ -59,11 +64,11 @@ export const ProductShop = ({
             {name}
           </Text>
           <Text>
-            {cantidad < 6
-              ? formatToCurrency(price)
-              : formatToCurrency(priceGalore)}
+            {cantidad > 5 || totalPaqReCalc > 4
+              ? formatToCurrency(priceGalore)
+              : formatToCurrency(price)}
           </Text>
-          <Text>{weight} g</Text>
+          <Text>{formatWeight(weight * cantidad)}</Text>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <SetItemCar

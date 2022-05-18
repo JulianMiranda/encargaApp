@@ -42,7 +42,7 @@ export const SubcategoryScreen = (props: Props) => {
     priceGalore,
     priceGaloreDiscount,
     priceDiscount,
-    updatedAt,
+    createdAt,
     description,
     aviableSizes,
     aviableColors,
@@ -61,10 +61,10 @@ export const SubcategoryScreen = (props: Props) => {
   const [colorSelected, setColorSelected] = useState<string[]>([]);
 
   const toast = useToast();
-  const fechaInicio = new Date(updatedAt).getTime();
+  const fechaInicio = new Date(createdAt).getTime();
   const fechaFin = new Date().getTime();
   const diff = fechaFin - fechaInicio;
-  const days = diff / (1000 * 60 * 60 * 24);
+  const days = diff / (1000 * 60 * 60 * 14);
 
   useEffect(() => {
     if (errorAddCar) {
@@ -72,7 +72,13 @@ export const SubcategoryScreen = (props: Props) => {
         type: 'danger',
         placement: 'top',
         duration: 3000,
-        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        style: {
+          justifyContent: 'center',
+          marginTop: 30,
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          backgroundColor: colors.primary,
+        },
         textStyle: {fontSize: 16},
         animationType: 'slide-in',
       });
@@ -105,7 +111,7 @@ export const SubcategoryScreen = (props: Props) => {
     }
   };
   const handleButton = () => {
-    if (
+    /* if (
       aviableSizes &&
       aviableSizes.length > 0 &&
       aviableSizes[0].talla !== 'Talla Única' &&
@@ -120,18 +126,24 @@ export const SubcategoryScreen = (props: Props) => {
         animationType: 'slide-in',
       });
       console.log('seleccione un Tamaño');
-    } else if (
+    } else  */ if (
       aviableColors &&
       aviableColors.length > 0 &&
       colorSelected.length === 0
     ) {
-      toast.show('Seleccione al menos un Color', {
+      toast.show('Seleccione color', {
         type: 'danger',
-        placement: 'top',
+        placement: 'bottom',
         duration: 3000,
-        style: {width: '100%', justifyContent: 'center', marginTop: 30},
+        style: {
+          justifyContent: 'center',
+          marginBottom: 120,
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          backgroundColor: colors.primary,
+        },
         textStyle: {fontSize: 16},
-        animationType: 'slide-in',
+        animationType: 'zoom-in',
       });
       console.log('seleccione un color');
     } else {

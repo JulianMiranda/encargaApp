@@ -7,6 +7,7 @@ import api from '../../api/api';
 import {AuthContext} from '../auth/AuthContext';
 import {User} from '../../interfaces/User.interface';
 import {useToast} from 'react-native-toast-notifications';
+import {Dimensions} from 'react-native';
 
 type ShopContextProps = {
   addCarLoading: boolean;
@@ -30,6 +31,7 @@ const shopInicialState: ShopState = {
 export const ShopContext = createContext({} as ShopContextProps);
 
 export const ShopProvider = ({children}: any) => {
+  const {height} = Dimensions.get('window');
   const {status, user} = useContext(AuthContext);
   const [state, dispatch] = useReducer(shopReducer, shopInicialState);
   const toast = useToast();
@@ -67,17 +69,19 @@ export const ShopProvider = ({children}: any) => {
         });
         dispatch({type: 'update_item', payload: item});
         dispatch({type: 'add_car_loading', payload: false});
-        toast.show(
-          `Se añadió ${item.cantidad} ${item.subcategory.name} al carrito`,
-          {
-            type: 'normal',
-            placement: 'top',
-            duration: 3000,
-            style: {width: '100%', justifyContent: 'center', marginTop: 30},
-            textStyle: {fontSize: 16},
-            animationType: 'slide-in',
+        toast.show('Añadido al carrito', {
+          type: 'normal',
+          placement: 'top',
+          duration: 3000,
+          style: {
+            borderRadius: 50,
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            marginTop: height / 2,
           },
-        );
+          textStyle: {fontSize: 16},
+          animationType: 'zoom-in',
+        });
       } else {
         await api.post('/shop/setMyShop', {
           user: user!.id,
@@ -85,24 +89,26 @@ export const ShopProvider = ({children}: any) => {
         });
         dispatch({type: 'set_item', payload: item});
         dispatch({type: 'add_car_loading', payload: false});
-        toast.show(
-          `Se añadió ${item.cantidad} ${item.subcategory.name} al carrito`,
-          {
-            type: 'normal',
-            placement: 'top',
-            duration: 3000,
-            style: {width: '100%', justifyContent: 'center', marginTop: 30},
-            textStyle: {fontSize: 16},
-            animationType: 'slide-in',
+        toast.show('Añadido al carrito', {
+          type: 'normal',
+          placement: 'top',
+          duration: 3000,
+          style: {
+            borderRadius: 50,
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            marginTop: height / 2,
           },
-        );
+          textStyle: {fontSize: 16},
+          animationType: 'slide-in',
+        });
       }
     } catch (error) {
       console.log(error);
       dispatch({type: 'add_car_loading', payload: false});
       dispatch({
         type: 'error_add_car',
-        payload: 'Error al agregar al carrito, por favor intente nuevamente',
+        payload: 'Error al agregar al carrito, intente nuevamente',
       });
     }
   };

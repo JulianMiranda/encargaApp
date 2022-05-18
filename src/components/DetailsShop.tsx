@@ -21,15 +21,15 @@ export const DetailsShop = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.firstInfo}>
+      {/* <View style={styles.firstInfo}>
         <Text style={styles.textFirstInfo}>
           *Para su envío, la compra se embalará en paquetes de 1.5 kg con un
           costo de ${prices.oneandhalfkgPrice} por paquete.
         </Text>
-      </View>
+      </View> */}
       <View style={styles.secContainer}>
         <Text style={styles.txtPaq}>
-          Cantidad aproximada de paquetes:{'  '}
+          Paquetes aproximados 1.5 Kg:{'  '}
           <Text style={styles.txtPaq}> {totalPaqReCalc}</Text>
         </Text>
       </View>
@@ -96,20 +96,19 @@ export const DetailsShop = ({
 
       <View style={styles.threeCont}>
         <Text style={styles.txtThreeCont}>
-          *La cantidad aproximada de paquetes para el envío es calculada a
-          partir del peso aproximado de los productos, por lo que puede ser
-          diferente al realizar su compra.
+          *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar al
+          efectuarse la compra.
         </Text>
       </View>
-      <View style={{}}>
+      {/*  <View style={{}}>
         <Text style={styles.factContainer}>Factura:</Text>
       </View>
       <View style={styles.priceCont}>
         <Text style={styles.priceProd}>Precio productos:</Text>
         <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
-      </View>
-      <Factura totalPaqReCalc={totalPaqReCalc} />
-      <View style={styles.sendPrice}>
+      </View> */}
+      {/*  <Factura totalPaqReCalc={totalPaqReCalc} /> */}
+      {/* <View style={styles.sendPrice}>
         <Text style={styles.sendPriceTxt}>Precio envío:</Text>
         <Text style={styles.sendPriceTxtCalc}>
           {formatToCurrency(totalMoneyReCalc)}
@@ -120,7 +119,7 @@ export const DetailsShop = ({
         <Text style={styles.totalTxt}>
           {formatToCurrency(total + totalMoneyReCalc)}
         </Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -154,10 +153,11 @@ const styles = StyleSheet.create({
   },
   threeCont: {
     borderRadius: 8,
-    backgroundColor: '#FCB1B1',
+    backgroundColor: '#FFB0A5',
     padding: 10,
   },
   txtThreeCont: {
+    color: '#000000',
     marginLeft: 10,
     fontSize: 14,
     fontWeight: '400',

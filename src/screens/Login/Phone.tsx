@@ -117,7 +117,7 @@ export default function PhoneNumber(props: any) {
                   }
                 : () => {}
             }>
-            <Text style={loginStyles.textButton}>Continuemos</Text>
+            <Text style={loginStyles.textButton}>Continuar</Text>
             <Icon
               name="arrow-right"
               color="white"

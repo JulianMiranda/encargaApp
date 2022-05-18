@@ -28,6 +28,7 @@ export const SuggestionsSearch = ({
 
   const searchSuggestions = async (search: string) => {
     const body = {
+      filter: {status: ['=', true]},
       docsPerPage: 5,
       sort: 'desc',
       search: {text: search, fields: ['name']},

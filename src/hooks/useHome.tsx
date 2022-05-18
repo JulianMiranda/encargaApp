@@ -18,6 +18,7 @@ export const useHome = () => {
     try {
       const resp = await api.post<any>('/queries/home');
       const body = {
+        filter: {status: ['=', true]},
         population: [
           {
             path: 'image',

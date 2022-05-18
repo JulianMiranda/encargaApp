@@ -100,36 +100,38 @@ export const useShop = () => {
       if (item.subcategory.weight < 1440) {
         totalWeight += item.cantidad * item.subcategory.weight;
       } else {
-        if (item.subcategory.weight > 1440 && item.subcategory.weight < 2000) {
+        console.log(item.subcategory.weight);
+        if (item.subcategory.weight > 1440 && item.subcategory.weight <= 2000) {
           kilos.twokgPrice = kilos.twokgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 1999 && item.subcategory.weight < 3000) {
+        if (item.subcategory.weight > 2000 && item.subcategory.weight <= 3000) {
           kilos.threekgPrice = kilos.threekgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 2999 && item.subcategory.weight < 4000) {
+        if (item.subcategory.weight > 3000 && item.subcategory.weight <= 4000) {
           kilos.fourkgPrice = kilos.fourkgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 3999 && item.subcategory.weight < 5000) {
+        if (item.subcategory.weight > 4000 && item.subcategory.weight <= 5000) {
           kilos.fivekgPrice = kilos.fivekgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 4999 && item.subcategory.weight < 6000) {
+        if (item.subcategory.weight > 5000 && item.subcategory.weight <= 6000) {
           kilos.sixkgPrice = kilos.sixkgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 5999 && item.subcategory.weight < 7000) {
+        if (item.subcategory.weight > 6000 && item.subcategory.weight <= 7000) {
           kilos.sevenkgPrice = kilos.sevenkgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 6999 && item.subcategory.weight < 8000) {
+        if (item.subcategory.weight > 7000 && item.subcategory.weight <= 8000) {
+          console.log('entro', item.subcategory.weight);
+
           kilos.eigthkgPrice = kilos.eigthkgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 7999 && item.subcategory.weight < 9000) {
+        if (item.subcategory.weight > 8000 && item.subcategory.weight <= 9000) {
           kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
         }
-        if (item.subcategory.weight > 8999) {
+        if (item.subcategory.weight > 9000) {
           kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
         }
       }
     });
-
     setTotal(totalCalc);
     setWeigth(totalWeight);
 
