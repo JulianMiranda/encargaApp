@@ -11,7 +11,7 @@ export const Factura = ({totalPaqReCalc}: Props) => {
   return (
     <>
       <View
-        style={{backgroundColor: '#E8E8E8', padding: 5, marginHorizontal: 10}}>
+        style={{backgroundColor: '#f9f9f9', padding: 5, marginHorizontal: 10}}>
         <View
           style={{
             flexDirection: 'row',
@@ -50,16 +50,17 @@ export const Factura = ({totalPaqReCalc}: Props) => {
                 ? formatToCurrency(subcategory.priceGalore)
                 : formatToCurrency(subcategory.price)}
             </Text>
-
-            <Text
+            <View
               style={{
                 flex: 2,
                 alignItems: 'center',
               }}>
-              {totalPaqReCalc > 4 || cantidad > 5
-                ? formatToCurrency(subcategory.priceGalore * cantidad)
-                : formatToCurrency(subcategory.price * cantidad)}
-            </Text>
+              <Text>
+                {totalPaqReCalc > 4 || cantidad > 5
+                  ? formatToCurrency(subcategory.priceGalore * cantidad)
+                  : formatToCurrency(subcategory.price * cantidad)}
+              </Text>
+            </View>
           </View>
         ))}
       </View>

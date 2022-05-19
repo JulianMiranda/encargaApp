@@ -28,7 +28,6 @@ export const ProductShop = ({
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
     setItem({subcategory: subcategoryRef, cantidad: cantidadRef});
   };
-  console.log(subcategory);
 
   return (
     <View style={styles.container}>

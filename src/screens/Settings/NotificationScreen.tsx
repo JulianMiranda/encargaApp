@@ -32,7 +32,6 @@ export const NotificationScreen = () => {
       const resp = await api.put(`/users/update/${user!.id}`, {
         reciveNotifications: reciveNot,
       });
-      console.log(resp.data);
 
       if (resp.status === 200) {
         const newUserProps = {...user, reciveNotifications: reciveNot};

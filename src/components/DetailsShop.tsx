@@ -21,116 +21,60 @@ export const DetailsShop = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      {/* <View style={styles.firstInfo}>
-        <Text style={styles.textFirstInfo}>
-          *Para su envío, la compra se embalará en paquetes de 1.5 kg con un
-          costo de ${prices.oneandhalfkgPrice} por paquete.
-        </Text>
-      </View> */}
-      <View style={styles.secContainer}>
-        <Text style={styles.txtPaq}>
-          Paquetes aproximados 1.5 Kg:{'  '}
-          <Text style={styles.txtPaq}> {totalPaqReCalc}</Text>
-        </Text>
-      </View>
-      {cantPaqOS.oneandhalfkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>1.5 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.oneandhalfkgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.twokgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>2 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.twokgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.threekgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>3 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.threekgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.fourkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>4 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.fourkgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.fivekgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>5 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.fivekgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.sixkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>6 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.sixkgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.sevenkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>7 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.sevenkgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.eigthkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>8 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.eigthkgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.ninekgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>9 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.ninekgPrice}</Text>
-        </View>
-      )}
-      {cantPaqOS.tenkgPrice !== 0 && (
-        <View style={styles.boxCant}>
-          <Text style={styles.txtPaq}>10 Kg</Text>
-          <Text style={styles.txtPaq}>{cantPaqOS.tenkgPrice}</Text>
-        </View>
-      )}
-
-      <View style={styles.threeCont}>
-        <Text style={styles.txtThreeCont}>
-          *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar al
-          efectuarse la compra.
-        </Text>
-      </View>
-      {/*  <View style={{}}>
-        <Text style={styles.factContainer}>Factura:</Text>
-      </View>
-      <View style={styles.priceCont}>
-        <Text style={styles.priceProd}>Precio productos:</Text>
-        <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
-      </View> */}
-      {/*  <Factura totalPaqReCalc={totalPaqReCalc} /> */}
-      {/* <View style={styles.sendPrice}>
-        <Text style={styles.sendPriceTxt}>Precio envío:</Text>
-        <Text style={styles.sendPriceTxtCalc}>
-          {formatToCurrency(totalMoneyReCalc)}
-        </Text>
-      </View>
-      <View style={styles.total}>
-        <Text style={styles.totalTitle}>Total:</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: 10,
+        }}>
+        <Text style={styles.factContainer}>Total:</Text>
         <Text style={styles.totalTxt}>
           {formatToCurrency(total + totalMoneyReCalc)}
         </Text>
-      </View> */}
+      </View>
+      <View style={styles.divider} />
+
+      <Factura totalPaqReCalc={totalPaqReCalc} />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: 10,
+          marginTop: 10,
+        }}>
+        <Text style={{...styles.factContainer, fontSize: 20}}>Subtotal:</Text>
+      </View>
+      <View style={styles.divider} />
+      <View
+        style={{
+          padding: 10,
+          alignItems: 'stretch',
+          justifyContent: 'space-between',
+        }}>
+        <View style={styles.priceCont}>
+          <Text style={styles.priceProd}>Precio productos:</Text>
+          <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
+        </View>
+        <View style={styles.sendPrice}>
+          <Text style={styles.sendPriceTxt}>Precio envío:</Text>
+          <Text style={styles.sendPriceTxtCalc}>
+            {formatToCurrency(totalMoneyReCalc)}
+          </Text>
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.total}>
+          <Text style={styles.totalTitle}>Total:</Text>
+          <Text style={styles.totalTxt}>
+            {formatToCurrency(total + totalMoneyReCalc)}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    margin: 15,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#FEFEFE',
-  },
+  container: {marginTop: 25},
   firstInfo: {
     borderRadius: 8,
     backgroundColor: '#FCB1B1',
@@ -163,7 +107,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   factContainer: {
-    marginTop: 30,
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -174,11 +117,11 @@ const styles = StyleSheet.create({
   },
   priceProd: {
     marginLeft: 5,
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '500',
   },
   txtTotal: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
   },
   sendPrice: {
@@ -187,12 +130,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sendPriceTxt: {
-    marginLeft: 10,
-    fontSize: 22,
-    fontWeight: '600',
+    marginLeft: 5,
+    fontSize: 18,
+    fontWeight: '500',
   },
   sendPriceTxtCalc: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: '600',
   },
   total: {
@@ -201,7 +144,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   totalTitle: {
-    marginLeft: 10,
     fontSize: 26,
     fontWeight: '600',
   },
@@ -214,5 +156,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  divider: {
+    height: 2,
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: '#f1f1f1',
   },
 });

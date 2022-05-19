@@ -100,7 +100,6 @@ export const useShop = () => {
       if (item.subcategory.weight < 1440) {
         totalWeight += item.cantidad * item.subcategory.weight;
       } else {
-        console.log(item.subcategory.weight);
         if (item.subcategory.weight > 1440 && item.subcategory.weight <= 2000) {
           kilos.twokgPrice = kilos.twokgPrice + item.cantidad;
         }
@@ -120,8 +119,6 @@ export const useShop = () => {
           kilos.sevenkgPrice = kilos.sevenkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 7000 && item.subcategory.weight <= 8000) {
-          console.log('entro', item.subcategory.weight);
-
           kilos.eigthkgPrice = kilos.eigthkgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 8000 && item.subcategory.weight <= 9000) {
