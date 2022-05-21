@@ -1,0 +1,39 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-authphone-dev-191923-authRole",
+      "UnauthRoleArn": "arn:aws:iam::174491001014:role/amplify-authphone-dev-191923-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::174491001014:role/amplify-authphone-dev-191923-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-authphone-dev-191923-deployment",
+      "UnauthRoleName": "amplify-authphone-dev-191923-unauthRole",
+      "StackName": "amplify-authphone-dev-191923",
+      "StackId": "arn:aws:cloudformation:us-east-1:174491001014:stack/amplify-authphone-dev-191923/05954690-d0c0-11ec-b6ee-12a71a1a2721",
+      "AmplifyAppId": "domhxf9m7tleq",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-authphone-dev-191923-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "AuthPhone": {}
+      },
+      "function": {
+        "AuthPhoneCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-authphone-dev-191923-deployment",
+          "s3Key": "amplify-builds/AuthPhoneCreateAuthChallenge-6843504a6c3979744b55-build.zip"
+        },
+        "AuthPhoneDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-authphone-dev-191923-deployment",
+          "s3Key": "amplify-builds/AuthPhoneDefineAuthChallenge-66665a5653396d473862-build.zip"
+        },
+        "AuthPhonePreSignup": {
+          "deploymentBucketName": "amplify-authphone-dev-191923-deployment",
+          "s3Key": "amplify-builds/AuthPhonePreSignup-434b4e772f7a49527342-build.zip"
+        },
+        "AuthPhoneVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-authphone-dev-191923-deployment",
+          "s3Key": "amplify-builds/AuthPhoneVerifyAuthChallengeResponse-7949477371796f627535-build.zip"
+        }
+      }
+    }
+  }
+}
