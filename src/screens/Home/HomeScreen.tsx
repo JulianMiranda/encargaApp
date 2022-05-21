@@ -42,7 +42,6 @@ export const HomeScreen = () => {
     errorHome,
     loadHome,
   } = useHome();
-  const [openHeader, setOpenHeader] = useState(true);
 
   useEffect(() => {
     if (!isLoading) {

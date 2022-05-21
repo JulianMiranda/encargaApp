@@ -16,7 +16,6 @@ export const useHome = () => {
     setIsLoading(true);
     setErrorHome(false);
     try {
-      const resp = await api.post<any>('/queries/home');
       const body = {
         filter: {status: ['=', true]},
         population: [
@@ -28,7 +27,11 @@ export const useHome = () => {
           },
         ],
       };
-      const promos = await api.post<PromoResponse>('/promotions/getList', body);
+      const [promos, resp] = await Promise.all([
+        api.post<PromoResponse>('/promotions/getList', body),
+        api.post<any>('/queries/home'),
+      ]);
+
       const images = promos.data.data.map((promo: Datum) => promo.image.url);
       setImagesPromo(images);
 
