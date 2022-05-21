@@ -33,7 +33,9 @@ export const shopReducer = (
         ...state,
         car: [
           ...state.car.filter(
-            item => item.subcategory.id !== action.payload.id,
+            item =>
+              JSON.stringify(item.subcategory) !==
+              JSON.stringify(action.payload),
           ),
         ],
       };
@@ -42,9 +44,12 @@ export const shopReducer = (
         ...state,
         car: [
           ...state.car.map(item => {
-            if (item.subcategory.id === action.payload.subcategory.id) {
+            if (
+              JSON.stringify(item.subcategory) ===
+              JSON.stringify(action.payload.subcategory)
+            ) {
               return {
-                cantidad: (item.cantidad = action.payload.cantidad),
+                cantidad: action.payload.cantidad,
                 subcategory: action.payload.subcategory,
               };
             } else {

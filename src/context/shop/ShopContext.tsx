@@ -58,18 +58,35 @@ export const ShopProvider = ({children}: any) => {
     try {
       console.log('setItem');
       dispatch({type: 'add_car_loading', payload: true});
-      const subcategoriesCar = state.car.map(carItem => carItem.subcategory.id);
-      if (subcategoriesCar.includes(item.subcategory.id)) {
+      let isAlreadyInCar = false;
+      let newCantidad = 0;
+      state.car.forEach(itemCar => {
+        if (
+          JSON.stringify(itemCar.subcategory) ===
+          JSON.stringify(item.subcategory)
+        ) {
+          isAlreadyInCar = true;
+          newCantidad = itemCar.cantidad + item.cantidad;
+        }
+      });
+      console.log('isAlreadyInCar', isAlreadyInCar);
+      console.log('newCantidad', newCantidad);
+      if (isAlreadyInCar) {
         const newState = state.car.filter(
-          carItem => carItem.subcategory.id !== item.subcategory.id,
+          carItem =>
+            JSON.stringify(carItem.subcategory) !==
+            JSON.stringify(item.subcategory),
         );
         await api.post('/shop/setMyShop', {
           user: user!.id,
-          car: [...newState, item],
+          car: [...newState, {...item, cantidad: newCantidad}],
         });
-        dispatch({type: 'update_item', payload: item});
+        dispatch({
+          type: 'update_item',
+          payload: {...item, cantidad: newCantidad},
+        });
         dispatch({type: 'add_car_loading', payload: false});
-        toast.show('Añadido al carrito', {
+        toast.show('Actualizado al carrito', {
           type: 'normal',
           placement: 'top',
           duration: 3000,
@@ -117,17 +134,46 @@ export const ShopProvider = ({children}: any) => {
     dispatch({type: 'error_add_car', payload: ''});
   };
 
-  const unsetItem = (item: Subcategory) => {
+  const unsetItem = async (item: Subcategory) => {
     try {
       console.log('deletin item');
-
+      dispatch({type: 'add_car_loading', payload: true});
       const newState = state.car.filter(
-        carItem => carItem.subcategory.id !== item.id,
+        carItem => JSON.stringify(carItem.subcategory) !== JSON.stringify(item),
       );
-      api.post('/shop/setMyShop', {user: user!.id, car: [...newState]});
+      await api.post('/shop/setMyShop', {user: user!.id, car: [...newState]});
       dispatch({type: 'unset_item', payload: item});
+      dispatch({type: 'add_car_loading', payload: false});
+      toast.show('Eliminado del carrito', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          justifyContent: 'center',
+          marginTop: height / 2,
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
     } catch (error) {
       console.log(error);
+
+      dispatch({type: 'add_car_loading', payload: false});
+      toast.show('Error al eliminar del carrito, intente más tarde', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          justifyContent: 'center',
+          marginTop: height / 2,
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
     }
   };
 

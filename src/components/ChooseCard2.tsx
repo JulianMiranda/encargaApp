@@ -25,7 +25,6 @@ export const ChooseCard2 = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginHorizontal: 20,
     height: width * 0.5,
     width: width * 0.5,
     borderRadius: 10,
@@ -36,8 +35,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
-    elevation: 5,
+    /* 
+    elevation: 5, */
   },
   productImage: {
     height: width * 0.5,

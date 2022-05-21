@@ -21,7 +21,15 @@ export const ProductShop = ({
 
   totalPaqReCalc,
 }: Props) => {
-  const {price, priceGalore, images, name, weight, aviableSizes} = subcategory;
+  const {
+    price,
+    priceGalore,
+    images,
+    name,
+    weight,
+    aviableSizes,
+    aviableColors,
+  } = subcategory;
 
   const {setItem, unsetItem} = useContext(ShopContext);
 
@@ -76,6 +84,58 @@ export const ProductShop = ({
           ) : (
             <Text>{formatWeight(weight * cantidad)}</Text>
           )}
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              maxWidth: '50%',
+              marginTop: 2,
+            }}>
+            {aviableColors &&
+              aviableColors.length > 0 &&
+              aviableColors.map((color, index) => (
+                <View
+                  key={color + index}
+                  style={{
+                    borderRadius: 100,
+                    height: 18,
+                    width: 18,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderColor: '#F3F3F3',
+                    borderWidth: 3,
+                    backgroundColor: color,
+                  }}
+                />
+              ))}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              maxWidth: '50%',
+              marginTop: 2,
+            }}>
+            {aviableSizes &&
+              aviableSizes.length > 0 &&
+              aviableSizes.map((size, index) => (
+                <View
+                  key={size.talla.toString() + index}
+                  style={{
+                    marginRight: 5,
+                    padding: 5,
+                    paddingHorizontal: 10,
+                    borderRadius: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    backgroundColor: '#ffffff',
+                    borderColor: 'black',
+                  }}>
+                  <Text>{size.talla}</Text>
+                </View>
+              ))}
+          </View>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <SetItemCar
