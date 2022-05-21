@@ -57,7 +57,7 @@ export const SubcategoryScreen = (props: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageIndex, setImageIndex] = useState(images[0]);
   const [cantidad, setCantidad] = useState(1);
-  const [sizeSelected, setSizeSelected] = useState<AviableSize>();
+  const [sizeSelected, setSizeSelected] = useState<AviableSize[]>([]);
   const [colorSelected, setColorSelected] = useState<string[]>([]);
 
   const toast = useToast();
@@ -84,14 +84,19 @@ export const SubcategoryScreen = (props: Props) => {
       });
       clearErrorAdd();
     }
-  }, [clearErrorAdd, errorAddCar, toast]);
+  }, [clearErrorAdd, colors.primary, errorAddCar, toast]);
 
   useEffect(() => {
     if (aviableSizes && aviableSizes.length > 0) {
-      setSizeSelected(aviableSizes[0]);
+      setSizeSelected([aviableSizes[0]]);
     }
   }, []);
 
+  useEffect(() => {
+    if (aviableColors && aviableColors.length === 1) {
+      setColorSelected(aviableColors);
+    }
+  }, []);
   /* useEffect(() => {
     if (cantidad === 5 && priceGalore !== price) {
       toast.show('Puedes añadir 1 más y obtener precio de por mayor', {
@@ -152,7 +157,7 @@ export const SubcategoryScreen = (props: Props) => {
       const subcategoryUpd = {...subcategory};
 
       if (sizeSelected) {
-        subcategoryUpd.weight = sizeSelected.peso;
+        subcategoryUpd.aviableSizes = sizeSelected;
       }
       if (colorSelected.length > 0) {
         subcategoryUpd.aviableColors = colorSelected;
@@ -201,6 +206,7 @@ export const SubcategoryScreen = (props: Props) => {
             aviableSizes={
               aviableSizes && aviableSizes.length > 0 ? aviableSizes : []
             }
+            cantidad={cantidad}
             sizeSelected={sizeSelected}
             setSizeSelected={setSizeSelected}
           />

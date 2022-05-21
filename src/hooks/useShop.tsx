@@ -98,7 +98,19 @@ export const useShop = () => {
         totalCalc += valor;
       }
       if (item.subcategory.weight < 1440) {
-        totalWeight += item.cantidad * item.subcategory.weight;
+        if (
+          item.subcategory.aviableSizes &&
+          item.subcategory.aviableSizes.length > 0
+        ) {
+          let sizeTotal = 0;
+          item.subcategory.aviableSizes.forEach(function (size) {
+            sizeTotal += parseInt(size.peso.toString(), 10);
+          });
+          const mediaWeight = sizeTotal / item.subcategory.aviableSizes.length;
+          totalWeight += item.cantidad * mediaWeight;
+        } else {
+          totalWeight += item.cantidad * item.subcategory.weight;
+        }
       } else {
         if (item.subcategory.weight > 1440 && item.subcategory.weight <= 2000) {
           kilos.twokgPrice = kilos.twokgPrice + item.cantidad;

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -14,6 +14,7 @@ import {AnimatedProgress} from '../../components/AnimatedProgress';
 import {ShopStepOne} from '../../components/ShopStepOne';
 import {ShopStepTwo} from '../../components/ShopStepTwo';
 import {ShopStepThree} from '../../components/ShopStepThree';
+import {ShopContext} from '../../context/shop/ShopContext';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
@@ -24,6 +25,7 @@ export const ShopScreen = () => {
     useShop();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [progress, setProgress] = useState(2);
+  const {car} = useContext(ShopContext);
 
   const headerHeight = scrollY.interpolate({
     inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
@@ -80,12 +82,12 @@ export const ShopScreen = () => {
 
   return (
     <>
-      <Animated.View
+      {/* <Animated.View
         style={{
           ...styles.animatedHeader,
           height: headerHeight,
           zIndex: headerZindex,
-          elevation: headerZindex, //required for android
+          elevation: headerZindex,
         }}>
         <Animated.View
           style={{
@@ -96,7 +98,6 @@ export const ShopScreen = () => {
         </Animated.View>
       </Animated.View>
       <ScrollView
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{flex: 1}}
         scrollEventThrottle={16}
         onScroll={Animated.event(
@@ -114,15 +115,75 @@ export const ShopScreen = () => {
             Mi Compra
           </Text>
         </View>
-        <View style={{marginTop: 50}}>
-          <AnimatedProgress progress={progress} barWidth={barWidth} />
-        </View>
+        {car.length > 0 && (
+          <>
+            <View style={{marginTop: 50}}>
+              <AnimatedProgress progress={progress} barWidth={barWidth} />
+            </View>
+          </>
+        )}
+        {progress === 2 && <ShopStepOne handleButton={handleButton} />}
+        {progress === 1 && <ShopStepTwo handleButton={handleButton} />}
+        {progress === 0 && <ShopStepThree handleButton={handleButton} />}
+        <View style={{height: 80}} />
+      </ScrollView> */}
+
+      <View
+        style={{
+          ...styles.headerContainer,
+        }}>
+        {progress === 2 && (
+          <Text
+            style={{
+              ...styles.titleList,
+            }}>
+            Mi Compra
+          </Text>
+        )}
+        {progress === 1 && (
+          <Text
+            style={{
+              ...styles.titleList,
+            }}>
+            Factura{' '}
+          </Text>
+        )}
+        {progress === 0 && (
+          <Text
+            style={{
+              ...styles.titleList,
+            }}>
+            Datos
+          </Text>
+        )}
+      </View>
+      {car.length > 0 && (
+        <>
+          <View
+            style={{
+              marginTop: 30,
+              backgroundColor: 'red',
+              zIndex: 999999,
+              marginBottom: 30,
+            }}>
+            <AnimatedProgress progress={progress} barWidth={barWidth} />
+          </View>
+        </>
+      )}
+      <ScrollView
+        style={{flex: 1}}
+
+        /*  scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: false},
+        )} */
+      >
         {progress === 2 && <ShopStepOne handleButton={handleButton} />}
         {progress === 1 && <ShopStepTwo handleButton={handleButton} />}
         {progress === 0 && <ShopStepThree handleButton={handleButton} />}
         <View style={{height: 80}} />
       </ScrollView>
-
       <ModalComponent
         title={title}
         body={body}
@@ -145,17 +206,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    height: 150,
+    backgroundColor: '#FFB0A5',
+    height: 100,
     overflow: 'hidden',
     zIndex: 999,
     alignItems: 'center',
-    borderBottomRightRadius: Platform.OS === 'ios' ? 1000 : 100,
-    borderBottomLeftRadius: 0,
   },
   titleList: {
     color: 'white',
     alignSelf: 'center',
-    marginTop: 60,
+    marginTop: 30,
     fontSize: 40,
   },
   headerTitle: {

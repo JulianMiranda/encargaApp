@@ -11,6 +11,10 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+
+  if (weigth < 2) {
+    return null;
+  }
   return (
     <View
       key={i}

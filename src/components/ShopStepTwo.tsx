@@ -1,5 +1,11 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {useShop} from '../hooks/useShop';
@@ -9,6 +15,7 @@ interface Props {
   handleButton: () => void;
 }
 
+const {height} = Dimensions.get('window');
 export const ShopStepTwo = ({handleButton}: Props) => {
   const {
     theme: {colors},
@@ -18,7 +25,7 @@ export const ShopStepTwo = ({handleButton}: Props) => {
     useShop();
   return (
     <>
-      <View style={{flex: 6, minHeight: 530}}>
+      <View style={{minHeight: height * 0.7}}>
         <DetailsShop
           cantPaqOS={cantPaqOS}
           prices={prices}
@@ -27,7 +34,7 @@ export const ShopStepTwo = ({handleButton}: Props) => {
           totalMoneyReCalc={totalMoneyReCalc}
         />
       </View>
-      <View style={{flex: 1}}>
+      <View style={{}}>
         <TouchableOpacity
           style={{...styles.button, backgroundColor: colors.card}}
           activeOpacity={0.8}

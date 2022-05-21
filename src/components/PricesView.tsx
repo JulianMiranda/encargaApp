@@ -11,7 +11,7 @@ interface Props {
   priceGaloreDiscount: number;
   priceDiscount: number;
   weight: number;
-  sizeSelected: AviableSize | undefined;
+  sizeSelected: AviableSize[] | undefined;
 }
 export const PricesView = ({
   price,
@@ -73,8 +73,8 @@ export const PricesView = ({
                 Peso: {''}
               </Text>
               <Text style={styles.gramos}>
-                {sizeSelected
-                  ? formatWeight(sizeSelected.peso)
+                {sizeSelected && sizeSelected.length > 0
+                  ? formatWeight(sizeSelected[0].peso)
                   : formatWeight(weight)}
               </Text>
             </View>
@@ -150,8 +150,8 @@ export const PricesView = ({
                 Peso: {''}
               </Text>
               <Text style={styles.gramos}>
-                {sizeSelected
-                  ? formatWeight(sizeSelected.peso)
+                {sizeSelected && sizeSelected.length > 0
+                  ? formatWeight(sizeSelected[0].peso)
                   : formatWeight(weight)}
               </Text>
             </View>

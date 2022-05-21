@@ -23,6 +23,12 @@ export const AviablesColors = ({
     }
   }, [aviableColors, cantidad, setColorSelected]);
 
+  /* useEffect(() => {
+    if (aviableColors && aviableColors.length === 1) {
+      return setColorSelected(aviableColors);
+    }
+  }, [aviableColors, cantidad, setColorSelected]); */
+
   useEffect(() => {
     if (cantidad < colorSelected.length) {
       setColorSelected(colorSelected);
@@ -35,6 +41,9 @@ export const AviablesColors = ({
 
   const handleColorSelected = (color: string) => {
     if (cantidad > 5) {
+      return;
+    }
+    if (aviableColors.length === 1) {
       return;
     }
     if (cantidad <= colorSelected.length) {

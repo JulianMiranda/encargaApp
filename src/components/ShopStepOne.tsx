@@ -14,7 +14,6 @@ import api from '../api/api';
 import {ShopContext} from '../context/shop/ShopContext';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {useShop} from '../hooks/useShop';
-import {DetailsShop} from './DetailsShop';
 import {JabaComponent} from './JabaComponent';
 import {PaqByKg} from './PaqByKg';
 import {ProductShop} from './ProductShop';
@@ -31,15 +30,7 @@ export const ShopStepOne = ({handleButton}: Props) => {
   } = useContext(ThemeContext);
 
   const {car} = useContext(ShopContext);
-  const {
-    weigth,
-    isLoading,
-    total,
-    totalPaqReCalc,
-    totalMoneyReCalc,
-    cantPaqOS,
-    prices,
-  } = useShop();
+  const {weigth, totalPaqReCalc, cantPaqOS} = useShop();
 
   const navigateSubcategory = async (id: string) => {
     try {
@@ -122,92 +113,95 @@ export const ShopStepOne = ({handleButton}: Props) => {
 
   return (
     <>
-      <View style={{marginLeft: 7, marginTop: 30}}>
-        {car.map((carItem, index) => (
-          <ProductShop
-            key={index}
-            subcategory={carItem.subcategory}
-            cantidad={carItem.cantidad}
-            navigateSubcategory={navigateSubcategory}
-            totalPaqReCalc={totalPaqReCalc}
-          />
-        ))}
-
-        {car.length < 1 && (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-              alignSelf: 'center',
-              height: height - 250,
-            }}>
-            <Image
-              source={require('../assets/cart.png')}
-              style={{height: 90, width: 110}}
+      <View style={{minHeight: height * 0.7}}>
+        <View style={{marginLeft: 7}}>
+          {car.map((carItem, index) => (
+            <ProductShop
+              key={index}
+              subcategory={carItem.subcategory}
+              cantidad={carItem.cantidad}
+              navigateSubcategory={navigateSubcategory}
+              totalPaqReCalc={totalPaqReCalc}
             />
-            <Text style={{marginTop: 10, fontSize: 16}}>
-              Tu carrito de compras está vacío
-            </Text>
+          ))}
 
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('HomeScreen')}
+          {car.length < 1 && (
+            <View
               style={{
-                backgroundColor: colors.card,
-                position: 'absolute',
-                bottom: 10,
-                flexDirection: 'row',
-                marginTop: 1,
-                padding: 10,
-                paddingHorizontal: 50,
-                alignSelf: 'center',
                 justifyContent: 'center',
-                borderRadius: 50,
-                marginBottom: 15,
-                width: '80%',
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
+                alignItems: 'center',
+                flex: 1,
+                alignSelf: 'center',
+                height: height - 250,
               }}>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  color: 'white',
-                  fontSize: 20,
-                  marginHorizontal: 15,
-                }}>
-                Ir a la tienda
-              </Text>
-              <Icon
-                name="arrow-right"
-                color="white"
-                size={24}
-                style={{position: 'absolute', right: 14, top: 10}}
+              <Image
+                source={require('../assets/cart.png')}
+                style={{height: 90, width: 110}}
               />
-            </TouchableOpacity>
+              <Text style={{marginTop: 10, fontSize: 16}}>
+                Tu carrito de compras está vacío
+              </Text>
+
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('HomeScreen')}
+                style={{
+                  backgroundColor: colors.card,
+                  position: 'absolute',
+                  bottom: 10,
+                  flexDirection: 'row',
+                  marginTop: 1,
+                  padding: 10,
+                  paddingHorizontal: 50,
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 50,
+                  marginBottom: 15,
+                  width: '80%',
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    color: 'white',
+                    fontSize: 20,
+                    marginHorizontal: 15,
+                  }}>
+                  Ir a la tienda
+                </Text>
+                <Icon
+                  name="arrow-right"
+                  color="white"
+                  size={24}
+                  style={{position: 'absolute', right: 14, top: 10}}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+        {car.length > 0 && (
+          <View style={{}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'flex-start',
+                padding: 10,
+              }}>
+              {sliders}
+            </View>
+
+            <PaqByKg />
           </View>
         )}
       </View>
-      <View style={{minHeight: height - 450}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'flex-start',
-            padding: 10,
-          }}>
-          {sliders}
-        </View>
-
-        <PaqByKg />
-      </View>
-
       {car.length > 0 && (
         <>
           <TouchableOpacity

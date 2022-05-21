@@ -21,7 +21,7 @@ export const ProductShop = ({
 
   totalPaqReCalc,
 }: Props) => {
-  const {price, priceGalore, images, name, weight} = subcategory;
+  const {price, priceGalore, images, name, weight, aviableSizes} = subcategory;
 
   const {setItem, unsetItem} = useContext(ShopContext);
 
@@ -67,7 +67,15 @@ export const ProductShop = ({
               ? formatToCurrency(priceGalore)
               : formatToCurrency(price)}
           </Text>
-          <Text>{formatWeight(weight * cantidad)}</Text>
+          {aviableSizes && aviableSizes.length > 0 ? (
+            <Text>
+              {formatWeight(
+                aviableSizes[aviableSizes.length - 1].peso * cantidad,
+              )}
+            </Text>
+          ) : (
+            <Text>{formatWeight(weight * cantidad)}</Text>
+          )}
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <SetItemCar

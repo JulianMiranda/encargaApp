@@ -1,5 +1,11 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {GetInputCarnet} from './GetInputCarnet';
@@ -8,13 +14,14 @@ interface Props {
   handleButton: () => void;
 }
 
+const {height} = Dimensions.get('window');
 export const ShopStepThree = ({handleButton}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
   return (
     <>
-      <View style={{flex: 6, minHeight: 480, marginTop: 50}}>
+      <View style={{minHeight: height * 0.7}}>
         <GetInputCarnet />
       </View>
 
