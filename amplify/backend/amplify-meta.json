@@ -1,0 +1,197 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sendsmssp-production-104500-authRole",
+      "UnauthRoleArn": "arn:aws:iam::174491001014:role/amplify-sendsmssp-production-104500-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::174491001014:role/amplify-sendsmssp-production-104500-authRole",
+      "Region": "sa-east-1",
+      "DeploymentBucketName": "amplify-sendsmssp-production-104500-deployment",
+      "UnauthRoleName": "amplify-sendsmssp-production-104500-unauthRole",
+      "StackName": "amplify-sendsmssp-production-104500",
+      "StackId": "arn:aws:cloudformation:sa-east-1:174491001014:stack/amplify-sendsmssp-production-104500/25a52c50-d9e6-11ec-873b-0a8441beb4da",
+      "AmplifyAppId": "drrant1luti38",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    }
+  },
+  "function": {
+    "SendSMSSPCreateAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-05-22T16:08:42.146Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-05-22T16:08:42.593Z",
+      "distZipFilename": "SendSMSSPCreateAuthChallenge-746956414c56796e3778-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-sendsmssp-production-104500-deployment",
+        "s3Key": "amplify-builds/SendSMSSPCreateAuthChallenge-746956414c56796e3778-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/function/SendSMSSPCreateAuthChallenge-cloudformation-template.json",
+        "logicalId": "functionSendSMSSPCreateAuthChallenge"
+      },
+      "lastPushTimeStamp": "2022-05-22T16:46:01.264Z",
+      "output": {
+        "Region": "sa-east-1",
+        "Arn": "arn:aws:lambda:sa-east-1:174491001014:function:SendSMSSPCreateAuthChallenge-production",
+        "Name": "SendSMSSPCreateAuthChallenge-production",
+        "LambdaExecutionRole": "SendSMSSPCreateAuthChallenge-production"
+      },
+      "lastPushDirHash": "u6VotX/mftDZ9BCRIgMyOj1AIVg="
+    },
+    "SendSMSSPDefineAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-05-22T16:08:42.162Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-05-22T16:08:42.627Z",
+      "distZipFilename": "SendSMSSPDefineAuthChallenge-4e415a5757654f646552-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-sendsmssp-production-104500-deployment",
+        "s3Key": "amplify-builds/SendSMSSPDefineAuthChallenge-4e415a5757654f646552-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/function/SendSMSSPDefineAuthChallenge-cloudformation-template.json",
+        "logicalId": "functionSendSMSSPDefineAuthChallenge"
+      },
+      "lastPushTimeStamp": "2022-05-22T16:46:01.284Z",
+      "output": {
+        "Region": "sa-east-1",
+        "Arn": "arn:aws:lambda:sa-east-1:174491001014:function:SendSMSSPDefineAuthChallenge-production",
+        "Name": "SendSMSSPDefineAuthChallenge-production",
+        "LambdaExecutionRole": "SendSMSSPDefineAuthChallenge-production"
+      },
+      "lastPushDirHash": "GlTmp/xn6vl//kBD4v/5DGnMIOc="
+    },
+    "SendSMSSPPreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-05-22T16:08:42.173Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-05-22T16:08:42.683Z",
+      "distZipFilename": "SendSMSSPPreSignup-31666c4b6957666f5530-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-sendsmssp-production-104500-deployment",
+        "s3Key": "amplify-builds/SendSMSSPPreSignup-31666c4b6957666f5530-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/function/SendSMSSPPreSignup-cloudformation-template.json",
+        "logicalId": "functionSendSMSSPPreSignup"
+      },
+      "lastPushTimeStamp": "2022-05-22T16:46:01.307Z",
+      "output": {
+        "Region": "sa-east-1",
+        "Arn": "arn:aws:lambda:sa-east-1:174491001014:function:SendSMSSPPreSignup-production",
+        "Name": "SendSMSSPPreSignup-production",
+        "LambdaExecutionRole": "SendSMSSPPreSignup-production"
+      },
+      "lastPushDirHash": "+PHmQI4Lpl0POZjXKzVjrhtUZdc="
+    },
+    "SendSMSSPVerifyAuthChallengeResponse": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-05-22T16:08:42.188Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-05-22T16:08:46.831Z",
+      "distZipFilename": "SendSMSSPVerifyAuthChallengeResponse-79367441384a4b2f764a-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-sendsmssp-production-104500-deployment",
+        "s3Key": "amplify-builds/SendSMSSPVerifyAuthChallengeResponse-79367441384a4b2f764a-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/function/SendSMSSPVerifyAuthChallengeResponse-cloudformation-template.json",
+        "logicalId": "functionSendSMSSPVerifyAuthChallengeResponse"
+      },
+      "lastPushTimeStamp": "2022-05-22T16:46:01.329Z",
+      "output": {
+        "Region": "sa-east-1",
+        "Arn": "arn:aws:lambda:sa-east-1:174491001014:function:SendSMSSPVerifyAuthChallengeResponse-production",
+        "Name": "SendSMSSPVerifyAuthChallengeResponse-production",
+        "LambdaExecutionRole": "SendSMSSPVerifyAuthChallengeResponse-production"
+      },
+      "lastPushDirHash": "SdGH33Rb82eNIt41tHGX1eGstaY="
+    }
+  },
+  "auth": {
+    "SendSMSSP": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "SendSMSSPCreateAuthChallenge",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "SendSMSSPDefineAuthChallenge",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "SendSMSSPPreSignup",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "SendSMSSPVerifyAuthChallengeResponse",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "customAuth": true,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "PHONE_NUMBER"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "PHONE_NUMBER"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-sendsmssp-production-104500-deployment/amplify-cfn-templates/auth/SendSMSSP-cloudformation-template.json",
+        "logicalId": "authSendSMSSP"
+      },
+      "lastPushTimeStamp": "2022-05-22T16:46:01.350Z",
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::174491001014:role/snsefffd0dd104500-production",
+        "UserPoolId": "sa-east-1_Dc4MUNUEC",
+        "AppClientIDWeb": "2cb153vi8qct24l2okpnsfrkgk",
+        "AppClientID": "1q6rs6eone65k5splghh4qan78",
+        "IdentityPoolId": "sa-east-1:5f2e30d0-fab7-42a7-b0a8-12b7aefcfc2b",
+        "UserPoolArn": "arn:aws:cognito-idp:sa-east-1:174491001014:userpool/sa-east-1_Dc4MUNUEC",
+        "IdentityPoolName": "SendSMSSP__production",
+        "UserPoolName": "SendSMSSP"
+      },
+      "lastPushDirHash": "cMmsna9nx7w2jwIEKQLsN5vnsMA="
+    }
+  }
+}
