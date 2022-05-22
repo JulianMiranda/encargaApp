@@ -10,6 +10,7 @@ import {Login} from '../../interfaces/Login.interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceCountry from 'react-native-device-country';
 import {Prices, PricesResponse} from '../../interfaces/Prices.interface';
+import {Auth} from 'aws-amplify';
 
 type AuthContextProps = {
   status: 'checking' | 'authenticated' | 'not-authenticated' | 'not-internet';
@@ -156,6 +157,8 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const logOut = async () => {
+    console.log('sinOut AWS');
+    Auth.signOut();
     AsyncStorage.removeItem('token');
     dispatch({type: 'utilityChoose'});
     dispatch({type: 'logout'});

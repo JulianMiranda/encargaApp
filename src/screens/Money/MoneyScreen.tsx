@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState} from 'react';
 import {
   Text,
@@ -16,10 +17,14 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useMoney} from '../../hooks/useMoney';
 import {ModalComponentMoney} from '../../components/ModalComponentMoney';
 import api from '../../api/api';
+import {useNavigation} from '@react-navigation/native';
+import {useToast} from 'react-native-toast-notifications';
 
 export const MoneyScreen = () => {
   const {prices, user, countryCode} = useContext(AuthContext);
   const {top} = useSafeAreaInsets();
+  const navigation = useNavigation();
+  const toast = useToast();
   const {
     setSenderFunction,
     setReciberFunction,
@@ -45,22 +50,38 @@ export const MoneyScreen = () => {
 
   const handleButton = () => {
     try {
-      const bodyPost = {
-        name: user?.name,
-        phone: user?.phone,
-        sender: sender,
-        reciber: reciber,
-        currency: currency,
-        countryCode: countryCode,
-      };
+      if (sender === '' || reciber === '') {
+        toast.show('Por favor, complete todos los campos', {
+          duration: 3000,
+          placement: 'top',
+          type: 'danger',
+          animationType: 'zoom-in',
+          style: {width: '100%', justifyContent: 'center', marginTop: 30},
+          textStyle: {
+            color: 'white',
+            fontSize: 16,
+            fontWeight: 'bold',
+          },
+        });
+      } else {
+        const bodyPost = {
+          name: user?.name,
+          phone: user?.phone,
+          sender: sender,
+          reciber: reciber,
+          currency: currency,
+          countryCode: countryCode,
+        };
 
-      api.post('/orders/newSendMoney', bodyPost);
+        /*  api.post('/orders/newSendMoney', bodyPost); */
+        navigation.navigate('CardScreen', {...bodyPost});
+      }
     } catch (error) {
       console.log(error);
     }
-    setTitle('Contáctanos vía WhatsApp');
+    /* setTitle('Contáctanos vía WhatsApp');
     setBody('Para realizar su remesa, contáctenos vía WhatsApp');
-    setOpenModal(true);
+    setOpenModal(true); */
   };
 
   const handleButtonHelp = () => {
@@ -239,7 +260,7 @@ export const MoneyScreen = () => {
           onPress={handleButtonHelp}
           style={styles.buttonHelp}>
           <Image
-            source={require(`../../assets/whatsapp.png`)}
+            source={require('../../assets/whatsapp.png')}
             style={{height: 60, width: 60}}
           />
           <Text style={{alignSelf: 'center', color: 'rgb(16,141,9)'}}>

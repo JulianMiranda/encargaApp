@@ -1,0 +1,2 @@
+export const stripePublicKey =
+  'pk_test_51L1ziOFEU9Nmrqwc146Dkz7E9Q74TsrWDLAusNfs1GOVd0bLjhvuVvXoouaN7SQ0LqtgjsTG6oLkbW38pqSEvvHg00V6oyYQ9F';

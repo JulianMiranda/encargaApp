@@ -5449,6 +5449,11 @@
     "combined-stream" "^1.0.6"
     "mime-types" "^2.1.12"
 
+"form-urlencoded@^1.5.1":
+  "integrity" "sha1-+2nRamRpNjs/2r+dJWo5p6XtLhM="
+  "resolved" "https://registry.npmjs.org/form-urlencoded/-/form-urlencoded-1.5.1.tgz"
+  "version" "1.5.1"
+
 "fragment-cache@^0.2.1":
   "integrity" "sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk="
   "resolved" "https://registry.npmjs.org/fragment-cache/-/fragment-cache-0.2.1.tgz"
@@ -9481,6 +9486,13 @@
   "integrity" "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig=="
   "resolved" "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz"
   "version" "3.1.1"
+
+"stripe-client@^1.1.5":
+  "integrity" "sha1-Seim88iE+pbV2AI8DUNrWO179xM="
+  "resolved" "https://registry.npmjs.org/stripe-client/-/stripe-client-1.1.5.tgz"
+  "version" "1.1.5"
+  dependencies:
+    "form-urlencoded" "^1.5.1"
 
 "strnum@^1.0.4":
   "integrity" "sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA=="
