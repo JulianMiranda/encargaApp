@@ -58,7 +58,7 @@ export default function Name(props: any) {
         value={name}
         onChangeText={setName}
         placeholder="Ejemplo: Juan Pérez"
-        style={{...loginStyles.inputName, color: 'black'}}
+        style={{...loginStyles.inputName, color: 'black', paddingLeft: 20}}
       />
 
       {loading ? (
@@ -67,13 +67,15 @@ export default function Name(props: any) {
         </View>
       ) : (
         <TouchableOpacity
-          activeOpacity={name.trim().length > 2 ? 0.8 : 1}
+          activeOpacity={name.trim().split(' ').length > 1 ? 0.8 : 1}
           style={{
             ...styles.button,
             backgroundColor:
-              name.trim().length > 2 ? colors.primary : '#f1b2b3',
+              name.trim().split(' ').length > 1 ? colors.primary : '#f1b2b3',
           }}
-          onPress={name.trim().length > 2 ? () => handleSave() : () => {}}>
+          onPress={
+            name.trim().split(' ').length > 1 ? () => handleSave() : () => {}
+          }>
           <Text style={styles.buttonText}>Guardar</Text>
           <Icon
             name="arrow-right"

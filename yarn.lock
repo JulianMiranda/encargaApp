@@ -1142,10 +1142,10 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.2.1.tgz"
   "version" "4.2.1"
 
-"@react-native-picker/picker@^1.16.0", "@react-native-picker/picker@^1.8.3", "@react-native-picker/picker@>= 1.0":
-  "integrity" "sha512-kQcL8U5CYQRgmNtlyhEH1BIp06Eaxhj7Lybd7rV4asd4Q90kCEm52b5x5WnE0J6WdVvC6sRzdcbPCb0s9yc4mQ=="
-  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.0.tgz"
-  "version" "1.16.0"
+"@react-native-picker/picker@^1.16.8", "@react-native-picker/picker@^1.8.3", "@react-native-picker/picker@>= 1.0":
+  "integrity" "sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
+  "version" "1.16.8"
 
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="

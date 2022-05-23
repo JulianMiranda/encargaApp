@@ -18,6 +18,9 @@ import {ScrollView} from 'react-native';
 import {useForm} from '../hooks/useForm';
 import api from '../api/api';
 import {AuthContext} from '../context/auth/AuthContext';
+import {provincias} from '../utils/provincias';
+import RNPickerSelect from 'react-native-picker-select';
+import {Picker} from '@react-native-picker/picker';
 
 interface Props {
   title: string;
@@ -33,11 +36,8 @@ const {height, width} = Dimensions.get('window');
 
 export const ModalAddCarnet = ({
   title,
-  body,
-  setBody,
   openModal,
   setOpenModal,
-  onConfirmModal,
   loadCarnets,
 }: Props) => {
   const {
@@ -109,7 +109,7 @@ export const ModalAddCarnet = ({
     floor: '',
     reparto: '',
   });
-
+  const [aviableMunicipios, setAviableMunicipios] = useState<any>([]);
   const onSave = async () => {
     const carnetRegex = new RegExp(/^([0-9])*$/);
 
@@ -129,10 +129,10 @@ export const ModalAddCarnet = ({
       setError({...error, address: 'La dirección es obligatoria'});
     } else if (number?.trim() === '') {
       setError({...error, number: 'El número de la casa es obligatorio'});
-    } else if (municipio?.trim() === '') {
-      setError({...error, municipio: 'El municipio es obligatorio'});
     } else if (provincia?.trim() === '') {
       setError({...error, provincia: 'La provincia es obligatoria'});
+    } else if (municipio?.trim() === '') {
+      setError({...error, municipio: 'El municipio es obligatorio'});
     } else if (phoneNumber?.trim() === '') {
       setError({...error, phoneNumber: 'El teléfono es obligatorio'});
     } else if (
@@ -199,6 +199,16 @@ export const ModalAddCarnet = ({
       setIsVisible(false);
     }
   }, [openModal]);
+
+  useEffect(() => {
+    if (provincia?.trim() !== '' && provincia !== undefined) {
+      const municipios = provincias.filter(
+        province => province.nombre === provincia.trim(),
+      );
+      const value = municipios[0].municipios[0];
+      onChange(value, 'municipio');
+    }
+  }, [provincia]);
   return (
     <Modal
       animationType="fade"
@@ -443,12 +453,11 @@ export const ModalAddCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Municipio</Text>
-                <TextInput
+                <Text style={{fontSize: 14}}>Provincia</Text>
+                {/* <TextInput
                   ref={nueve}
                   onSubmitEditing={() => diez.current.focus()}
                   placeholder="Cabaiguán"
-                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
                     height: 40,
@@ -466,41 +475,86 @@ export const ModalAddCarnet = ({
                       clearError();
                     }
                   }}
-                />
-                {error.municipio !== '' && (
+                /> */}
+                <View style={{flex: 1}}>
+                  <Picker
+                    style={{}}
+                    mode="dropdown"
+                    selectedValue={provincia}
+                    onValueChange={value => {
+                      if (error.provincia !== '') {
+                        clearError();
+                      }
+                      onChange(value, 'provincia');
+
+                      const municipios = provincias.filter(
+                        province => province.nombre === value,
+                      );
+                      console.log(municipios[0].municipios);
+                      setAviableMunicipios(municipios[0].municipios); /* 
+                      onChange(municipios[0].municipios[0], 'municipio'); */
+                    }}>
+                    {provincias.map((province, index) => (
+                      <Picker.Item
+                        key={index}
+                        label={province.nombre}
+                        value={province.nombre}
+                      />
+                    ))}
+                  </Picker>
+                  <Text
+                    style={{
+                      width: '100%',
+                      height: 60,
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                    }}>
+                    {' '}
+                  </Text>
+                </View>
+                {error.provincia !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
-                    {error.municipio}
+                    {error.provincia}
                   </Text>
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Provincia</Text>
-                <TextInput
-                  ref={diez}
-                  onSubmitEditing={() => once.current.focus()}
-                  placeholder="Sancti-Spíritus"
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  style={{
-                    fontSize: 14,
-                    height: 40,
-                    borderColor: '#c1c1c1',
-                    borderWidth: 1,
-                    borderRadius: 8,
-                    top: Platform.OS === 'ios' ? 0 : 2,
-                  }}
-                  autoCapitalize="words"
-                  autoCorrect={false}
-                  value={provincia}
-                  onChangeText={value => {
-                    onChange(value, 'provincia');
-                    if (error.provincia !== '') {
-                      clearError();
-                    }
-                  }}
-                />
-                {error.provincia !== '' && (
+                <Text style={{fontSize: 14}}>Municipio</Text>
+
+                <View style={{flex: 1}}>
+                  <Picker
+                    style={{}}
+                    mode="dropdown"
+                    selectedValue={municipio}
+                    onValueChange={value => {
+                      if (error.municipio !== '') {
+                        clearError();
+                      }
+                      onChange(value, 'municipio');
+                    }}>
+                    {aviableMunicipios.map((municipioS: any, index: any) => (
+                      <Picker.Item
+                        key={index}
+                        label={municipioS}
+                        value={municipioS}
+                      />
+                    ))}
+                  </Picker>
+                  <Text
+                    style={{
+                      width: '100%',
+                      height: 60,
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                    }}>
+                    {' '}
+                  </Text>
+                </View>
+                {error.municipio !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
-                    {error.provincia}
+                    {error.municipio}
                   </Text>
                 )}
               </View>
@@ -668,5 +722,27 @@ const styles = StyleSheet.create({
     padding: 6,
     borderRadius: 8,
     paddingHorizontal: 12,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
