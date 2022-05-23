@@ -25,13 +25,10 @@ export const homeStyles = StyleSheet.create({
     marginBottom: 20,
   },
   loading: {
-    flex: 1,
-    height: '100%',
-    width: '100%',
     position: 'absolute',
     zIndex: 9999999999,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fafafa',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
 });

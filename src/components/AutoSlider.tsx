@@ -12,7 +12,7 @@ export const AutoSlider = ({imagesPromo}: Props) => {
       onCurrentImagePressed={(index: any) =>
         console.warn(`image ${index} pressed`)
       }
-      dotColor="white"
+      dotColor="#b0b0b0"
       imageLoadingColor="#fb2331"
       inactiveDotColor="#f1f1f1"
       paginationBoxVerticalPadding={20}
@@ -30,7 +30,7 @@ export const AutoSlider = ({imagesPromo}: Props) => {
 const styles = StyleSheet.create({
   paginationBox: {
     position: 'absolute',
-    bottom: 0,
+    bottom: -15,
     padding: 0,
     alignItems: 'center',
     alignSelf: 'center',

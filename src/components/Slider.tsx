@@ -1,8 +1,7 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {TouchableOpacity} from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
+import {StyleSheet} from 'react-native';
 import {Image, Image as PImage} from '../interfaces/Image.interface';
-import {FadeInImage} from './FadeInImage';
+import {SliderBox} from 'react-native-image-slider-box';
 
 interface Props {
   images: PImage[];
@@ -18,28 +17,26 @@ interface Item {
 }
 
 export const Slider = ({images, setIsVisible, setImageIndex}: Props) => {
-  const slides = images.map(image => {
-    return {
-      key: image.id,
-      image: image.url,
-    };
-  });
-
-  const _renderItem = ({item}: Item) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          setIsVisible(true);
-          setImageIndex({url: item.image, id: item.key});
-        }}>
-        <FadeInImage uri={item.image} style={{width: '100%', height: 400}} />
-      </TouchableOpacity>
-    );
-  };
+  const slides = images.map(image => image.url);
 
   return (
-    <AppIntroSlider
+    <>
+      <SliderBox
+        images={slides}
+        sliderBoxHeight={400}
+        onCurrentImagePressed={(item: any) => {
+          setIsVisible(true);
+          setImageIndex({url: slides[item], id: images[item].id});
+        }}
+        dotColor="#b0b0b0"
+        imageLoadingColor="#fb2331"
+        inactiveDotColor="#f1f1f1"
+        paginationBoxVerticalPadding={20}
+        paginationBoxStyle={styles.paginationBox}
+        dotStyle={styles.dot}
+        ImageComponentStyle={styles.image}
+      />
+      {/* <AppIntroSlider
       showPrevButton={false}
       showNextButton={false}
       activeDotStyle={{backgroundColor: 'white'}}
@@ -51,6 +48,31 @@ export const Slider = ({images, setIsVisible, setImageIndex}: Props) => {
       showDoneButton={false}
       renderNextButton={undefined}
       renderPrevButton={undefined}
-    />
+    /> */}
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  paginationBox: {
+    position: 'absolute',
+    bottom: -30,
+    padding: 0,
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 0,
+    padding: 0,
+    margin: 0,
+    backgroundColor: 'rgba(128, 128, 128, 0.92)',
+  },
+  image: {
+    width: '100%',
+  },
+});

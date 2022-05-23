@@ -48,27 +48,6 @@ export const ModalImages = ({isVisible, setIsVisible, images}: Props) => {
               <Icon name="close-circle-outline" size={26} color="white" />
             </TouchableOpacity>
           )}
-          renderImage={(image: ImageViewer) => {
-            return (
-              <View
-                style={{
-                  flex: 1,
-                  width: width,
-                  height: height,
-                }}>
-                <FadeInImage
-                  uri={image.source.uri}
-                  style={{
-                    flex: 1,
-                    width: width,
-                    height: height,
-                    resizeMode: 'stretch',
-                  }}
-                />
-              </View>
-              /*  <Text style={{color: 'white'}}> {JSON.stringify(image)}</Text> */
-            );
-          }}
           loadingRender={() => <ActivityIndicator color="black" size={32} />}
         />
       </Modal>

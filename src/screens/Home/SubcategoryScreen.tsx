@@ -11,7 +11,6 @@ import {
 import {ShopContext} from '../../context/shop/ShopContext';
 import {RootStackParams} from '../../navigation/HomeStack';
 import {ModalImages} from '../../components/ModalImages';
-import {formatToCurrency} from '../../utils/formatToCurrency';
 import {Slider} from '../../components/Slider';
 import {loginStyles} from '../../styles/loginTheme';
 import {ThemeContext} from '../../context/theme/ThemeContext';
@@ -22,7 +21,6 @@ import {AviableSizesSubcategory} from '../../components/AviableSizesSubcategory'
 import {useToast} from 'react-native-toast-notifications';
 import ScreenLoading from '../../components/LoadingSafe';
 import {BackButton} from '../../components/BackButton';
-import {useNavigation} from '@react-navigation/native';
 import {AviablesColors} from '../../components/AviablesColors';
 import {PricesView} from '../../components/PricesView';
 
@@ -266,7 +264,7 @@ const styles = StyleSheet.create({
     width: 75,
   },
   textContainer: {
-    marginTop: 10,
+    marginTop: 30,
   },
 
   name: {

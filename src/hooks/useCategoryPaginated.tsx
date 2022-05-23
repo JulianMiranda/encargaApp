@@ -13,7 +13,6 @@ export const useCategoryPaginated = () => {
     setIsLoading(true);
     const body = {
       filter: {status: ['=', true]},
-      docsPerPage: 4,
       page: nextPage.current,
       sort: {createdAt: 'ASC'},
       population: [

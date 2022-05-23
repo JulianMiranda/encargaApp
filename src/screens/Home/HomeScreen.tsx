@@ -181,17 +181,17 @@ export const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        {isLoading && (
-          <View
-            style={{
-              ...homeStyles.loading,
-              backgroundColor: 'white',
-              height: height,
-            }}>
-            <ActivityIndicator color={'red'} size={26} />
-          </View>
-        )}
       </ScrollView>
+      {isLoading && (
+        <View
+          style={{
+            ...homeStyles.loading,
+            top: top + height * 0.75,
+            width: '100%',
+          }}>
+          <ActivityIndicator color={'red'} size={36} />
+        </View>
+      )}
     </>
   );
 };

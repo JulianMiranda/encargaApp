@@ -8,12 +8,14 @@ interface Props {
   offer: Subcategory;
 }
 export const OfferCard = ({offer}: Props) => {
-  const {name, images, priceDiscount, price, priceGaloreDiscount} = offer;
+  const {name, images, priceDiscount, price, priceGalore, priceGaloreDiscount} =
+    offer;
   const navigation = useNavigation();
+
   const discount =
     priceDiscount && priceDiscount !== 0
-      ? (100 * priceDiscount) / price
-      : (100 * priceGaloreDiscount) / price;
+      ? (100 * (price - priceDiscount)) / price
+      : (100 * (priceGalore - priceGaloreDiscount)) / priceGalore;
   return (
     <TouchableOpacity
       activeOpacity={0.9}
