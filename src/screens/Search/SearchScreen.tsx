@@ -33,6 +33,7 @@ export const SearchScreen = () => {
 
   const onSearch = async (reuseSearch: any) => {
     const isReuse = typeof reuseSearch === 'string';
+    if (!isReuse && searchQuery === '') return;
     Keyboard.dismiss();
     !isReuse && (await updateSearchHistory(searchQuery));
     if (isReuse) {
@@ -43,7 +44,6 @@ export const SearchScreen = () => {
     setShowResults(true);
   };
   const closeSearch = () => {
-    animatedTransition.reset();
     Keyboard.dismiss();
   };
   return (

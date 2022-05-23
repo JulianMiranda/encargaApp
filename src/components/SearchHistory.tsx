@@ -26,16 +26,19 @@ export default function SearchHistory(props: any) {
         showHistory ? styles.history : styles.hidden,
         {top: containerHeight},
       ]}>
-      <Text
-        style={{
-          color: '#000000',
-          fontSize: 16,
-          fontWeight: 'bold',
-          marginLeft: 10,
-          marginTop: 15,
-        }}>
-        Búsquedas Recientes
-      </Text>
+      {history.length > 0 && (
+        <Text
+          style={{
+            color: '#000000',
+            fontSize: 16,
+            fontWeight: 'bold',
+            marginLeft: 10,
+            marginTop: 15,
+          }}>
+          Búsquedas Recientes
+        </Text>
+      )}
+
       {history &&
         history.map((item: any, index: any) => (
           <View key={index}>
