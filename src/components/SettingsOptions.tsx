@@ -50,10 +50,10 @@ export default function SettingsOptions() {
     }
   };
 
-  const closeSesion = () => {
+  const closeSesion = async () => {
     setOpenModal(false);
+    await emptyCar();
     logOut();
-    emptyCar();
   };
 
   const redirectWhatsapp = () => {

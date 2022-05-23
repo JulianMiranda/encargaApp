@@ -16,7 +16,7 @@ type ShopContextProps = {
   errorAddCar: string;
   setItem: (item: CarItemProps) => void;
   unsetItem: (item: Subcategory) => void;
-  emptyCar: () => void;
+  emptyCar: () => Promise<any>;
   removeAlert: () => void;
   clearErrorAdd: () => void;
   makeShop: (total: number, description: string) => void;
@@ -177,11 +177,12 @@ export const ShopProvider = ({children}: any) => {
     }
   };
 
-  const emptyCar = () => {
+  const emptyCar = async (): Promise<any> => {
     try {
       api.post('/shop/setMyShop', {user: user!.id, car: []});
       dispatch({type: 'empty_car'});
     } catch (error) {
+      console.log('Empty car error');
       console.log(error);
     }
   };

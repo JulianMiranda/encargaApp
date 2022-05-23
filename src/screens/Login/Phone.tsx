@@ -88,6 +88,7 @@ export default function PhoneNumber(props: any) {
                   placeholder: '0962914922',
                   autoFocus: true,
                   autoCompleteType: 'tel',
+                  paddingLeft: 15,
                 }}
                 autoFormat
                 flagStyle={loginStyles.flagStyle}
