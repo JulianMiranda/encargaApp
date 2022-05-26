@@ -58,12 +58,14 @@ export const OfferCard = ({offer}: Props) => {
             borderBottomWidth: 1,
             borderLeftWidth: 1,
             borderLeftColor: 'red', */,
+            borderTopLeftRadius: 20,
             borderBottomLeftRadius: 20,
-            paddingLeft: 7,
+            paddingLeft: 15,
+            paddingVertical: 1,
           }}>
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 20,
               color: '#fff',
               marginLeft: 3,
               marginRight: 3,

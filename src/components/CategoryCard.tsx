@@ -77,5 +77,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     resizeMode: 'cover',
   },
-  cardInside: {backgroundColor: '#f1f1f1', borderRadius: 10},
+  cardInside: {borderRadius: 10},
 });

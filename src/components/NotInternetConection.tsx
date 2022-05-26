@@ -21,8 +21,8 @@ export const NotInternetConection = () => {
         backgroundColor: 'white',
       }}>
       <Image
-        source={require('../assets/not-internet.png')}
-        style={{height: 150, width: 270, alignSelf: 'center'}}
+        source={require('../assets/nowifi.png')}
+        style={{height: 200, width: 200, alignSelf: 'center'}}
       />
       <TouchableOpacity
         onPress={refreshApp}
@@ -31,7 +31,7 @@ export const NotInternetConection = () => {
           width: 220,
           marginTop: 15,
           backgroundColor: '#fb2331',
-          borderRadius: 8,
+          borderRadius: 50,
           justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',

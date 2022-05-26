@@ -22,7 +22,6 @@ export const homeStyles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
   },
   loading: {
     position: 'absolute',

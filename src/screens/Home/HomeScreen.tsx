@@ -118,7 +118,17 @@ export const HomeScreen = () => {
         </View>
         <View style={{marginTop: 10}}>
           {offers.length > 0 && (
-            <Text style={homeStyles.carouselTitles}>Rebajas 🛍 </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text style={homeStyles.carouselTitles}>Rebajas </Text>
+              <Image
+                source={require('../../assets/porciento.jpg')}
+                style={{width: 35, height: 35}}
+              />
+            </View>
           )}
           {offers.map(offer => (
             <OfferCard offer={offer} key={offer.id} />
