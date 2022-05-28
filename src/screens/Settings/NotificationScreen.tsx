@@ -8,6 +8,8 @@ import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useToast} from 'react-native-toast-notifications';
 import {useNavigation} from '@react-navigation/native';
 import {BackButton} from '../../components/BackButton';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 export const NotificationScreen = () => {
   const {user, updateReciveNotifications} = useContext(AuthContext);
@@ -29,6 +31,9 @@ export const NotificationScreen = () => {
   const handleButton = async () => {
     try {
       setIsLoading(true);
+      if (reciveNot) {
+        await obteinToken();
+      }
       const resp = await api.put(`/users/update/${user!.id}`, {
         reciveNotifications: reciveNot,
       });
@@ -77,6 +82,41 @@ export const NotificationScreen = () => {
         animationType: 'slide-in',
       });
     }
+  };
+  const obteinToken = () => {
+    PushNotification.configure({
+      onRegister: async function (token) {
+        if (token.token) {
+          console.log('TOKEN:', token);
+
+          await api.put(`/users/update/${user!.id}`, {
+            notificationTokens: token.token,
+          });
+        }
+      },
+
+      onNotification: function (notification) {
+        console.log('NOTIFICATION:', notification);
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+      onAction: function (notification) {
+        console.log('ACTION:', notification.action);
+        console.log('NOTIFICATION:', notification);
+      },
+      onRegistrationError: function (err) {
+        console.error(err.message, err);
+      },
+
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      popInitialNotification: true,
+
+      requestPermissions: true,
+    });
   };
   return (
     <>
