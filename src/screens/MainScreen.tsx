@@ -21,7 +21,7 @@ export const MainScreen = () => {
     <>
       <TopScreen
         colors={colorsBG}
-        text={'Elija un servicio'}
+        text={'Servicios'}
         backButton={false}
         height={170}
       />

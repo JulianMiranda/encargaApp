@@ -21,6 +21,8 @@ import {AuthContext} from '../context/auth/AuthContext';
 import {provincias} from '../utils/provincias';
 import RNPickerSelect from 'react-native-picker-select';
 import {Picker} from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   title: string;
@@ -136,7 +138,7 @@ export const ModalAddCarnet = ({
     } else if (phoneNumber?.trim() === '') {
       setError({...error, phoneNumber: 'El teléfono es obligatorio'});
     } else if (
-      phoneNumber!.trim().length < 6 ||
+      phoneNumber!.trim().length < 8 ||
       !carnetRegex.test(phoneNumber!.trim().slice(1))
     ) {
       setError({...error, phoneNumber: 'Ingrese un teléfono válido'});
@@ -160,6 +162,22 @@ export const ModalAddCarnet = ({
           reparto,
           user: user?.id,
         });
+        /* 
+        onChange('', 'name');
+        onChange('', 'firstLastName');
+        onChange('', 'secondLastName');
+        onChange('', 'carnet');
+        onChange('', 'phoneNumber');
+        onChange('', 'address');
+        onChange('', 'municipio');
+        onChange('', 'number');
+        onChange('', 'provincia');
+        onChange('', 'deparment');
+        onChange('', 'firstAccross');
+        onChange('', 'secondAccross');
+        onChange('', 'floor');
+        onChange('', 'reparto'); */
+
         setIsLoading(false);
         setOpenModal(false);
         loadCarnets();
@@ -201,6 +219,14 @@ export const ModalAddCarnet = ({
   }, [openModal]);
 
   useEffect(() => {
+    onChange('La Habana', 'provincia');
+    const municipios = provincias.filter(
+      province => province.nombre === 'La Habana',
+    );
+    const value = municipios[0].municipios;
+    setAviableMunicipios(value);
+  }, []);
+  useEffect(() => {
     if (provincia?.trim() !== '' && provincia !== undefined) {
       const municipios = provincias.filter(
         province => province.nombre === provincia.trim(),
@@ -209,6 +235,8 @@ export const ModalAddCarnet = ({
       onChange(value, 'municipio');
     }
   }, [provincia]);
+  console.log('municipio', municipio);
+  console.log('provincia', provincia);
   return (
     <Modal
       animationType="fade"
@@ -219,13 +247,24 @@ export const ModalAddCarnet = ({
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           style={styles.shadowContainer}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.cancelButton}
+            onPress={closeModal}>
+            <IconMaterial
+              name="close-circle-outline"
+              color="red"
+              size={32}
+              style={{}}
+            />
+          </TouchableOpacity>
           <ScrollView>
             {/* <View style={{flex: 1}}> */}
             <View style={{marginTop: 3}}>
               <Text style={styles.title}>{title}</Text>
               <Text style={{fontSize: 14}}>Nombre(s)*</Text>
               <TextInput
-                placeholder="Jorge"
+                placeholder="Juan Carlos"
                 ref={uno}
                 onSubmitEditing={() => dos.current.focus()}
                 // eslint-disable-next-line react-native/no-inline-styles
@@ -254,9 +293,9 @@ export const ModalAddCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Apellido Paterno*</Text>
+                <Text style={{fontSize: 14}}>Primer Apellido*</Text>
                 <TextInput
-                  placeholder="Pérez"
+                  placeholder="Torres"
                   ref={dos}
                   onSubmitEditing={() => tres.current.focus()}
                   // eslint-disable-next-line react-native/no-inline-styles
@@ -285,11 +324,11 @@ export const ModalAddCarnet = ({
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Apellido Materno*</Text>
+                <Text style={{fontSize: 14}}>Segundo Apellido*</Text>
                 <TextInput
                   ref={tres}
                   onSubmitEditing={() => cuatro.current.focus()}
-                  placeholder="García"
+                  placeholder="Acosta"
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
@@ -317,7 +356,7 @@ export const ModalAddCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Carnet</Text>
+              <Text style={{fontSize: 14}}>Número de Carnet*</Text>
               <TextInput
                 ref={cuatro}
                 onSubmitEditing={() => cinco.current.focus()}
@@ -347,7 +386,7 @@ export const ModalAddCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Calle principal</Text>
+              <Text style={{fontSize: 14}}>Calle Principal*</Text>
               <TextInput
                 ref={cinco}
                 onSubmitEditing={() => seis.current.focus()}
@@ -378,11 +417,11 @@ export const ModalAddCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de casa</Text>
+              <Text style={{fontSize: 14}}>Número de Casa*</Text>
               <TextInput
                 ref={seis}
                 onSubmitEditing={() => siete.current.focus()}
-                placeholder="127"
+                placeholder="127A"
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
@@ -409,7 +448,7 @@ export const ModalAddCarnet = ({
 
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>1 Entre Calle Opcional</Text>
+                <Text style={{fontSize: 14}}>Entre Calle 1</Text>
                 <TextInput
                   ref={siete}
                   onSubmitEditing={() => ocho.current.focus()}
@@ -430,7 +469,7 @@ export const ModalAddCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>2 Entre Calle Opcional</Text>
+                <Text style={{fontSize: 14}}>Entre Calle 2</Text>
                 <TextInput
                   ref={ocho}
                   onSubmitEditing={() => nueve.current.focus()}
@@ -453,7 +492,7 @@ export const ModalAddCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Provincia</Text>
+                <Text style={{fontSize: 14}}>Provincia*</Text>
                 {/* <TextInput
                   ref={nueve}
                   onSubmitEditing={() => diez.current.focus()}
@@ -520,7 +559,7 @@ export const ModalAddCarnet = ({
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Municipio</Text>
+                <Text style={{fontSize: 14}}>Municipio*</Text>
 
                 <View style={{flex: 1}}>
                   <Picker
@@ -560,12 +599,12 @@ export const ModalAddCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Teléfono</Text>
+              <Text style={{fontSize: 14}}>Número de Teléfono*</Text>
               <TextInput
                 ref={once}
                 onSubmitEditing={() => doce.current.focus()}
                 keyboardType="phone-pad"
-                placeholder="+53 55213165"
+                placeholder="55213165"
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
@@ -593,7 +632,7 @@ export const ModalAddCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Departameno (Opcional)</Text>
+                <Text style={{fontSize: 14}}>Departameno</Text>
                 <TextInput
                   ref={doce}
                   onSubmitEditing={() => trece.current.focus()}
@@ -614,7 +653,7 @@ export const ModalAddCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Piso (Opcional)</Text>
+                <Text style={{fontSize: 14}}>Piso</Text>
                 <TextInput
                   ref={trece}
                   onSubmitEditing={() => catorce.current.focus()}
@@ -662,27 +701,67 @@ export const ModalAddCarnet = ({
               </View>
             )}
 
-            <View
+            {/*   <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 marginTop: 20,
-              }}>
-              <TouchableOpacity
+              }}> */}
+            {/* <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.cancelButton}
                 onPress={closeModal}>
                 <Text style={{color: '#000', fontSize: 16}}>Cancelar</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              <TouchableOpacity
+            {/*  <TouchableOpacity
                 activeOpacity={0.8}
                 style={{...styles.confirmButton, backgroundColor: colors.card}}
                 onPress={onSave}>
                 <Text style={{color: '#ffffff', fontSize: 16}}>Añadir</Text>
-              </TouchableOpacity>
-            </View>
+              </TouchableOpacity> */}
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                marginTop: 30,
+                padding: 10,
+                paddingHorizontal: 50,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                borderRadius: 50,
+                marginBottom: 30,
+                width: '80%',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                backgroundColor: colors.card,
+              }}
+              activeOpacity={0.8}
+              onPress={onSave}>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  color: 'white',
+                  fontSize: 20,
+                  marginHorizontal: 15,
+                }}>
+                Guardar
+              </Text>
+
+              <Icon
+                name="arrow-right"
+                color="white"
+                size={24}
+                style={{position: 'absolute', right: 14, top: 10}}
+              />
+            </TouchableOpacity>
+            {/*      </View> */}
             {/* </View> */}
           </ScrollView>
         </KeyboardAvoidingView>
@@ -712,10 +791,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancelButton: {
-    backgroundColor: '#eeebeb',
+    zIndex: 9999,
     padding: 6,
     borderRadius: 8,
     paddingHorizontal: 12,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   title: {fontSize: 20, fontWeight: 'bold', alignSelf: 'center'},
   confirmButton: {

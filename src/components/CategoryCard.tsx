@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
     resizeMode: 'cover',
   },
   cardInside: {borderRadius: 10},

@@ -121,32 +121,106 @@ export const HomeScreen = () => {
             <View
               style={{
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'center' /* 
+                borderTopWidth: 2,
+                borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: 'red',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 10,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
               }}>
-              <Text style={homeStyles.carouselTitles}>Rebajas </Text>
-              <Image
-                source={require('../../assets/porciento.jpg')}
-                style={{width: 35, height: 35}}
-              />
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                REBAJAS
+              </Text>
+              {/* <Image
+                source={require('../../assets/rebaja9.png')}
+                style={{width: 150, height: 45}}
+              /> */}
             </View>
           )}
           {offers.map(offer => (
             <OfferCard offer={offer} key={offer.id} />
           ))}
+          <View
+            style={{
+              height: 1,
+              width: '90%',
+              alignSelf: 'center',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
         </View>
         {/* <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Lo más vendido</Text>
           <CarouselComponent data={mostSale} />
         </View> */}
-        <View style={{marginTop: 10}}>
+        <View style={{marginTop: 40}}>
           {mostSaleLastMonth.length > 0 && (
-            <Text style={homeStyles.carouselTitles}>Top Ventas 🔥</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center' /* 
+              borderTopWidth: 2,
+              borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: '#F59622',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 10,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
+              }}>
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                TOP VENTAS
+              </Text>
+            </View>
           )}
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
-        <View style={{marginTop: 10}}>
+        <View style={{marginTop: 40}}>
           {lastSubcategories.length > 0 && (
-            <Text style={homeStyles.carouselTitles}>Lo último ⚡</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center' /* 
+            borderTopWidth: 2,
+            borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: '#76D573',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 20,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
+              }}>
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                LO ÚLTIMO
+              </Text>
+            </View>
           )}
           <SubcategoryCarousel data={lastSubcategories} />
         </View>

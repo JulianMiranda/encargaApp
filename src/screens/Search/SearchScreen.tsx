@@ -13,12 +13,14 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import SearchHistory from '../../components/SearchHistory';
 import {SuggestionsSearch} from '../../components/SuggestionsSearch';
 import {SearchResults} from '../../components/SearchResults';
+import {useNavigation} from '@react-navigation/native';
 
 export const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [findResultsQuery, setFindResultsQuery] = useState('');
   const {top} = useSafeAreaInsets();
+  const navigation = useNavigation();
   useEffect(() => {
     animatedTransition.start();
   }, []);
@@ -45,14 +47,18 @@ export const SearchScreen = () => {
   };
   const closeSearch = () => {
     Keyboard.dismiss();
+    navigation.navigate('Home');
   };
   return (
     <>
       <View
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
-          paddingHorizontal: 30,
+          flexDirection: 'row',
+          paddingHorizontal: 10,
           marginTop: top + 15,
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
         <AnimatedIcon
           name="arrow-left"
@@ -62,6 +68,7 @@ export const SearchScreen = () => {
             closeSearch();
           }}
         />
+
         <Animated.View style={[inputAnimation, {width: inputAnimationWidth}]}>
           <Searchbar
             placeholder="Busca tu producto"
@@ -110,9 +117,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   backArrow: {
-    position: 'absolute',
-    left: 0,
-    top: 15,
+    paddingTop: 5,
+    paddingLeft: 5,
     color: 'black',
     height: 30,
     width: 30,

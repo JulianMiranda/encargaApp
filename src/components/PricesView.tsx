@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   divider: {
-    height: 2,
+    height: 1,
     width: '99%',
     alignSelf: 'center',
     backgroundColor: '#f1f1f1',

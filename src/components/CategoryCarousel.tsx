@@ -13,9 +13,6 @@ interface Props {
 }
 export const CategoryCarousel = ({data}: Props) => {
   const {categoryList, loadCategories} = useCategoryPaginated();
-  useEffect(() => {
-    console.log(categoryList.length);
-  }, [categoryList]);
 
   return (
     <>

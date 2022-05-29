@@ -19,7 +19,6 @@ export const homeStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   carouselTitles: {
-    marginLeft: 10,
     fontSize: 24,
     fontWeight: 'bold',
   },
