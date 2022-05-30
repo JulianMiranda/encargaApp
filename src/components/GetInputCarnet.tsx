@@ -22,7 +22,11 @@ import {ModalAddCarnet} from './ModalAddCarnet';
 import {ModalEditCarnet} from './ModalEditCarnet';
 import {useShop} from '../hooks/useShop';
 
-export const GetInputCarnet = () => {
+interface Props {
+  setSelectedCarnet: (carnet: string[]) => void;
+  selectedCarnet: string[];
+}
+export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
   const {cantPaqOS} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
   const {carnets, loadCarnets, deleteCarnet, isLoading} = useCarnets();
@@ -36,8 +40,6 @@ export const GetInputCarnet = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [carnetEdit, setCarnetEdit] = useState<Partial<Carnet>>({});
-
-  const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
 
   const addCarnet = () => {
     setTitle('Datos');
@@ -68,40 +70,73 @@ export const GetInputCarnet = () => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
+          marginBottom: 60,
         }}>
-        <Text>Necesitamos {cantCarnets} carnets</Text>
-        {carnets.map((carnet, index) => (
-          <View
-            key={index}
+        <Text style={{fontSize: 18}}>
+          Necesitamos datos de{' '}
+          <Text
             style={{
-              width: '100%',
-              backgroundColor: '#fcfcfc',
-              padding: 10,
-              paddingLeft: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
+              fontWeight: 'bold',
+              fontSize: 20,
+              backgroundColor: 'black',
+              color: 'white',
             }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{padding: 10}}
-              onPress={() => handleCheck(carnet.id)}>
-              <Icon
-                name={
-                  selectedCarnet.includes(carnet.id)
-                    ? 'check-circle-outline'
-                    : 'circle-outline'
-                }
-                size={22}
-                color={selectedCarnet.includes(carnet.id) ? 'green' : '#e0e0e0'}
-                style={{
-                  marginRight: 10,
-                }}
-              />
-            </TouchableOpacity>
-            <View style={{flex: 1}}>
-              <CarnetComponent carnet={carnet} />
+            {' '}
+            {cantCarnets}{' '}
+          </Text>{' '}
+          {cantCarnets === 1 ? 'persona' : 'personas'}
+        </Text>
+        <View
+          style={{
+            height: 1,
+            width: '90%',
+            alignSelf: 'center',
+            backgroundColor: '#f1f1f1',
+          }}
+        />
+        {carnets.map((carnet, index) => (
+          <>
+            <View
+              style={{
+                width: '100%',
+                padding: 10,
+                paddingLeft: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{padding: 10}}
+                onPress={() => handleCheck(carnet.id)}>
+                <Icon
+                  name={
+                    selectedCarnet.includes(carnet.id)
+                      ? 'check-circle-outline'
+                      : 'circle-outline'
+                  }
+                  size={22}
+                  color={
+                    selectedCarnet.includes(carnet.id) ? colors.card : '#e0e0e0'
+                  }
+                  style={{
+                    marginRight: 10,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={{flex: 1}}>
+                <CarnetComponent carnet={carnet} />
+              </View>
             </View>
-          </View>
+
+            <View
+              style={{
+                height: 1,
+                width: '90%',
+                alignSelf: 'center',
+                backgroundColor: '#f1f1f1',
+              }}
+            />
+          </>
         ))}
       </View>
       {isLoading && (
@@ -115,7 +150,7 @@ export const GetInputCarnet = () => {
           <ActivityIndicator size={32} color={colors.card} />
         </View>
       )}
-      <Fab
+      {/*  <Fab
         iconName={'add-outline'}
         onPress={addCarnet}
         style={{
@@ -123,7 +158,48 @@ export const GetInputCarnet = () => {
           bottom: 20,
           right: 20,
         }}
-      />
+      /> */}
+
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={addCarnet}
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            backgroundColor: '#fb2331',
+            marginRight: -10,
+            height: 30,
+            paddingRight: 20,
+            paddingLeft: 10,
+            borderTopLeftRadius: 20,
+            borderBottomLeftRadius: 20,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 4.65,
+            elevation: 6,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              color: 'white',
+            }}>
+            Añadir
+          </Text>
+        </View>
+        <Fab iconName={'add-outline'} onPress={addCarnet} style={{}} />
+      </TouchableOpacity>
 
       <ModalAddCarnet
         title={title}

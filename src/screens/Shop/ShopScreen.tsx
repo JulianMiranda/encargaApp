@@ -7,6 +7,7 @@ import {
   Platform,
   Animated,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {ModalComponent} from '../../components/ModalComponent';
 import {useShop} from '../../hooks/useShop';
@@ -15,17 +16,31 @@ import {ShopStepOne} from '../../components/ShopStepOne';
 import {ShopStepTwo} from '../../components/ShopStepTwo';
 import {ShopStepThree} from '../../components/ShopStepThree';
 import {ShopContext} from '../../context/shop/ShopContext';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useToast} from 'react-native-toast-notifications';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
 const {width} = Dimensions.get('window');
 export const ShopScreen = () => {
-  const {isLoading, openModal, title, body, setOpenModal, confirmModal} =
-    useShop();
+  const {
+    isLoading,
+    openModal,
+    title,
+    body,
+    weigth,
+    cantPaqOS,
+    setOpenModal,
+    confirmModal,
+  } = useShop();
+
   const scrollY = useRef(new Animated.Value(0)).current;
   const [progress, setProgress] = useState(2);
   const {car} = useContext(ShopContext);
+  const {top} = useSafeAreaInsets();
+  const toast = useToast();
 
   const headerHeight = scrollY.interpolate({
     inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
@@ -52,7 +67,27 @@ export const ShopScreen = () => {
   const barWidth = useRef(new Animated.Value(0)).current;
 
   const handleButton = () => {
-    console.log('handleButton', progress);
+    if (progress === 2) {
+      const paquete = 1440 + (weigth - 1 - cantPaqOS.oneandhalfkgPrice * 1440);
+      if (paquete < 1300) {
+        toast.show('Completa el último paquete', {
+          type: 'normal',
+          placement: 'bottom',
+          duration: 3000,
+          style: {
+            justifyContent: 'center',
+            marginBottom: 150,
+            borderRadius: 50,
+            paddingHorizontal: 20,
+            backgroundColor: 'rgba(0,0,0,0.8)',
+          },
+          textStyle: {fontSize: 16},
+          animationType: 'zoom-in',
+        });
+
+        return;
+      }
+    }
     if (progress >= 1) {
       const newBarWith =
         progress === 2
@@ -157,13 +192,38 @@ export const ShopScreen = () => {
           </Text>
         )}
       </View>
+      {progress < 2 && (
+        <TouchableOpacity
+          onPress={() => setProgress(progress + 1)}
+          activeOpacity={0.8}
+          style={{
+            top: top + 20,
+            marginLeft: 10,
+            padding: 6,
+            backgroundColor: 'white',
+            borderRadius: 50,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+
+            position: 'absolute',
+            zIndex: 999999999,
+            left: 10,
+          }}>
+          <Icon name="arrow-back-outline" color={'black'} size={26} />
+        </TouchableOpacity>
+      )}
+
       {car.length > 0 && (
         <>
           <View
             style={{
               marginTop: 30,
-              backgroundColor: 'red',
-              zIndex: 999999,
               marginBottom: 30,
             }}>
             <AnimatedProgress progress={progress} barWidth={barWidth} />
@@ -207,7 +267,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: '#FFB0A5',
-    height: 100,
+    height: 130,
     overflow: 'hidden',
     zIndex: 999,
     alignItems: 'center',
@@ -215,7 +275,7 @@ const styles = StyleSheet.create({
   titleList: {
     color: 'white',
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 50,
     fontSize: 40,
   },
   headerTitle: {

@@ -113,7 +113,7 @@ export const ShopStepOne = ({handleButton}: Props) => {
 
   return (
     <>
-      <View style={{minHeight: height * 0.7}}>
+      <View style={{minHeight: height * 0.66}}>
         <View style={{marginLeft: 7}}>
           {car.map((carItem, index) => (
             <ProductShop
