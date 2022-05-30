@@ -126,7 +126,7 @@ export const NotificationScreen = () => {
         style={{
           color: 'black',
           alignSelf: 'center',
-          marginTop: 80,
+          marginTop: 100,
           fontSize: 26,
           marginRight: 10,
           marginLeft: 15,

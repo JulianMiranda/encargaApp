@@ -10,28 +10,29 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useCategoryPaginated} from '../../hooks/useCategoryPaginated';
 import {homeStyles} from '../../styles/homeTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
-import {SearchInputBar} from '../../components/SearchInputBar';
 import {AuthContext} from '../../context/auth/AuthContext';
 import {useHome} from '../../hooks/useHome';
 import {AutoSlider} from '../../components/AutoSlider';
 import {CarouselComponent} from '../../components/Carousel';
 import {CategoryCarousel} from '../../components/CategoryCarousel';
 import {SubcategoryCarousel} from '../../components/SubcategoryCarousel';
-import PushNotification from 'react-native-push-notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import api from '../../api/api';
 import {OfferCard} from '../../components/OfferCard';
+import {useNavigation} from '@react-navigation/native';
+import {ThemeContext} from '../../context/theme/ThemeContext';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width, height} = Dimensions.get('window');
 export const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
-
-  const {user} = useContext(AuthContext); /* 
+  const navigation = useNavigation();
+  const {user} = useContext(AuthContext);
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+  /* 
   const {categoryList} = useCategoryPaginated(); */
   const {
     isLoading,
@@ -121,32 +122,131 @@ export const HomeScreen = () => {
             <View
               style={{
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'center' /* 
+                borderTopWidth: 2,
+                borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: 'red',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 10,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
               }}>
-              <Text style={homeStyles.carouselTitles}>Rebajas </Text>
-              <Image
-                source={require('../../assets/porciento.jpg')}
-                style={{width: 35, height: 35}}
-              />
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                REBAJAS
+              </Text>
+              {/* <Image
+                source={require('../../assets/rebaja9.png')}
+                style={{width: 150, height: 45}}
+              /> */}
             </View>
           )}
           {offers.map(offer => (
             <OfferCard offer={offer} key={offer.id} />
           ))}
+          <View
+            style={{
+              height: 1,
+              width: '90%',
+              alignSelf: 'center',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
+          {offers.length > 0 && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('OffersScreen')}
+              activeOpacity={0.8}
+              style={{
+                padding: 3,
+                backgroundColor: colors.card,
+                alignSelf: 'flex-end',
+                borderRadius: 20,
+                paddingHorizontal: 10,
+                marginTop: 10,
+                marginRight: 10,
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+
+                elevation: 5,
+              }}>
+              <Text style={{color: 'white'}}>Más...</Text>
+            </TouchableOpacity>
+          )}
         </View>
         {/* <View style={{marginTop: 10}}>
           <Text style={homeStyles.carouselTitles}>Lo más vendido</Text>
           <CarouselComponent data={mostSale} />
         </View> */}
-        <View style={{marginTop: 10}}>
+        <View style={{marginTop: 40}}>
           {mostSaleLastMonth.length > 0 && (
-            <Text style={homeStyles.carouselTitles}>Top Ventas 🔥</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center' /* 
+              borderTopWidth: 2,
+              borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: '#F59622',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 10,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
+              }}>
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                TOP VENTAS
+              </Text>
+            </View>
           )}
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
-        <View style={{marginTop: 10}}>
+        <View style={{marginTop: 40}}>
           {lastSubcategories.length > 0 && (
-            <Text style={homeStyles.carouselTitles}>Lo último ⚡</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center' /* 
+            borderTopWidth: 2,
+            borderTopColor: '#f1f1f1', */,
+                marginHorizontal: 10,
+                backgroundColor: '#76D573',
+                alignSelf: 'flex-start',
+                paddingHorizontal: 20,
+                justifyContent: 'center',
+                borderRadius: 5,
+                marginBottom: 5,
+              }}>
+              <Text
+                style={{
+                  ...homeStyles.carouselTitles,
+                  color: 'white',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
+                LO ÚLTIMO
+              </Text>
+            </View>
           )}
           <SubcategoryCarousel data={lastSubcategories} />
         </View>

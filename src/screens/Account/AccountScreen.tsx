@@ -81,7 +81,7 @@ export const AccountScreen = () => {
                 fontWeight: '500',
                 color: '#615e5e',
               }}>
-              Carnets
+              Datos de Envío
             </Text>
           </TouchableOpacity>
 

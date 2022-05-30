@@ -64,7 +64,12 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
               shadowRadius: 3.84,
               elevation: 5,
             }}>
-            <Text style={{...styles.number, color: colors.card}}>
+            <Text
+              style={{
+                ...styles.number,
+                color: colors.card,
+                fontSize: cantidad > 99 ? 14 : 18,
+              }}>
               {cantidad}
             </Text>
           </View>

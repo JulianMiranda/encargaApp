@@ -7,6 +7,8 @@ import {Subcategory} from '../interfaces/Subcategory.interface';
 import {ShopContext} from '../context/shop/ShopContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {formatWeight} from '../utils/formatWeight';
+import {discountGalore} from '../utils/discountGalore';
+import {discount} from '../utils/discount';
 
 interface Props {
   cantidad: number;
@@ -72,8 +74,15 @@ export const ProductShop = ({
           </Text>
           <Text>
             {cantidad > 5 || totalPaqReCalc > 4
-              ? formatToCurrency(priceGalore)
-              : formatToCurrency(price)}
+              ? formatToCurrency(
+                  discountGalore(
+                    subcategory.priceGalore,
+                    subcategory.priceGaloreDiscount,
+                  ),
+                )
+              : formatToCurrency(
+                  discount(subcategory.price, subcategory.priceDiscount),
+                )}
           </Text>
           {aviableSizes && aviableSizes.length > 0 ? (
             <Text>
@@ -123,16 +132,17 @@ export const ProductShop = ({
                   key={size.talla.toString() + index}
                   style={{
                     marginRight: 5,
-                    padding: 5,
-                    paddingHorizontal: 10,
-                    borderRadius: 50,
+                    padding: 1,
+                    paddingHorizontal: 7,
+                    borderRadius: 10,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderWidth: 1,
                     backgroundColor: '#ffffff',
                     borderColor: 'black',
+                    marginBottom: -20,
                   }}>
-                  <Text>{size.talla}</Text>
+                  <Text style={{fontSize: 10}}>{size.talla}</Text>
                 </View>
               ))}
           </View>
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
     zIndex: 999999999,
     flex: 1,
     alignSelf: 'flex-end',
-    marginTop: -10,
+    marginBottom: 5,
     marginEnd: 5,
   },
 });

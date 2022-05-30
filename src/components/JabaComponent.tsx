@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Dimensions, Image, Text, View} from 'react-native';
 import {ThemeContext} from '../context/theme/ThemeContext';
 
 interface Props {
@@ -7,6 +7,8 @@ interface Props {
   cantPaq: number;
   weigth: number;
 }
+
+const {width, height} = Dimensions.get('window');
 export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
   const {
     theme: {colors},
@@ -20,13 +22,12 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
       key={i}
       style={{
         margin: 15,
-        overflow: 'hidden',
       }}>
       <Image
-        source={require('../assets/bag2.png')}
+        source={require('../assets/zipbag.jpg')}
         style={{
           height: 70,
-          width: 60,
+          width: width * 0.16,
         }}
       />
       <Text
@@ -35,14 +36,23 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
         }}>
         {cantPaq !== i + 1 ? '1.5 Kg' : weigth - 1 - i * 1440 + 'g'}
       </Text>
-      <Text
+      <View
         style={{
+          backgroundColor: 'black',
           alignSelf: 'center',
+          paddingHorizontal: 2,
+          borderRadius: 5,
         }}>
-        {cantPaq !== i + 1
-          ? '100%'
-          : (((weigth - 1 - i * 1440) * 100) / 1440).toFixed(2) + '%'}
-      </Text>
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: 'white',
+          }}>
+          {cantPaq !== i + 1
+            ? '100%'
+            : (((weigth - 1 - i * 1440) * 100) / 1440).toFixed(2) + '%'}
+        </Text>
+      </View>
     </View>
   );
 };

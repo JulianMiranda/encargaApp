@@ -8,6 +8,7 @@ import {
   ScrollView,
   Platform,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import {useOrders} from '../../hooks/useOrders';
 import {Order} from '../../interfaces/Order.interface';
@@ -16,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {formatToCurrency} from '../../utils/formatToCurrency';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {BackButton} from '../../components/BackButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
@@ -81,7 +83,7 @@ export const OrderScreen = () => {
               fontSize: 22,
               fontWeight: 'bold',
             }}>
-            Mis Compras
+            Compras
           </Text>
         </Animated.View>
       </Animated.View>
@@ -105,7 +107,7 @@ export const OrderScreen = () => {
               alignSelf: 'center',
               marginTop: 80,
             }}>
-            Mis Compras
+            Compras
           </Text>
         </View>
         <View style={{marginTop: 40}}>
@@ -119,14 +121,30 @@ export const OrderScreen = () => {
                 alignItems: 'center',
                 flex: 1,
                 alignSelf: 'center',
-                height: 300,
+                height: 500,
               }}>
-              <Text>Haz tu primera compra</Text>
+              <Image
+                source={require('../../assets/perch.png')}
+                style={{
+                  height: 80,
+                  width: 120,
+                }}
+              />
+              <Text style={{fontSize: 18}}>Haz tu primera compra</Text>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('HomeScreen')}
-                style={{...styles.button, backgroundColor: colors.card}}>
-                <Text style={styles.buttonText}>Empezar a comprar</Text>
+                style={{
+                  ...styles.button,
+                  backgroundColor: colors.card,
+                }}>
+                <Text style={styles.buttonText}>Comprar</Text>
+                <Icon
+                  name="arrow-right"
+                  color="white"
+                  size={24}
+                  style={{position: 'absolute', right: 14, top: 10}}
+                />
               </TouchableOpacity>
             </View>
           )}

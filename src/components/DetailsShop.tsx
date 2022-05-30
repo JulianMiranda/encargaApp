@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {ThemeContext} from '../context/theme/ThemeContext';
 import {Prices} from '../interfaces/Prices.interface';
 import {CantPaq} from '../interfaces/Shop.Interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
@@ -19,9 +21,12 @@ export const DetailsShop = ({
   totalPaqReCalc,
   totalMoneyReCalc,
 }: Props) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   return (
     <View style={styles.container}>
-      <View
+      {/*  <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -32,10 +37,10 @@ export const DetailsShop = ({
           {formatToCurrency(total + totalMoneyReCalc)}
         </Text>
       </View>
-      <View style={styles.divider} />
+      <View style={styles.divider} /> */}
 
       <Factura totalPaqReCalc={totalPaqReCalc} />
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -44,25 +49,26 @@ export const DetailsShop = ({
         }}>
         <Text style={{...styles.factContainer, fontSize: 20}}>Subtotal:</Text>
       </View>
-      <View style={styles.divider} />
+      <View style={styles.divider} /> */}
       <View
         style={{
           padding: 10,
-          alignItems: 'stretch',
-          justifyContent: 'space-between',
+          marginRight: 15,
+          width: '60%',
+          alignSelf: 'flex-end',
         }}>
         <View style={styles.priceCont}>
-          <Text style={styles.priceProd}>Precio productos:</Text>
+          <Text style={styles.priceProd}>Productos:</Text>
           <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
         </View>
         <View style={styles.sendPrice}>
-          <Text style={styles.sendPriceTxt}>Precio envío:</Text>
+          <Text style={styles.sendPriceTxt}>Envío:</Text>
           <Text style={styles.sendPriceTxtCalc}>
             {formatToCurrency(totalMoneyReCalc)}
           </Text>
         </View>
         <View style={styles.divider} />
-        <View style={styles.total}>
+        <View style={{...styles.total, backgroundColor: colors.card}}>
           <Text style={styles.totalTitle}>Total:</Text>
           <Text style={styles.totalTxt}>
             {formatToCurrency(total + totalMoneyReCalc)}
@@ -140,16 +146,19 @@ const styles = StyleSheet.create({
   },
   total: {
     flexDirection: 'row',
+    paddingHorizontal: 5,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   totalTitle: {
     fontSize: 26,
     fontWeight: '600',
+    color: 'white',
   },
   totalTxt: {
     fontSize: 28,
     fontWeight: '600',
+    color: 'white',
   },
   boxCant: {
     flexDirection: 'row',
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   divider: {
-    height: 2,
+    height: 1,
     width: '90%',
     alignSelf: 'center',
     backgroundColor: '#f1f1f1',

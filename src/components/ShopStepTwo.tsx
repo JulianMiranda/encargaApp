@@ -25,7 +25,7 @@ export const ShopStepTwo = ({handleButton}: Props) => {
     useShop();
   return (
     <>
-      <View style={{minHeight: height * 0.7}}>
+      <View style={{minHeight: height * 0.66}}>
         <DetailsShop
           cantPaqOS={cantPaqOS}
           prices={prices}

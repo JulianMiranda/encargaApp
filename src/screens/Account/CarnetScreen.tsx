@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
+  Image,
   Platform,
   ScrollView,
   StyleSheet,
@@ -106,7 +107,7 @@ export const CarnetScreen = () => {
               fontSize: 22,
               fontWeight: 'bold',
             }}>
-            Carnets
+            Datos
           </Text>
         </Animated.View>
       </Animated.View>
@@ -130,7 +131,7 @@ export const CarnetScreen = () => {
               alignSelf: 'center',
               marginTop: 80,
             }}>
-            Carnets
+            Datos
           </Text>
         </View>
         <View
@@ -145,6 +146,14 @@ export const CarnetScreen = () => {
               style={{
                 width: '90%',
               }}>
+              <View
+                style={{
+                  height: 1,
+                  width: '100%',
+                  alignSelf: 'center',
+                  backgroundColor: '#f1f1f1',
+                }}
+              />
               <CarnetComponent carnet={carnet} />
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -153,7 +162,7 @@ export const CarnetScreen = () => {
                   position: 'absolute',
                   top: 0,
                   right: 0,
-                  padding: 5,
+                  padding: 15,
                 }}>
                 <Icon
                   name="close-circle-outline"
@@ -162,20 +171,49 @@ export const CarnetScreen = () => {
                   style={{position: 'absolute', top: 5, right: 5}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => {
                   setCarnetEdit(carnet);
                   editCarnet();
                 }}
-                style={{position: 'absolute', bottom: 3, right: 5}}>
-                <Text style={{marginLeft: 3, fontSize: 18, color: 'blue'}}>
-                  Editar...
+                style={{
+                  backgroundColor: colors.card,
+                  padding: 5,
+                  alignSelf: 'flex-start',
+                  borderRadius: 20,
+                  paddingHorizontal: 10,
+                }}>
+                <Text style={{marginLeft: 3, fontSize: 18, color: 'white'}}>
+                  Editar
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           ))}
+          <View
+            style={{
+              height: 1,
+              width: '100%',
+              alignSelf: 'center',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
         </View>
+        {!isLoading && carnets.length === 0 && (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 300,
+            }}>
+            <Image
+              style={{height: 180, width: 200}}
+              source={require('../../assets/no_id.png')}
+            />
+            <Text style={{fontSize: 18}}>No tienes datos guardados</Text>
+          </View>
+        )}
         {isLoading && (
           <View
             style={{
@@ -188,16 +226,46 @@ export const CarnetScreen = () => {
           </View>
         )}
       </ScrollView>
-      <Fab
-        iconName={'add-outline'}
+      <TouchableOpacity
+        activeOpacity={0.8}
         onPress={addCarnet}
         style={{
           position: 'absolute',
           bottom: 70,
           right: 20,
-        }}
-      />
-
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            backgroundColor: '#fb2331',
+            marginRight: -10,
+            height: 30,
+            paddingRight: 20,
+            paddingLeft: 10,
+            borderTopLeftRadius: 20,
+            borderBottomLeftRadius: 20,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 4.65,
+            elevation: 6,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              color: 'white',
+            }}>
+            Añadir
+          </Text>
+        </View>
+        <Fab iconName={'add-outline'} onPress={addCarnet} style={{}} />
+      </TouchableOpacity>
       <ModalAddCarnet
         title={title}
         body={body}

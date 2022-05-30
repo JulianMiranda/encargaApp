@@ -23,10 +23,21 @@ export const BackButton = ({navigation, color = 'white'}: Props) => {
       activeOpacity={0.8}
       style={{
         ...styles.backButton,
-        top: top,
+        top: top + 10,
+        marginLeft: 10,
         padding: 10,
+        backgroundColor: 'white',
+        borderRadius: 50,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}>
-      <Icon name="arrow-back-outline" color={colors.primary} size={35} />
+      <Icon name="arrow-back-outline" color={'black'} size={26} />
     </TouchableOpacity>
   );
 };

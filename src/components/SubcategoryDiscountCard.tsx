@@ -1,17 +1,33 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
+
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {FadeInImage} from './FadeInImage';
+import {RootStackParams} from '../navigation/HomeStack';
 import {Subcategory} from '../interfaces/Subcategory.interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
-import {FadeInImage} from './FadeInImage';
+import {discountGalore} from '../utils/discountGalore';
 
 interface Props {
-  offer: Subcategory;
+  item: Subcategory;
 }
-export const OfferCard = ({offer}: Props) => {
-  const {name, images, priceDiscount, price, priceGalore, priceGaloreDiscount} =
-    offer;
-  const navigation = useNavigation();
+interface PropsNavigation
+  extends StackNavigationProp<RootStackParams, 'SubcategoryScreen'> {}
+
+const {width} = Dimensions.get('window');
+export const SubcategoryDiscountCard = ({item}: Props) => {
+  const {priceGalore, priceGaloreDiscount, price, priceDiscount, images, name} =
+    item;
+
+  const navigation = useNavigation<PropsNavigation>();
 
   const discount =
     priceGaloreDiscount && priceGaloreDiscount !== 0
@@ -31,10 +47,8 @@ export const OfferCard = ({offer}: Props) => {
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => {
-          console.log('subcat');
-
           navigation.navigate('SubcategoryScreen', {
-            subcategory: offer,
+            subcategory: item,
           });
         }}>
         <View
@@ -196,3 +210,45 @@ export const OfferCard = ({offer}: Props) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    marginHorizontal: 5,
+    height: width * 0.47,
+    width: width * 0.47,
+    marginBottom: 60,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  textContainer: {},
+  name: {
+    fontSize: 16,
+    top: 4,
+    left: 10,
+    color: 'black',
+    fontWeight: '500',
+    maxWidth: '75%',
+  },
+  price: {
+    fontSize: 12,
+    marginLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    color: 'black',
+    fontWeight: '500',
+  },
+  productImage: {
+    height: width * 0.47,
+    width: width * 0.47,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+});

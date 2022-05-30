@@ -14,6 +14,7 @@ import {FadeInImage} from './FadeInImage';
 import {RootStackParams} from '../navigation/HomeStack';
 import {Subcategory} from '../interfaces/Subcategory.interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
+import {discountGalore} from '../utils/discountGalore';
 
 interface Props {
   item: Subcategory;
@@ -23,16 +24,14 @@ interface PropsNavigation
 
 const {width} = Dimensions.get('window');
 export const SubcategoryCardHome = ({item}: Props) => {
-  const {priceGalore, images, name} = item;
+  const {priceGalore, priceGaloreDiscount, images, name} = item;
 
   const navigation = useNavigation<PropsNavigation>();
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      style={{marginBottom: 40, marginLeft: 5}}
+      style={{marginLeft: 5}}
       onPress={() => {
-        console.log('subcat');
-
         navigation.navigate('SubcategoryScreen', {
           subcategory: item,
         });
@@ -44,13 +43,23 @@ export const SubcategoryCardHome = ({item}: Props) => {
           /* width: windowWidth * 0.6, */
           /* backgroundColor: 'red' */
         }}>
-        <View style={{backgroundColor: '#f1f1f1', borderRadius: 10}}>
+        <View style={{borderRadius: 10}}>
           <FadeInImage uri={images[0].url} style={styles.productImage} />
 
           <Text style={{...styles.name}} numberOfLines={1}>
             {name}
           </Text>
-          <Text style={{...styles.price}}>{formatToCurrency(priceGalore)}</Text>
+          <Text
+            style={{
+              ...styles.price,
+              backgroundColor: 'rgba(0,0,0,0.9)',
+              alignSelf: 'flex-start',
+              paddingHorizontal: 5,
+              color: 'white',
+              borderRadius: 2,
+            }}>
+            {formatToCurrency(discountGalore(priceGalore, priceGaloreDiscount))}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
     height: width * 0.37,
     width: width * 0.37,
     marginBottom: 60,
-    borderRadius: 10,
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -94,7 +103,6 @@ const styles = StyleSheet.create({
   productImage: {
     height: width * 0.37,
     width: width * 0.37,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    borderRadius: 8,
   },
 });

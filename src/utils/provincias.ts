@@ -1,7 +1,23 @@
 export const provincias = [
   {
-    nombre: 'Isla de la Juventud',
-    municipios: ['Isla de la Juventud'],
+    nombre: 'La Habana',
+    municipios: [
+      'Arroyo Naranjo',
+      'Boyeros',
+      'Centro Habana',
+      'Cotorro',
+      'Diez de Octubre',
+      'El Cerro',
+      'Guanabacoa',
+      'La Habana del Este',
+      'La Habana Vieja',
+      'La Lisa',
+      'Marianao',
+      'Playa',
+      'Plaza de la Revolución',
+      'Regla',
+      'San Miguel del Padrón',
+    ],
   },
   {
     nombre: 'Pinar del Río',
@@ -51,26 +67,7 @@ export const provincias = [
       'Santa Cruz del Norte',
     ],
   },
-  {
-    nombre: 'La Habana',
-    municipios: [
-      'Arroyo Naranjo',
-      'Boyeros',
-      'Centro Habana',
-      'Cotorro',
-      'Diez de Octubre',
-      'El Cerro',
-      'Guanabacoa',
-      'La Habana del Este',
-      'La Habana Vieja',
-      'La Lisa',
-      'Marianao',
-      'Playa',
-      'Plaza de la Revolución',
-      'Regla',
-      'San Miguel del Padrón',
-    ],
-  },
+
   {
     nombre: 'Matanzas',
     municipios: [
@@ -244,5 +241,9 @@ export const provincias = [
       'San Antonio del Sur',
       'Yateras',
     ],
+  },
+  {
+    nombre: 'Isla de la Juventud',
+    municipios: ['Isla de la Juventud'],
   },
 ];

@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import api from '../api/api';
 
-import {CategoriesPaginated, Category} from '../interfaces/Category.interface';
 import {Datum, PromoResponse} from '../interfaces/Promo.interface';
 
 export const useHome = () => {
@@ -18,6 +17,7 @@ export const useHome = () => {
     try {
       const body = {
         filter: {status: ['=', true]},
+        sort: {updatedAt: 'ASC'},
         population: [
           {
             path: 'image',

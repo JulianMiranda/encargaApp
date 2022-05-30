@@ -1,12 +1,5 @@
 import React, {useContext, useRef, useState} from 'react';
-import {
-  Animated,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Animated, Dimensions, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ThemeContext} from '../context/theme/ThemeContext';
 interface Props {
