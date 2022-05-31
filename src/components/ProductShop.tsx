@@ -33,10 +33,37 @@ export const ProductShop = ({
     aviableColors,
   } = subcategory;
 
-  const {setItem, unsetItem} = useContext(ShopContext);
+  const {car, updateCarItem, unsetItem} = useContext(ShopContext);
 
   const updateCantidad = (subcategoryRef: Subcategory, cantidadRef: number) => {
-    setItem({subcategory: subcategoryRef, cantidad: cantidadRef});
+    const oldColors: string[] = [];
+    const oldSizes: any[] = [];
+    car.forEach(item => {
+      if (item.subcategory.id === subcategoryRef.id) {
+        if (
+          item.subcategory.aviableColors &&
+          item.subcategory.aviableColors.length > 0
+        ) {
+          oldColors.push(...item.subcategory.aviableColors);
+        }
+        if (cantidadRef < oldColors.length) {
+          oldColors.shift();
+        }
+        if (
+          item.subcategory.aviableSizes &&
+          item.subcategory.aviableSizes.length > 0
+        ) {
+          oldSizes.push(...item.subcategory.aviableSizes);
+        }
+        if (cantidadRef < oldSizes.length) {
+          oldSizes.shift();
+        }
+      }
+    });
+    subcategoryRef.aviableColors = oldColors;
+    subcategoryRef.aviableSizes = oldSizes;
+    updateCarItem({subcategory: subcategoryRef, cantidad: cantidadRef});
+    /* setItem({subcategory: subcategoryRef, cantidad: cantidadRef}); */
   };
 
   return (

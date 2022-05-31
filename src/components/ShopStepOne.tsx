@@ -15,6 +15,7 @@ import {ShopContext} from '../context/shop/ShopContext';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {useShop} from '../hooks/useShop';
 import {JabaComponent} from './JabaComponent';
+import ScreenLoading from './LoadingSafe';
 import {PaqByKg} from './PaqByKg';
 import {ProductShop} from './ProductShop';
 interface Props {

@@ -14,8 +14,23 @@ export const AviableSizesSubcategory = ({
   cantidad,
 }: Props) => {
   useEffect(() => {
-    if (cantidad === 6 && aviableSizes && aviableSizes.length > 0) {
+    if (cantidad > 5 && aviableSizes && aviableSizes.length > 0) {
       return setSizeSelected(aviableSizes);
+    }
+  }, [aviableSizes, cantidad, setSizeSelected]);
+
+  useEffect(() => {
+    let newSizes = [];
+    if (aviableSizes && aviableSizes.length > 0 && cantidad < 6) {
+      for (let i = cantidad; i > 0; i--) {
+        if (sizeSelected && sizeSelected.length > 0) {
+          if (sizeSelected[i - 1]) {
+            newSizes.push(sizeSelected[i - 1]);
+          }
+        }
+      }
+
+      if (newSizes.length > 0) setSizeSelected(newSizes);
     }
   }, [aviableSizes, cantidad, setSizeSelected]);
 
@@ -28,13 +43,15 @@ export const AviableSizesSubcategory = ({
       return;
     }
     if (cantidad <= sizeSelected.length) {
-      sizeSelected.shift();
-      setSizeSelected([...sizeSelected, size]);
+      const newColorSelected = [...sizeSelected];
+      newColorSelected.shift();
+      setSizeSelected([...newColorSelected, size]);
     } else {
       if (!sizeSelected.includes(size)) {
         setSizeSelected([...sizeSelected, size]);
       } else {
-        setSizeSelected(sizeSelected.filter(item => item !== size));
+        const newSizeSelected = sizeSelected.filter(item => item !== size);
+        setSizeSelected(newSizeSelected);
       }
     }
   };

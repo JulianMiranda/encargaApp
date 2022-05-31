@@ -16,6 +16,7 @@ type ShopContextProps = {
   errorAddCar: string;
   setItem: (item: CarItemProps) => void;
   unsetItem: (item: Subcategory) => void;
+  updateCarItem: (item: CarItemProps) => void;
   emptyCar: () => Promise<any>;
   removeAlert: () => void;
   clearErrorAdd: () => void;
@@ -56,37 +57,27 @@ export const ShopProvider = ({children}: any) => {
   };
   const setItem = async (item: CarItemProps) => {
     try {
-      console.log('setItem');
       dispatch({type: 'add_car_loading', payload: true});
+
       let isAlreadyInCar = false;
       let newCantidad = 0;
       state.car.forEach(itemCar => {
         if (
-          JSON.stringify(itemCar.subcategory) ===
-          JSON.stringify(item.subcategory)
+          JSON.stringify(itemCar.subcategory.id) ===
+          JSON.stringify(item.subcategory.id)
         ) {
           isAlreadyInCar = true;
           newCantidad = itemCar.cantidad + item.cantidad;
         }
       });
-      console.log('isAlreadyInCar', isAlreadyInCar);
-      console.log('newCantidad', newCantidad);
-      if (isAlreadyInCar) {
-        const newState = state.car.filter(
-          carItem =>
-            JSON.stringify(carItem.subcategory) !==
-            JSON.stringify(item.subcategory),
-        );
+      if (!isAlreadyInCar) {
+        dispatch({type: 'set_item', payload: item});
         await api.post('/shop/setMyShop', {
           user: user!.id,
-          car: [...newState, {...item, cantidad: newCantidad}],
-        });
-        dispatch({
-          type: 'update_item',
-          payload: {...item, cantidad: newCantidad},
+          car: [...state.car, item],
         });
         dispatch({type: 'add_car_loading', payload: false});
-        toast.show('Actualizado al carrito', {
+        toast.show('Añadido al carrito', {
           type: 'normal',
           placement: 'top',
           duration: 3000,
@@ -97,16 +88,27 @@ export const ShopProvider = ({children}: any) => {
             marginTop: height / 2,
           },
           textStyle: {fontSize: 16},
-          animationType: 'zoom-in',
+          animationType: 'slide-in',
         });
       } else {
+        const oldCarItems = state.car.filter(
+          carItem =>
+            JSON.stringify(carItem.subcategory.id) !==
+            JSON.stringify(item.subcategory.id),
+        );
         await api.post('/shop/setMyShop', {
           user: user!.id,
-          car: [...state.car, item],
+          car: [
+            ...oldCarItems,
+            {subcategory: item.subcategory, cantidad: newCantidad},
+          ],
         });
-        dispatch({type: 'set_item', payload: item});
+        dispatch({
+          type: 'update_item',
+          payload: {...item, cantidad: newCantidad},
+        });
         dispatch({type: 'add_car_loading', payload: false});
-        toast.show('Añadido al carrito', {
+        toast.show('Actualizado al carrito', {
           type: 'normal',
           placement: 'top',
           duration: 3000,
@@ -130,6 +132,58 @@ export const ShopProvider = ({children}: any) => {
     }
   };
 
+  const updateCarItem = async (item: CarItemProps) => {
+    if (item.cantidad === 0) {
+      return unsetItem(item.subcategory);
+    }
+    try {
+      dispatch({type: 'add_car_loading', payload: true});
+      const oldCarItems = state.car.filter(
+        carItem =>
+          JSON.stringify(carItem.subcategory.id) !==
+          JSON.stringify(item.subcategory.id),
+      );
+      await api.post('/shop/setMyShop', {
+        user: user!.id,
+        car: [...oldCarItems, item],
+      });
+      dispatch({
+        type: 'update_item',
+        payload: {...item},
+      });
+      dispatch({type: 'add_car_loading', payload: false});
+      toast.show('Carrito actualizado', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          justifyContent: 'center',
+          marginTop: height / 2,
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({type: 'add_car_loading', payload: false});
+      toast.show('Error al actualizar del carrito, intente más tarde', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          justifyContent: 'center',
+          marginTop: height / 2,
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+    }
+  };
+
   const clearErrorAdd = () => {
     dispatch({type: 'error_add_car', payload: ''});
   };
@@ -147,7 +201,7 @@ export const ShopProvider = ({children}: any) => {
       toast.show('Eliminado del carrito', {
         type: 'normal',
         placement: 'top',
-        duration: 3000,
+        duration: 1000,
         style: {
           borderRadius: 50,
           paddingHorizontal: 20,
@@ -224,6 +278,7 @@ export const ShopProvider = ({children}: any) => {
         makeShop,
         removeAlert,
         clearErrorAdd,
+        updateCarItem,
       }}>
       {children}
     </ShopContext.Provider>

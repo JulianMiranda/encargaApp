@@ -19,6 +19,7 @@ import {ShopContext} from '../../context/shop/ShopContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useToast} from 'react-native-toast-notifications';
+import ScreenLoading from '../../components/LoadingSafe';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
@@ -38,7 +39,7 @@ export const ShopScreen = () => {
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const [progress, setProgress] = useState(2);
-  const {car} = useContext(ShopContext);
+  const {car, addCarLoading} = useContext(ShopContext);
   const {top} = useSafeAreaInsets();
   const toast = useToast();
 
@@ -252,6 +253,11 @@ export const ShopScreen = () => {
         setOpenModal={setOpenModal}
         onConfirmModal={confirmModal}
       />
+      {addCarLoading && (
+        <View style={styles.loadingContainer}>
+          <ScreenLoading size={32} text="" />
+        </View>
+      )}
     </>
   );
 };
@@ -289,5 +295,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  loadingContainer: {
+    zIndex: 9999999,
+    position: 'absolute',
+    flex: 1,
+    top: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: '100%',
+    width: '100%',
   },
 });

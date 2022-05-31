@@ -34,6 +34,7 @@ export const SubcategoryScreen = (props: Props) => {
   const {route, navigation} = props;
   const {subcategory} = route.params;
   const {
+    id,
     name,
     images,
     price,
@@ -46,7 +47,7 @@ export const SubcategoryScreen = (props: Props) => {
     aviableColors,
     weight,
   } = subcategory;
-  const {errorAddCar, clearErrorAdd, addCarLoading, setItem} =
+  const {car, errorAddCar, clearErrorAdd, addCarLoading, setItem} =
     useContext(ShopContext);
   const {
     theme: {colors},
@@ -114,22 +115,16 @@ export const SubcategoryScreen = (props: Props) => {
     }
   };
   const handleButton = () => {
-    /* if (
-      aviableSizes &&
-      aviableSizes.length > 0 &&
-      aviableSizes[0].talla !== 'Talla Única' &&
-      sizeSelected === undefined
-    ) {
-      toast.show('Seleccione al menos una Talla', {
-        type: 'danger',
-        placement: 'top',
-        duration: 3000,
-        style: {width: '100%', justifyContent: 'center', marginTop: 30},
-        textStyle: {fontSize: 16},
-        animationType: 'slide-in',
-      });
-      console.log('seleccione un Tamaño');
-    } else  */ if (
+    /*    console.log('Nuevo', colorSelected);
+    console.log(
+      'Color en Carro',
+      car.map(a => a.subcategory.aviableColors),
+    );
+    console.log(
+      'Subcate en Carro',
+      car.map(a => a.subcategory),
+    ); */
+    if (
       aviableColors &&
       aviableColors.length > 0 &&
       colorSelected.length === 0
@@ -155,11 +150,39 @@ export const SubcategoryScreen = (props: Props) => {
       const subcategoryUpd = {...subcategory};
 
       if (sizeSelected) {
-        subcategoryUpd.aviableSizes = sizeSelected;
+        const oldSizes: AviableSize[] = [];
+        car.forEach(item => {
+          if (item.subcategory.id === id) {
+            item.subcategory.aviableSizes?.forEach(sizeInCar => {
+              const old = aviableSizes?.filter(
+                s => JSON.stringify(s) === JSON.stringify(sizeInCar),
+              );
+              console.log('Antigua No repetida', old);
+              old?.forEach(oldItem => {
+                if (!sizeSelected.includes(oldItem)) {
+                  oldSizes.push(oldItem);
+                }
+              });
+            });
+          }
+        });
+        subcategoryUpd.aviableSizes = [...oldSizes, ...sizeSelected];
       }
       if (colorSelected.length > 0) {
-        subcategoryUpd.aviableColors = colorSelected;
+        const colores: string[] = [];
+        car.forEach(item => {
+          if (item.subcategory.id === id) {
+            item.subcategory.aviableColors.forEach(color => {
+              if (!colorSelected.includes(color)) {
+                colores.push(color);
+              }
+            });
+          }
+        });
+
+        subcategoryUpd.aviableColors = [...colores, ...colorSelected];
       }
+      console.log('Para añadir', subcategoryUpd.aviableColors);
       setItem({subcategory: subcategoryUpd, cantidad});
     }
   };

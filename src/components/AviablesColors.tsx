@@ -18,8 +18,10 @@ export const AviablesColors = ({
     theme: {colors},
   } = useContext(ThemeContext);
   useEffect(() => {
-    if (cantidad === 6) {
-      return setColorSelected(aviableColors);
+    if (aviableColors && aviableColors.length > 0) {
+      if (cantidad > 5 && aviableColors) {
+        return setColorSelected(aviableColors);
+      }
     }
   }, [aviableColors, cantidad, setColorSelected]);
 
@@ -29,11 +31,34 @@ export const AviablesColors = ({
     }
   }, [aviableColors, cantidad, setColorSelected]); */
 
-  useEffect(() => {
-    if (cantidad < colorSelected.length) {
-      setColorSelected(colorSelected);
+  /*  useEffect(() => {
+    if (colorSelected && colorSelected.length > 0) {
+      if (cantidad < colorSelected.length) {
+        setColorSelected(colorSelected);
+      }
     }
-  }, [cantidad, colorSelected, setColorSelected]);
+  }, [cantidad, colorSelected, setColorSelected]); */
+
+  useEffect(() => {
+    let newColors = [];
+    if (aviableColors && aviableColors.length > 0 && cantidad < 6) {
+      for (let i = cantidad; i > 0; i--) {
+        if (colorSelected && colorSelected.length > 0) {
+          if (colorSelected[i - 1]) {
+            newColors.push(colorSelected[i - 1]);
+          }
+        }
+      }
+
+      if (newColors.length > 0) setColorSelected(newColors);
+    }
+  }, [aviableColors, cantidad, setColorSelected]);
+
+  useEffect(() => {
+    if (aviableColors && aviableColors.length === 1) {
+      return setColorSelected(aviableColors);
+    }
+  }, [aviableColors, setColorSelected]);
 
   if (!aviableColors || aviableColors.length === 0) {
     return null;
@@ -47,13 +72,15 @@ export const AviablesColors = ({
       return;
     }
     if (cantidad <= colorSelected.length) {
-      colorSelected.shift();
-      setColorSelected([...colorSelected, color]);
+      const newColorSelected = [...colorSelected];
+      newColorSelected.shift();
+      setColorSelected([...newColorSelected, color]);
     } else {
       if (!colorSelected.includes(color)) {
         setColorSelected([...colorSelected, color]);
       } else {
-        setColorSelected(colorSelected.filter(item => item !== color));
+        const newColorSelected = colorSelected.filter(item => item !== color);
+        setColorSelected(newColorSelected);
       }
     }
   };

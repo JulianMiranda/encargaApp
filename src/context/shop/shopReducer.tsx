@@ -45,8 +45,8 @@ export const shopReducer = (
         car: [
           ...state.car.map(item => {
             if (
-              JSON.stringify(item.subcategory) ===
-              JSON.stringify(action.payload.subcategory)
+              JSON.stringify(item.subcategory.id) ===
+              JSON.stringify(action.payload.subcategory.id)
             ) {
               return {
                 cantidad: action.payload.cantidad,
