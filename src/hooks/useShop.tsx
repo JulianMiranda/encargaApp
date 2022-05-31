@@ -23,7 +23,7 @@ export const useShop = () => {
     tenkgPrice: 0,
   });
 
-  const [weigth, setWeigth] = useState(1);
+  const [weigth, setWeigth] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -76,7 +76,7 @@ export const useShop = () => {
 
   useEffect(() => {
     let totalCalc = 0;
-    let totalWeight = 1;
+    let totalWeight = 0;
     let kilos = {
       oneandhalfkgPrice: 0,
       twokgPrice: 0,

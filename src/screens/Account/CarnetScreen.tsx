@@ -16,6 +16,7 @@ import {BackButton} from '../../components/BackButton';
 import {CarnetComponent} from '../../components/CarnetComponent';
 import {Fab} from '../../components/Fab';
 import {ModalAddCarnet} from '../../components/ModalAddCarnet';
+import {ModalComponent} from '../../components/ModalComponent';
 import {ModalEditCarnet} from '../../components/ModalEditCarnet';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useCarnets} from '../../hooks/useCarnets';
@@ -33,9 +34,13 @@ export const CarnetScreen = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [carnetEdit, setCarnetEdit] = useState<Partial<Carnet>>({});
+  const [selectedDeleteCarnet, setSelectedDeleteCarnet] = useState<
+    Partial<Carnet>
+  >({});
 
   const addCarnet = () => {
     setTitle('Datos');
@@ -45,6 +50,20 @@ export const CarnetScreen = () => {
   };
   const editCarnet = () => {
     setOpenModalEdit(true);
+  };
+
+  const confirmCloseModal = () => {
+    if (selectedDeleteCarnet.id) {
+      deleteCarnet(selectedDeleteCarnet.id);
+    }
+    setOpenConfirmModal(false);
+  };
+
+  const buttonDeleteCarnet = (carnet: Carnet) => {
+    setSelectedDeleteCarnet(carnet);
+    setTitle('Eliminar Datos');
+    setBody('¿Deseas eliminar los datos de esta persona?');
+    setOpenConfirmModal(true);
   };
 
   const confirmModal = () => {
@@ -157,7 +176,7 @@ export const CarnetScreen = () => {
               <CarnetComponent carnet={carnet} />
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => deleteCarnet(carnet.id)}
+                onPress={() => buttonDeleteCarnet(carnet)}
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -281,6 +300,14 @@ export const CarnetScreen = () => {
         openModal={openModalEdit}
         setOpenModal={setOpenModalEdit}
         loadCarnets={loadCarnets}
+      />
+      <ModalComponent
+        isLoading={false}
+        title={title}
+        body={body}
+        openModal={openConfirmModal}
+        setOpenModal={setOpenConfirmModal}
+        onConfirmModal={confirmCloseModal}
       />
     </>
   );
