@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -17,6 +17,7 @@ import {useShop} from '../hooks/useShop';
 import {JabaComponent} from './JabaComponent';
 import {ProductShop} from './ProductShop';
 import {Productos} from './Productos';
+import {Relleno} from './Relleno';
 interface Props {
   handleButton: () => void;
 }
@@ -31,6 +32,15 @@ export const ShopStepOne = ({handleButton}: Props) => {
 
   const {car} = useContext(ShopContext);
   const {weigth, totalPaqReCalc, cantPaqOS} = useShop();
+
+  const [relleno, setRelleno] = useState({
+    noone: false,
+    refresco: false,
+    maquina: false,
+    golosina: false,
+    plantilla: false,
+    lapicero: false,
+  });
 
   const navigateSubcategory = async (id: string) => {
     try {
@@ -51,6 +61,7 @@ export const ShopStepOne = ({handleButton}: Props) => {
   };
   const sliders = [];
   for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
+    console.log('cant1.5', cantPaqOS.oneandhalfkgPrice);
     sliders.push(
       <JabaComponent
         key={i + 'oneandhalfkgPrice'}
@@ -236,6 +247,9 @@ export const ShopStepOne = ({handleButton}: Props) => {
             </View>
           </View>
         )}
+        {cantPaqOS.oneandhalfkgPrice > 0 && (
+          <Relleno relleno={relleno} setRelleno={setRelleno} />
+        )}
       </View>
       {car.length > 0 && (
         <>
@@ -243,7 +257,32 @@ export const ShopStepOne = ({handleButton}: Props) => {
             style={{...styles.button, backgroundColor: colors.card}}
             activeOpacity={0.8}
             onPress={() => {
-              handleButton();
+              if (
+                relleno.golosina ||
+                relleno.lapicero ||
+                relleno.maquina ||
+                relleno.noone ||
+                relleno.plantilla ||
+                relleno.refresco
+              ) {
+                handleButton();
+              } else {
+                toast.show('Debe seleccionar un relleno', {
+                  type: 'normal',
+                  placement: 'bottom',
+                  duration: 1500,
+                  style: {
+                    justifyContent: 'center',
+                    marginBottom: 150,
+                    borderRadius: 50,
+                    paddingHorizontal: 20,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                  },
+                  textStyle: {fontSize: 16},
+                  animationType: 'zoom-in',
+                });
+              }
+              //handleButton();
               /* navigation.navigate('EnterPhoneScreen') */
             }}>
             <Text style={styles.buttonText}>Continuar</Text>

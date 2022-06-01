@@ -25,6 +25,8 @@ export const ShopStepThree = ({handleButton}: Props) => {
   const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
 
+  const [terms, setTerms] = useState(false);
+
   const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
   const noCarnetSelected = () => {
     toast.show(
@@ -33,7 +35,7 @@ export const ShopStepThree = ({handleButton}: Props) => {
         cantPaqOS.oneandhalfkgPrice +
         cantCarnets -
         selectedCarnet.length
-      } `,
+      } datos `,
       {
         type: 'normal',
         placement: 'bottom',
@@ -50,24 +52,51 @@ export const ShopStepThree = ({handleButton}: Props) => {
       },
     );
   };
+  const handleGuardar = () => {
+    if (terms) {
+      if (
+        selectedCarnet.length <
+        totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
+      ) {
+        noCarnetSelected();
+      } else {
+        handleButton();
+      }
+    } else {
+      toast.show('Debe aceptar las condiciones de envío', {
+        type: 'normal',
+        placement: 'bottom',
+        duration: 1000,
+        style: {
+          justifyContent: 'center',
+          marginBottom: 150,
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'zoom-in',
+      });
+    }
+  };
   return (
     <>
       <View style={{minHeight: height * 0.65}}>
         <GetInputCarnet
           selectedCarnet={selectedCarnet}
           setSelectedCarnet={setSelectedCarnet}
+          terms={terms}
+          setTerms={setTerms}
         />
       </View>
 
       <TouchableOpacity
-        style={{...styles.button, backgroundColor: colors.card}}
-        activeOpacity={0.8}
-        onPress={
-          selectedCarnet.length <
-          totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
-            ? () => noCarnetSelected()
-            : () => handleButton()
-        }>
+        style={{
+          ...styles.button,
+          backgroundColor: terms ? colors.card : '#ccc',
+        }}
+        activeOpacity={terms ? 0.8 : 1}
+        onPress={handleGuardar}>
         <Text style={styles.buttonText}>Comprar</Text>
 
         <Icon name="arrow-right" color="white" size={24} style={styles.icon} />

@@ -39,19 +39,7 @@ export const StackNavigator = () => {
             />
           </>
         ) : (
-          <>
-            {utility === 'choose' ? (
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            ) : (
-              <>
-                {utility === 'money' ? (
-                  <Stack.Screen name="MoneyStack" component={MoneyStack} />
-                ) : (
-                  <Stack.Screen name="Tabs" component={Tabs} />
-                )}
-              </>
-            )}
-          </>
+          <Stack.Screen name="Tabs" component={Tabs} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

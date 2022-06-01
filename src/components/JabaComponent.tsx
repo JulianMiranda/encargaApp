@@ -13,7 +13,7 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-  const color = (((weigth - 1 - i * 1440) * 100) / 1440).toFixed(2);
+  const color = (((weigth - i * 1440) * 100) / 1440).toFixed(2);
   const colorBack = (color / 100).toFixed(1);
 
   if (weigth < 2) {
@@ -37,8 +37,9 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
       <Text
         style={{
           alignSelf: 'center',
+          color: '#000',
         }}>
-        {cantPaq !== i + 1 ? '1.5 Kg' : weigth - 1 - i * 1440 + ' g'}
+        {cantPaq !== i + 1 ? '1.5 Kg' : weigth - i * 1440 + ' g'}
       </Text>
 
       <View
@@ -51,11 +52,12 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
         <Text
           style={{
             alignSelf: 'center',
-            color: 'white',
+
+            color: colorBack > 0.2 ? 'white' : 'black',
           }}>
           {cantPaq !== i + 1
             ? '100%'
-            : (((weigth - 1 - i * 1440) * 100) / 1440).toFixed(1) + '%'}
+            : (((weigth - i * 1440) * 100) / 1440).toFixed(1) + '%'}
         </Text>
       </View>
     </View>

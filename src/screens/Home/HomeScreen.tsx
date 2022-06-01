@@ -22,6 +22,7 @@ import {SubcategoryCarousel} from '../../components/SubcategoryCarousel';
 import {OfferCard} from '../../components/OfferCard';
 import {useNavigation} from '@react-navigation/native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
+import {AutoSliderFinal} from '../../components/AutoSliderFinal';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width, height} = Dimensions.get('window');
@@ -190,7 +191,13 @@ export const HomeScreen = () => {
           )}
           <CarouselComponent data={mostSaleLastMonth} />
         </View>
-        <View style={{marginTop: 40}}>
+        <View
+          style={{
+            marginTop: 40,
+            zIndex: 9999999,
+            backgroundColor: 'transparent',
+            marginBottom: -100,
+          }}>
           {lastSubcategories.length > 0 && (
             <View
               style={{
@@ -218,10 +225,10 @@ export const HomeScreen = () => {
               </Text>
             </View>
           )}
+
           <SubcategoryCarousel data={lastSubcategories} />
         </View>
 
-        <View style={{height: 100}} />
         {errorHome && (
           <View
             style={{
@@ -260,6 +267,11 @@ export const HomeScreen = () => {
               </Text>
             </TouchableOpacity>
           </View>
+        )}
+        {imagesPromo.length > 0 ? (
+          <AutoSliderFinal imagesPromoFinal={imagesPromo} />
+        ) : (
+          <View style={{height: 170}} />
         )}
       </ScrollView>
       {isLoading && (

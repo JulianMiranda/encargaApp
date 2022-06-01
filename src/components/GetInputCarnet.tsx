@@ -24,16 +24,22 @@ import {useShop} from '../hooks/useShop';
 
 interface Props {
   setSelectedCarnet: (carnet: string[]) => void;
+  setTerms: (term: boolean) => void;
+  terms: boolean;
   selectedCarnet: string[];
 }
-export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
+export const GetInputCarnet = ({
+  selectedCarnet,
+  setSelectedCarnet,
+  terms,
+  setTerms,
+}: Props) => {
   const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
   const {carnets, loadCarnets, isLoading} = useCarnets();
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-  const navigation = useNavigation();
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -161,13 +167,37 @@ export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
           right: 20,
         }}
       /> */}
-
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          left: 80,
+        }}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={{
+            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+          onPress={() => setTerms(!terms)}>
+          <Icon
+            name={terms ? 'check-circle-outline' : 'circle-outline'}
+            size={22}
+            color={terms ? colors.card : '#e0e0e0'}
+            style={{
+              marginRight: 10,
+            }}
+          />
+          <Text>Acepto las condiciones de envío</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={addCarnet}
         style={{
           position: 'absolute',
-          bottom: 20,
+          bottom: 50,
           right: 20,
           flexDirection: 'row',
           justifyContent: 'center',
