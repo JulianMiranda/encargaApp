@@ -137,7 +137,7 @@ export const useShop = () => {
           kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
         }
         if (item.subcategory.weight > 9000) {
-          kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
+          kilos.tenkgPrice = kilos.tenkgPrice + item.cantidad;
         }
       }
     });
@@ -146,7 +146,7 @@ export const useShop = () => {
 
     if (totalWeight > 0) {
       const cant = totalWeight / 1440;
-      if (totalWeight < 1400) {
+      if (totalWeight < 1440) {
         kilos.oneandhalfkgPrice = 1;
       } else if (cant < 2) {
         kilos.oneandhalfkgPrice = 2;

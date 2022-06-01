@@ -20,7 +20,7 @@ type ShopContextProps = {
   emptyCar: () => Promise<any>;
   removeAlert: () => void;
   clearErrorAdd: () => void;
-  makeShop: (total: number, description: string) => void;
+  makeShop: (total: number, description: string) => Promise<boolean>;
 };
 const shopInicialState: ShopState = {
   car: [],
@@ -80,7 +80,7 @@ export const ShopProvider = ({children}: any) => {
         toast.show('Añadido al carrito', {
           type: 'normal',
           placement: 'top',
-          duration: 3000,
+          duration: 1500,
           style: {
             borderRadius: 50,
             paddingHorizontal: 20,
@@ -111,7 +111,7 @@ export const ShopProvider = ({children}: any) => {
         toast.show('Actualizado al carrito', {
           type: 'normal',
           placement: 'top',
-          duration: 3000,
+          duration: 1500,
           style: {
             borderRadius: 50,
             paddingHorizontal: 20,
@@ -155,7 +155,7 @@ export const ShopProvider = ({children}: any) => {
       toast.show('Carrito actualizado', {
         type: 'normal',
         placement: 'top',
-        duration: 3000,
+        duration: 800,
         style: {
           borderRadius: 50,
           paddingHorizontal: 20,
@@ -241,8 +241,12 @@ export const ShopProvider = ({children}: any) => {
     }
   };
 
-  const makeShop = async (total: number, description: string) => {
+  const makeShop = async (
+    total: number,
+    description: string,
+  ): Promise<boolean> => {
     try {
+      dispatch({type: 'add_car_loading', payload: true});
       const authorized = await api.get<User>(`/users/getOne/${user?.id}`);
       if (!authorized.data.authorized) {
         const a = await api.post('/orders/setOrder', {
@@ -253,16 +257,47 @@ export const ShopProvider = ({children}: any) => {
         });
         if (a.status === 201) {
           dispatch({type: 'empty_car'});
+          dispatch({type: 'add_car_loading', payload: false});
+          return true;
+        } else {
+          dispatch({type: 'add_car_loading', payload: false});
+          return false;
         }
       } else {
-        dispatch({
-          type: 'show_alert',
-          payload:
-            'Es necesario contactar con el proveedor para constatar los detalles del envío',
+        dispatch({type: 'add_car_loading', payload: false});
+        toast.show('Error al realizar la compra', {
+          type: 'normal',
+          placement: 'top',
+          duration: 3000,
+          style: {
+            borderRadius: 50,
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            marginTop: height / 2,
+          },
+          textStyle: {fontSize: 16},
+          animationType: 'slide-in',
         });
+        return false;
       }
     } catch (error) {
       console.log(error);
+
+      dispatch({type: 'add_car_loading', payload: false});
+      toast.show('Error al realizar la compra', {
+        type: 'normal',
+        placement: 'top',
+        duration: 3000,
+        style: {
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          justifyContent: 'center',
+          marginTop: height / 2,
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'slide-in',
+      });
+      return false;
     }
   };
   const removeAlert = () => {

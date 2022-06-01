@@ -15,14 +15,13 @@ import {ShopContext} from '../context/shop/ShopContext';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {useShop} from '../hooks/useShop';
 import {JabaComponent} from './JabaComponent';
-import ScreenLoading from './LoadingSafe';
-import {PaqByKg} from './PaqByKg';
 import {ProductShop} from './ProductShop';
+import {Productos} from './Productos';
 interface Props {
   handleButton: () => void;
 }
 
-const {height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 export const ShopStepOne = ({handleButton}: Props) => {
   const navigation = useNavigation();
   const toast = useToast();
@@ -64,23 +63,23 @@ export const ShopStepOne = ({handleButton}: Props) => {
 
   for (const paq in cantPaqOS) {
     if (paq !== 'oneandhalfkgPrice') {
-      let kg = 2;
-      if (paq === 'twoandhalfkgPrice') {
-        kg = 2;
+      let kg = 2.0;
+      if (paq === 'twokgPrice') {
+        kg = 2.0;
       } else if (paq === 'threekgPrice') {
-        kg = 3;
+        kg = 3.0;
       } else if (paq === 'fourkgPrice') {
-        kg = 4;
+        kg = 4.0;
       } else if (paq === 'fivekgPrice') {
-        kg = 5;
+        kg = 5.0;
       } else if (paq === 'sixkgPrice') {
-        kg = 6;
+        kg = 6.0;
       } else if (paq === 'sevenkgPrice') {
-        kg = 7;
+        kg = 7.0;
       } else if (paq === 'eigthkgPrice') {
-        kg = 8;
+        kg = 8.0;
       } else if (paq === 'ninekgPrice') {
-        kg = 9;
+        kg = 9.0;
       } else {
         kg = 10;
       }
@@ -90,13 +89,14 @@ export const ShopStepOne = ({handleButton}: Props) => {
             key={i + paq}
             style={{
               margin: 15,
-              backgroundColor: '#f1f1f1',
               borderBottomStartRadius: 10,
               borderBottomEndRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
             <Image
-              source={require('../assets/boxclose.jpg')}
-              style={{height: 60, width: 60}}
+              source={require('../assets/cajabaria.png')}
+              style={{height: 70, width: width * 0.16}}
             />
             <Text
               style={{
@@ -104,8 +104,23 @@ export const ShopStepOne = ({handleButton}: Props) => {
                 zIndex: 1000,
                 marginBottom: 3,
               }}>
-              {kg} Kg
+              {kg}.0 Kg
             </Text>
+            <View
+              style={{
+                backgroundColor: 'black',
+                alignSelf: 'center',
+                paddingHorizontal: 2,
+                borderRadius: 5,
+              }}>
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  color: 'white',
+                }}>
+                100%
+              </Text>
+            </View>
           </View>,
         );
       }
@@ -199,7 +214,26 @@ export const ShopStepOne = ({handleButton}: Props) => {
               {sliders}
             </View>
 
-            <PaqByKg />
+            <Productos />
+            <View
+              style={{
+                marginHorizontal: 10,
+                marginVertical: 20,
+                borderRadius: 8,
+                backgroundColor: '#FFB0A5',
+                padding: 10,
+              }}>
+              <Text
+                style={{
+                  color: '#000000',
+                  marginLeft: 10,
+                  fontSize: 14,
+                  fontWeight: '400',
+                }}>
+                *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar
+                ligeramente al embalarse tu compra.
+              </Text>
+            </View>
           </View>
         )}
       </View>

@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {Prices} from '../interfaces/Prices.interface';
 import {CantPaq} from '../interfaces/Shop.Interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
 import {Factura} from './Factura';
+import {Productos} from './Productos';
 
 interface Props {
   total: number;
@@ -40,6 +40,7 @@ export const DetailsShop = ({
       <View style={styles.divider} /> */}
 
       <Factura totalPaqReCalc={totalPaqReCalc} />
+
       {/* <View
         style={{
           flexDirection: 'row',
@@ -61,14 +62,32 @@ export const DetailsShop = ({
           <Text style={styles.priceProd}>Productos:</Text>
           <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
         </View>
+      </View>
+      <Productos />
+      <View
+        style={{
+          padding: 10,
+          marginRight: 15,
+          width: '60%',
+          alignSelf: 'flex-end',
+          marginBottom: 10,
+        }}>
         <View style={styles.sendPrice}>
           <Text style={styles.sendPriceTxt}>Envío:</Text>
           <Text style={styles.sendPriceTxtCalc}>
             {formatToCurrency(totalMoneyReCalc)}
           </Text>
         </View>
-        <View style={styles.divider} />
-        <View style={{...styles.total, backgroundColor: colors.card}}>
+
+        <View
+          style={{
+            ...styles.total,
+            borderColor: colors.primary,
+            borderWidth: 1,
+            borderRadius: 4,
+            marginBottom: 30,
+            /* backgroundColor: colors.primary */
+          }}>
           <Text style={styles.totalTitle}>Total:</Text>
           <Text style={styles.totalTxt}>
             {formatToCurrency(total + totalMoneyReCalc)}
@@ -120,28 +139,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 50,
+    borderBottomColor: '#f1f1f1',
+    borderBottomWidth: 1,
   },
   priceProd: {
     marginLeft: 5,
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '500',
   },
   txtTotal: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '600',
+    color: '#000',
   },
   sendPrice: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+
+    marginBottom: 30,
+    borderBottomColor: '#f1f1f1',
+    borderBottomWidth: 1,
   },
   sendPriceTxt: {
     marginLeft: 5,
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '500',
   },
   sendPriceTxtCalc: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '600',
   },
   total: {
@@ -152,13 +179,13 @@ const styles = StyleSheet.create({
   },
   totalTitle: {
     fontSize: 26,
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: 'bold',
+    color: '#000',
   },
   totalTxt: {
     fontSize: 28,
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: 'bold',
+    color: '#000',
   },
   boxCant: {
     flexDirection: 'row',

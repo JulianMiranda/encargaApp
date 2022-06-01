@@ -47,38 +47,6 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (!isLoading) {
       SplashScreen.hide();
-      /* PushNotification.configure({
-        onRegister: function (token) {
-          if (token.token) {
-          }
-          console.log('TOKEN:', token);
-          api.put(`/users/update/${user!.id}`, {
-            notificationTokens: token.token,
-          });
-        },
-
-        onNotification: function (notification) {
-          console.log('NOTIFICATION:', notification);
-          notification.finish(PushNotificationIOS.FetchResult.NoData);
-        },
-        onAction: function (notification) {
-          console.log('ACTION:', notification.action);
-          console.log('NOTIFICATION:', notification);
-        },
-        onRegistrationError: function (err) {
-          console.error(err.message, err);
-        },
-
-        permissions: {
-          alert: true,
-          badge: true,
-          sound: true,
-        },
-
-        popInitialNotification: true,
-
-        requestPermissions: true,
-      }); */
     }
   }, [isLoading, user]);
 
@@ -110,11 +78,13 @@ export const HomeScreen = () => {
         {imagesPromo.length > 0 ? (
           <AutoSlider imagesPromo={imagesPromo} />
         ) : (
-          <View style={{height: 100}} />
+          <View style={{height: 170}} />
         )}
 
         <View style={{marginTop: 10}}>
-          <Text style={homeStyles.carouselTitles}>Categorías</Text>
+          <Text style={{...homeStyles.carouselTitles, marginLeft: 10}}>
+            Categorías
+          </Text>
           <CategoryCarousel />
         </View>
         <View style={{marginTop: 10}}>

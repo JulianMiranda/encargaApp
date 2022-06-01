@@ -49,7 +49,15 @@ export const SubcategoryCard = ({item}: Props) => {
           <Text style={{...styles.name}} numberOfLines={1}>
             {name}
           </Text>
-          <Text style={{...styles.price}}>
+          <Text
+            style={{
+              ...styles.price,
+              backgroundColor: 'rgba(0,0,0,0.9)',
+              alignSelf: 'flex-start',
+              paddingHorizontal: 5,
+              color: 'white',
+              borderRadius: 2,
+            }}>
             {formatToCurrency(discountGalore(priceGalore, priceGaloreDiscount))}
           </Text>
         </View>

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   ScrollView,
-  Platform,
   Animated,
   Dimensions,
   TouchableOpacity,
@@ -20,10 +19,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useToast} from 'react-native-toast-notifications';
 import ScreenLoading from '../../components/LoadingSafe';
+import {useNavigation} from '@react-navigation/native';
 
-const HEADER_MAX_HEIGHT = 170;
-const HEADER_MIN_HEIGHT = 70;
-const PROFILE_IMAGE_MIN_HEIGHT = 40;
 const {width} = Dimensions.get('window');
 export const ShopScreen = () => {
   const {
@@ -35,39 +32,19 @@ export const ShopScreen = () => {
     cantPaqOS,
     setOpenModal,
     confirmModal,
+    total,
+    totalMoneyReCalc,
   } = useShop();
 
-  const scrollY = useRef(new Animated.Value(0)).current;
   const [progress, setProgress] = useState(2);
-  const {car, addCarLoading} = useContext(ShopContext);
+  const {car, makeShop, addCarLoading} = useContext(ShopContext);
   const {top} = useSafeAreaInsets();
   const toast = useToast();
-
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    extrapolate: 'clamp',
-  });
-  const headerZindex = scrollY.interpolate({
-    inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT, 170],
-    outputRange: [0, 0, 1000],
-    extrapolate: 'clamp',
-  });
-
-  const headerTitleBottom = scrollY.interpolate({
-    inputRange: [
-      0,
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT,
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 5 + PROFILE_IMAGE_MIN_HEIGHT,
-      HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 5 + PROFILE_IMAGE_MIN_HEIGHT + 26,
-    ],
-    outputRange: [-30, -30, -30, 5],
-    extrapolate: 'clamp',
-  });
+  const navigation = useNavigation();
 
   const barWidth = useRef(new Animated.Value(0)).current;
 
-  const handleButton = () => {
+  const handleButton = async () => {
     if (progress === 2) {
       const paquete = 1440 + (weigth - 1 - cantPaqOS.oneandhalfkgPrice * 1440);
       if (paquete < 1300) {
@@ -102,6 +79,7 @@ export const ShopScreen = () => {
       }).start();
       setProgress(progress - 1);
     } else {
+      const respShop = await makeShop(total + totalMoneyReCalc, '');
       setProgress(2);
       const newBarWith =
         progress === 2
@@ -113,57 +91,14 @@ export const ShopScreen = () => {
         speed: 2,
         useNativeDriver: false,
       }).reset();
+      if (respShop) {
+        navigation.navigate('ShopSuccess');
+      }
     }
   };
 
   return (
     <>
-      {/* <Animated.View
-        style={{
-          ...styles.animatedHeader,
-          height: headerHeight,
-          zIndex: headerZindex,
-          elevation: headerZindex,
-        }}>
-        <Animated.View
-          style={{
-            bottom: headerTitleBottom,
-            ...styles.headerTitle,
-          }}>
-          <Text style={styles.textTitle}>Mi Compra</Text>
-        </Animated.View>
-      </Animated.View>
-      <ScrollView
-        style={{flex: 1}}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {y: scrollY}}}],
-          {useNativeDriver: false},
-        )}>
-        <View
-          style={{
-            ...styles.headerContainer,
-          }}>
-          <Text
-            style={{
-              ...styles.titleList,
-            }}>
-            Mi Compra
-          </Text>
-        </View>
-        {car.length > 0 && (
-          <>
-            <View style={{marginTop: 50}}>
-              <AnimatedProgress progress={progress} barWidth={barWidth} />
-            </View>
-          </>
-        )}
-        {progress === 2 && <ShopStepOne handleButton={handleButton} />}
-        {progress === 1 && <ShopStepTwo handleButton={handleButton} />}
-        {progress === 0 && <ShopStepThree handleButton={handleButton} />}
-        <View style={{height: 80}} />
-      </ScrollView> */}
-
       <View
         style={{
           ...styles.headerContainer,

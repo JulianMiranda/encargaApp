@@ -22,29 +22,37 @@ export const ShopStepThree = ({handleButton}: Props) => {
     theme: {colors},
   } = useContext(ThemeContext);
   const toast = useToast();
-  const {cantPaqOS} = useShop();
+  const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
 
   const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
   const noCarnetSelected = () => {
-    toast.show(`Necesitamos ${cantCarnets} `, {
-      type: 'normal',
-      placement: 'bottom',
-      duration: 3000,
-      style: {
-        justifyContent: 'center',
-        marginBottom: 150,
-        borderRadius: 50,
-        paddingHorizontal: 20,
-        backgroundColor: 'rgba(0,0,0,0.8)',
+    toast.show(
+      `Faltan ${
+        totalPaqReCalc -
+        cantPaqOS.oneandhalfkgPrice +
+        cantCarnets -
+        selectedCarnet.length
+      } `,
+      {
+        type: 'normal',
+        placement: 'bottom',
+        duration: 3000,
+        style: {
+          justifyContent: 'center',
+          marginBottom: 150,
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'zoom-in',
       },
-      textStyle: {fontSize: 16},
-      animationType: 'zoom-in',
-    });
+    );
   };
   return (
     <>
-      <View style={{minHeight: height * 0.66}}>
+      <View style={{minHeight: height * 0.65}}>
         <GetInputCarnet
           selectedCarnet={selectedCarnet}
           setSelectedCarnet={setSelectedCarnet}
@@ -55,11 +63,12 @@ export const ShopStepThree = ({handleButton}: Props) => {
         style={{...styles.button, backgroundColor: colors.card}}
         activeOpacity={0.8}
         onPress={
-          selectedCarnet.length < cantCarnets
+          selectedCarnet.length <
+          totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
             ? () => noCarnetSelected()
             : () => handleButton()
         }>
-        <Text style={styles.buttonText}>Continuar</Text>
+        <Text style={styles.buttonText}>Comprar</Text>
 
         <Icon name="arrow-right" color="white" size={24} style={styles.icon} />
       </TouchableOpacity>

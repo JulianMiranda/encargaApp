@@ -10,7 +10,7 @@ export const PaqByKg = () => {
     <>
       <View style={styles.secContainer}>
         <Text style={styles.txtPaq}>
-          Paquetes aproximados:
+          Cantidad de paquetes:
           {/* <Text style={styles.txtPaq}> {totalPaqReCalc}</Text> */}
         </Text>
       </View>
@@ -23,49 +23,49 @@ export const PaqByKg = () => {
         )}
         {cantPaqOS.twokgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>2 Kg</Text>
+            <Text style={styles.txtPaq}>2.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.twokgPrice}</Text>
           </View>
         )}
         {cantPaqOS.threekgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>3 Kg</Text>
+            <Text style={styles.txtPaq}>3.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.threekgPrice}</Text>
           </View>
         )}
         {cantPaqOS.fourkgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>4 Kg</Text>
+            <Text style={styles.txtPaq}>4.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.fourkgPrice}</Text>
           </View>
         )}
         {cantPaqOS.fivekgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>5 Kg</Text>
+            <Text style={styles.txtPaq}>5.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.fivekgPrice}</Text>
           </View>
         )}
         {cantPaqOS.sixkgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>6 Kg</Text>
+            <Text style={styles.txtPaq}>6.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.sixkgPrice}</Text>
           </View>
         )}
         {cantPaqOS.sevenkgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>7 Kg</Text>
+            <Text style={styles.txtPaq}>7.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.sevenkgPrice}</Text>
           </View>
         )}
         {cantPaqOS.eigthkgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>8 Kg</Text>
+            <Text style={styles.txtPaq}>8.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.eigthkgPrice}</Text>
           </View>
         )}
         {cantPaqOS.ninekgPrice !== 0 && (
           <View style={styles.boxCant}>
-            <Text style={styles.txtPaq}>9 Kg</Text>
+            <Text style={styles.txtPaq}>9.0 Kg</Text>
             <Text style={styles.txtPaq}>{cantPaqOS.ninekgPrice}</Text>
           </View>
         )}
@@ -88,8 +88,8 @@ export const PaqByKg = () => {
 
       <View style={styles.threeCont}>
         <Text style={styles.txtThreeCont}>
-          *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar al
-          efectuarse la compra.
+          *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar
+          ligeramente al embalarse tu compra.
         </Text>
       </View>
     </>

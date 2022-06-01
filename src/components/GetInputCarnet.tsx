@@ -27,9 +27,9 @@ interface Props {
   selectedCarnet: string[];
 }
 export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
-  const {cantPaqOS} = useShop();
+  const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
-  const {carnets, loadCarnets, deleteCarnet, isLoading} = useCarnets();
+  const {carnets, loadCarnets, isLoading} = useCarnets();
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -82,9 +82,11 @@ export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
               color: 'white',
             }}>
             {' '}
-            {cantCarnets}{' '}
+            {totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets}{' '}
           </Text>{' '}
-          {cantCarnets === 1 ? 'persona' : 'personas'}
+          {totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets === 1
+            ? 'persona'
+            : 'personas'}
         </Text>
         <View
           style={{
@@ -220,60 +222,3 @@ export const GetInputCarnet = ({selectedCarnet, setSelectedCarnet}: Props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    height: 170,
-    zIndex: 999,
-    alignItems: 'center',
-    borderBottomRightRadius: Platform.OS === 'ios' ? 1000 : 100,
-    borderBottomLeftRadius: 0,
-  },
-  title: {
-    fontSize: 24,
-  },
-  card: {
-    margin: 5,
-    backgroundColor: '#f8f7f7',
-    borderRadius: 3,
-    padding: 5,
-  },
-  subcategory: {
-    marginHorizontal: 5,
-    flexDirection: 'row',
-  },
-  firstText: {
-    fontSize: 16,
-  },
-  titleList: {
-    color: 'white',
-    fontSize: 40,
-  },
-  button: {
-    position: 'absolute',
-    bottom: 10,
-    flexDirection: 'row',
-    marginTop: 1,
-    padding: 10,
-    paddingHorizontal: 50,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    borderRadius: 50,
-    marginBottom: 15,
-    width: '80%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonText: {
-    alignSelf: 'center',
-    color: 'white',
-    fontSize: 20,
-    marginHorizontal: 15,
-  },
-});
