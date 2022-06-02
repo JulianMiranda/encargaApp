@@ -25,9 +25,15 @@ interface PropsNavigation
 
 const {width} = Dimensions.get('window');
 export const SubcategoryCard = ({item}: Props) => {
-  const {priceGalore, priceGaloreDiscount, images, name, soldOut} = item;
+  const {priceGalore, priceGaloreDiscount, images, name, soldOut, createdAt} =
+    item;
 
   const navigation = useNavigation<PropsNavigation>();
+
+  const fechaInicio = new Date(createdAt).getTime();
+  const fechaFin = new Date().getTime();
+  const diff = fechaFin - fechaInicio;
+  const days = diff / (1000 * 60 * 60 * 14);
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -45,6 +51,12 @@ export const SubcategoryCard = ({item}: Props) => {
           /* backgroundColor: 'red' */
         }}>
         <View style={{borderRadius: 10}}>
+          {days < 24 && (
+            <Image
+              source={require('../assets/bestSeller.png')}
+              style={styles.newImageProduct}
+            />
+          )}
           {soldOut && (
             <Image
               source={require('../assets/soldOut.png')}
@@ -127,5 +139,13 @@ const styles = StyleSheet.create({
     height: width * 0.47,
     width: width * 0.47,
     borderRadius: 10,
+  },
+  newImageProduct: {
+    position: 'absolute',
+    zIndex: 999999,
+    top: 0,
+    left: 0,
+    height: 120,
+    width: 150,
   },
 });
