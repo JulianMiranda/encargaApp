@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Image,
 } from 'react-native';
 
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -24,7 +25,7 @@ interface PropsNavigation
 
 const {width} = Dimensions.get('window');
 export const SubcategoryCard = ({item}: Props) => {
-  const {priceGalore, priceGaloreDiscount, images, name} = item;
+  const {priceGalore, priceGaloreDiscount, images, name, soldOut} = item;
 
   const navigation = useNavigation<PropsNavigation>();
   return (
@@ -44,9 +45,20 @@ export const SubcategoryCard = ({item}: Props) => {
           /* backgroundColor: 'red' */
         }}>
         <View style={{borderRadius: 10}}>
+          {soldOut && (
+            <Image
+              source={require('../assets/soldOut.png')}
+              style={styles.soldOut}
+            />
+          )}
           <FadeInImage uri={images[0].url} style={styles.productImage} />
 
-          <Text style={{...styles.name}} numberOfLines={1}>
+          <Text
+            style={{
+              ...styles.name,
+              textDecorationLine: soldOut ? 'line-through' : 'none',
+            }}
+            numberOfLines={1}>
             {name}
           </Text>
           <Text
@@ -101,6 +113,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   productImage: {
+    height: width * 0.47,
+    width: width * 0.47,
+    borderRadius: 10,
+  },
+  soldOut: {
+    zIndex: 9999999,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
     height: width * 0.47,
     width: width * 0.47,
     borderRadius: 10,

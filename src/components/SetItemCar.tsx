@@ -14,6 +14,7 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
     theme: {colors},
   } = useContext(ThemeContext);
   const setCarItem = (action: Operation) => {
+    if (subcategory.soldOut) return;
     if (action === 'add') {
       updateCantidad(subcategory, cantidad + 1);
     } else {

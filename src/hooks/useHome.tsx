@@ -2,6 +2,10 @@ import {useEffect, useState} from 'react';
 import api from '../api/api';
 
 import {Datum, PromoResponse} from '../interfaces/Promo.interface';
+import {
+  PromoFinal,
+  PromoFinalResponse,
+} from '../interfaces/PromoFinal.interface';
 
 export const useHome = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,7 +13,7 @@ export const useHome = () => {
   const [mostSaleLastMonth, setMostSaleLastMonth] = useState<any[]>([]);
   const [lastSubcategories, setLastSubcategories] = useState<any[]>([]);
   const [imagesPromo, setImagesPromo] = useState<string[]>([]);
-  const [imagesPromoFinal, setImagesPromoFinal] = useState<string[]>([]);
+  const [imagesPromoFinal, setImagesPromoFinal] = useState<PromoFinal[]>([]);
   const [errorHome, setErrorHome] = useState<boolean>(false);
 
   const loadHome = async () => {
@@ -59,22 +63,27 @@ export const useHome = () => {
               currency: true,
               aviableColors: true,
             },
+            populate: [
+              {
+                path: 'images',
+                fields: {
+                  url: true,
+                },
+              },
+            ],
           },
         ],
       };
       const [promos, resp, promoFinal] = await Promise.all([
         api.post<PromoResponse>('/promotions/getList', body),
         api.post<any>('/queries/home'),
-        api.post<PromoResponse>('/promotionsFinal/getList', bodyFinal),
+        api.post<PromoFinalResponse>('/promotionsFinal/getList', bodyFinal),
       ]);
 
       const images = promos.data.data.map((promo: Datum) => promo.image.url);
       setImagesPromo(images);
 
-      const imagesFinal = promoFinal.data.data.map(
-        (promo: any) => promo.image.url,
-      );
-      setImagesPromoFinal(imagesFinal);
+      setImagesPromoFinal(promoFinal.data.data);
 
       setOffers(resp.data[0]);
       setMostSaleLastMonth(resp.data[1]);

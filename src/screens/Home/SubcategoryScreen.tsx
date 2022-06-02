@@ -115,6 +115,24 @@ export const SubcategoryScreen = (props: Props) => {
     }
   };
   const handleButton = () => {
+    if (subcategory.soldOut) {
+      toast.show('Agotado por el momento', {
+        type: 'normal',
+        placement: 'bottom',
+        duration: 1500,
+        style: {
+          justifyContent: 'center',
+          marginBottom: 150,
+          borderRadius: 50,
+          paddingHorizontal: 20,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+        },
+        textStyle: {fontSize: 16},
+        animationType: 'zoom-in',
+      });
+
+      return;
+    }
     /*    console.log('Nuevo', colorSelected);
     console.log(
       'Color en Carro',
@@ -202,7 +220,19 @@ export const SubcategoryScreen = (props: Props) => {
             style={styles.newImageProduct}
           />
         )}
+
         <View style={styles.textContainer}>
+          {subcategory.soldOut && (
+            <View
+              style={{
+                alignSelf: 'center',
+                padding: 5,
+                backgroundColor: 'rgba(0,0,0,0.1)',
+                borderRadius: 20,
+              }}>
+              <Text style={{fontSize: 18}}>Agotado</Text>
+            </View>
+          )}
           <View style={{padding: 5}}>
             <View style={styles.row}>
               <Text style={styles.name}>{name}</Text>

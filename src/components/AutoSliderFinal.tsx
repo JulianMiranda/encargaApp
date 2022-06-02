@@ -1,30 +1,54 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {StyleSheet} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
+import {PromoFinal} from '../interfaces/PromoFinal.interface';
+/* import {Modalize} from 'react-native-modalize'; */
 interface Props {
-  imagesPromoFinal: string[];
+  imagesPromoFinal: PromoFinal[];
 }
 export const AutoSliderFinal = ({imagesPromoFinal}: Props) => {
+  const [imagesSlider, setImagesSlider] = useState<string[]>([]);
+  const navigation = useNavigation();
+  useEffect(() => {
+    const images = imagesPromoFinal.map((promo: PromoFinal) => promo.image.url);
+    setImagesSlider(images);
+  }, [imagesPromoFinal]);
+
+  /* const modalizeRef = useRef<Modalize>(null); */
+  const onOpen = (index: any) => {
+    if (imagesPromoFinal[index].subcategory) {
+      navigation.navigate('SubcategoryScreen', {
+        subcategory: imagesPromoFinal[index].subcategory,
+      });
+    }
+    /*  modalizeRef.current?.open(); */
+  };
   return (
-    <SliderBox
-      images={imagesPromoFinal}
-      sliderBoxHeight={500}
-      onCurrentImagePressed={(index: any) =>
-        console.warn(`image ${index} pressed`)
-      }
-      dotColor="transparent"
-      imageLoadingColor="#fb2331"
-      inactiveDotColor="transparent"
-      paginationBoxVerticalPadding={20}
-      autoplay
-      circleLoop
-      autoplayInterval={10000}
-      resizeMethod={'resize'}
-      resizeMode={'cover'}
-      paginationBoxStyle={styles.paginationBox}
-      dotStyle={styles.dot}
-      ImageComponentStyle={styles.image}
-    />
+    <>
+      <SliderBox
+        images={imagesSlider}
+        sliderBoxHeight={500}
+        onCurrentImagePressed={(index: any) => onOpen(index)}
+        dotColor="transparent"
+        imageLoadingColor="#fb2331"
+        inactiveDotColor="transparent"
+        paginationBoxVerticalPadding={20}
+        autoplay
+        circleLoop
+        autoplayInterval={10000}
+        resizeMethod={'resize'}
+        resizeMode={'cover'}
+        paginationBoxStyle={styles.paginationBox}
+        dotStyle={styles.dot}
+        ImageComponentStyle={styles.image}
+      />
+      {/* <Modalize ref={modalizeRef}>
+        <View style={{zIndex: 99999999999}}>
+          <Text>Modilice</Text>
+        </View>
+      </Modalize> */}
+    </>
   );
 };
 const styles = StyleSheet.create({
