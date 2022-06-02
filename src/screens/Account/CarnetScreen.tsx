@@ -173,7 +173,14 @@ export const CarnetScreen = () => {
                   backgroundColor: '#f1f1f1',
                 }}
               />
-              <CarnetComponent carnet={carnet} />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  setCarnetEdit(carnet);
+                  editCarnet();
+                }}>
+                <CarnetComponent carnet={carnet} />
+              </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => buttonDeleteCarnet(carnet)}

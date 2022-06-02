@@ -23,6 +23,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useToast} from 'react-native-toast-notifications';
 
 interface Props {
   title: string;
@@ -47,7 +48,26 @@ export const ModalAddCarnet = ({
   } = useContext(ThemeContext);
 
   const {user} = useContext(AuthContext);
-  const {
+
+  const toast = useToast();
+  const [datos, setDatos] = useState<Partial<Carnet>>({
+    id: '',
+    name: '',
+    firstLastName: '',
+    secondLastName: '',
+    carnet: '',
+    phoneNumber: '',
+    address: '',
+    municipio: '',
+    number: '',
+    provincia: '',
+    deparment: '',
+    firstAccross: '',
+    secondAccross: '',
+    floor: '',
+    reparto: '',
+  });
+  /* const {
     name,
     firstLastName,
     secondLastName,
@@ -78,7 +98,7 @@ export const ModalAddCarnet = ({
     secondAccross: '',
     floor: '',
     reparto: '',
-  });
+  }); */
   const uno = useRef<any>();
   const dos = useRef<any>();
   const tres = useRef<any>();
@@ -115,53 +135,84 @@ export const ModalAddCarnet = ({
   const onSave = async () => {
     const carnetRegex = new RegExp(/^([0-9])*$/);
 
-    if (name?.trim() === '') {
+    if (datos.name?.trim() === '') {
       setError({...error, name: 'El nombre es obligatorio'});
-    } else if (firstLastName?.trim() === '') {
+    } else if (datos.firstLastName?.trim() === '') {
       setError({...error, firstLastName: 'El apellido es obligatorio'});
-    } else if (secondLastName?.trim() === '') {
+    } else if (datos.secondLastName?.trim() === '') {
       setError({...error, secondLastName: 'El apellido es obligatorio'});
-    } else if (carnet?.trim() === '') {
+    } else if (datos.carnet?.trim() === '') {
       setError({...error, carnet: 'El carnet es obligatorio'});
-    } else if (typeof carnet === 'string' && !carnetRegex.test(carnet)) {
+    } else if (
+      typeof datos.carnet === 'string' &&
+      !carnetRegex.test(datos.carnet)
+    ) {
       setError({...error, carnet: 'El carnet debe ser un número válido'});
-    } else if (carnet?.trim().length !== 11) {
+    } else if (datos.carnet?.trim().length !== 11) {
       setError({...error, carnet: 'El carnet debe tener 11 dígitos'});
-    } else if (address?.trim() === '') {
+    } else if (datos.address?.trim() === '') {
       setError({...error, address: 'La dirección es obligatoria'});
-    } else if (number?.trim() === '') {
+    } else if (datos.number?.trim() === '') {
       setError({...error, number: 'El número de la casa es obligatorio'});
-    } else if (provincia?.trim() === '') {
+    } else if (datos.provincia?.trim() === '') {
       setError({...error, provincia: 'La provincia es obligatoria'});
-    } else if (municipio?.trim() === '') {
+    } else if (datos.municipio?.trim() === '') {
       setError({...error, municipio: 'El municipio es obligatorio'});
-    } else if (phoneNumber?.trim() === '') {
+    } else if (datos.phoneNumber?.trim() === '') {
       setError({...error, phoneNumber: 'El teléfono es obligatorio'});
     } else if (
-      phoneNumber!.trim().length < 8 ||
-      !carnetRegex.test(phoneNumber!.trim().slice(1))
+      datos.phoneNumber!.trim().length < 8 ||
+      !carnetRegex.test(datos.phoneNumber!.trim().slice(1))
     ) {
       setError({...error, phoneNumber: 'Ingrese un teléfono válido'});
     } else {
       try {
         setIsLoading(true);
-        await api.post('/carnets/create', {
-          name,
-          firstLastName,
-          secondLastName,
-          carnet,
-          phoneNumber,
-          address,
-          municipio,
-          number,
-          provincia,
-          deparment,
-          firstAccross,
-          secondAccross,
-          floor,
-          reparto,
-          user: user?.id,
+
+        const exist = await api.post('/carnets/getList', {
+          filter: {
+            user: ['=', user?.id],
+            carnet: ['=', datos.carnet],
+          },
         });
+        console.log('exist', exist.data.data);
+        if (exist.data.data.length > 0) {
+          console.log('Ya tienes este carnet guardado');
+
+          toast.show('Ya tienes guardados estos datos', {
+            type: 'normal',
+            placement: 'top',
+            duration: 3000,
+            style: {
+              zIndex: 9999,
+              justifyContent: 'center',
+              borderRadius: 50,
+              marginTop: 50,
+              paddingHorizontal: 20,
+              backgroundColor: 'red',
+            },
+            textStyle: {fontSize: 16},
+            animationType: 'zoom-in',
+          });
+        } else {
+          await api.post('/carnets/create', {
+            name: datos.name,
+            firstLastName: datos.firstLastName,
+            secondLastName: datos.secondLastName,
+            carnet: datos.carnet,
+            phoneNumber: datos.phoneNumber,
+            address: datos.address,
+            municipio: datos.municipio,
+            number: datos.number,
+            provincia: datos.provincia,
+            deparment: datos.deparment,
+            firstAccross: datos.firstAccross,
+            secondAccross: datos.secondAccross,
+            floor: datos.floor,
+            reparto: datos.reparto,
+            user: user?.id,
+          });
+        }
         /* 
         onChange('', 'name');
         onChange('', 'firstLastName');
@@ -218,25 +269,28 @@ export const ModalAddCarnet = ({
     }
   }, [openModal]);
 
-  useEffect(() => {
-    onChange('La Habana', 'provincia');
+  /* useEffect(() => {
+    setDatos({...datos, provincia: 'La Habana'});
     const municipios = provincias.filter(
       province => province.nombre === 'La Habana',
     );
     const value = municipios[0].municipios;
     setAviableMunicipios(value);
-  }, []);
-  useEffect(() => {
-    if (provincia?.trim() !== '' && provincia !== undefined) {
+  }, []); */
+  /* useEffect(() => {
+    if (datos.provincia?.trim() !== '' && datos.provincia !== undefined) {
       const municipios = provincias.filter(
-        province => province.nombre === provincia.trim(),
+        province => province.nombre === datos.provincia.trim(),
       );
       const value = municipios[0].municipios[0];
-      onChange(value, 'municipio');
+      setDatos({...datos, municipio: value});
     }
-  }, [provincia]);
-  console.log('municipio', municipio);
-  console.log('provincia', provincia);
+  }, [datos.provincia]); */
+
+  const onChange = (e: any, name: string) => {
+    setDatos({...datos, [name]: e});
+    setError({...error, [name]: ''});
+  };
   return (
     <Modal
       animationType="fade"
@@ -279,13 +333,8 @@ export const ModalAddCarnet = ({
                 autoFocus
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={name}
-                onChangeText={value => {
-                  onChange(value, 'name');
-                  if (error.name !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.name}
+                onChangeText={value => onChange(value, 'name')}
               />
               {error.name !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.name}</Text>
@@ -309,13 +358,8 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={firstLastName}
-                  onChangeText={value => {
-                    onChange(value, 'firstLastName');
-                    if (error.firstLastName !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.secondLastName}
+                  onChangeText={value => onChange(value, 'secondLastName')}
                 />
                 {error.firstLastName !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -340,13 +384,8 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={secondLastName}
-                  onChangeText={value => {
-                    onChange(value, 'secondLastName');
-                    if (error.secondLastName !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.secondLastName}
+                  onChangeText={value => onChange(value, 'secondLastName')}
                 />
                 {error.secondLastName !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -373,13 +412,8 @@ export const ModalAddCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={carnet}
-                onChangeText={value => {
-                  onChange(value, 'carnet');
-                  if (error.carnet !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.carnet}
+                onChangeText={value => onChange(value, 'carnet')}
               />
               {error.carnet !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.carnet}</Text>
@@ -402,13 +436,8 @@ export const ModalAddCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={address}
-                onChangeText={value => {
-                  onChange(value, 'address');
-                  if (error.address !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.address}
+                onChangeText={value => onChange(value, 'address')}
               />
               {error.address !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>
@@ -433,13 +462,8 @@ export const ModalAddCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={number}
-                onChangeText={value => {
-                  onChange(value, 'number');
-                  if (error.number !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.number}
+                onChangeText={value => onChange(value, 'number')}
               />
               {error.number !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.number}</Text>
@@ -464,7 +488,7 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={firstAccross}
+                  value={datos.firstAccross}
                   onChangeText={value => onChange(value, 'firstAccross')}
                 />
               </View>
@@ -485,7 +509,7 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={secondAccross}
+                  value={datos.secondAccross}
                   onChangeText={value => onChange(value, 'secondAccross')}
                 />
               </View>
@@ -519,11 +543,8 @@ export const ModalAddCarnet = ({
                   <Picker
                     style={{}}
                     mode="dropdown"
-                    selectedValue={provincia}
+                    selectedValue={datos.provincia}
                     onValueChange={value => {
-                      if (error.provincia !== '') {
-                        clearError();
-                      }
                       onChange(value, 'provincia');
 
                       const municipios = provincias.filter(
@@ -565,11 +586,8 @@ export const ModalAddCarnet = ({
                   <Picker
                     style={{}}
                     mode="dropdown"
-                    selectedValue={municipio}
+                    selectedValue={datos.municipio}
                     onValueChange={value => {
-                      if (error.municipio !== '') {
-                        clearError();
-                      }
                       onChange(value, 'municipio');
                     }}>
                     {aviableMunicipios.map((municipioS: any, index: any) => (
@@ -616,13 +634,8 @@ export const ModalAddCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={phoneNumber}
-                onChangeText={value => {
-                  onChange(value, 'phoneNumber');
-                  if (error.phoneNumber !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.phoneNumber}
+                onChangeText={value => onChange(value, 'phoneNumber')}
               />
               {error.phoneNumber !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>
@@ -648,7 +661,7 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={deparment}
+                  value={datos.deparment}
                   onChangeText={value => onChange(value, 'deparment')}
                 />
               </View>
@@ -669,7 +682,7 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={floor}
+                  value={datos.floor}
                   onChangeText={value => onChange(value, 'floor')}
                 />
               </View>
@@ -691,7 +704,7 @@ export const ModalAddCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={reparto}
+                value={datos.reparto}
                 onChangeText={value => onChange(value, 'reparto')}
               />
             </View>

@@ -18,6 +18,7 @@ import {ScrollView} from 'react-native';
 import {useForm} from '../hooks/useForm';
 import api from '../api/api';
 import {AuthContext} from '../context/auth/AuthContext';
+import {useToast} from 'react-native-toast-notifications';
 
 interface Props {
   openModal: boolean;
@@ -39,9 +40,25 @@ export const ModalEditCarnet = ({
   } = useContext(ThemeContext);
 
   const {user} = useContext(AuthContext);
-  useEffect(() => {
-    console.log('carnetEdit', carnetEdit);
-  }, [carnetEdit]);
+  const toast = useToast();
+  const [datos, setDatos] = useState<Partial<Carnet>>({
+    id: carnetEdit.id || '',
+    name: carnetEdit.name || '',
+    firstLastName: carnetEdit.firstLastName || '',
+    secondLastName: carnetEdit.secondLastName || '',
+    carnet: carnetEdit.carnet || '',
+    phoneNumber: carnetEdit.phoneNumber || '',
+    address: carnetEdit.address || '',
+    municipio: carnetEdit.municipio || '',
+    number: carnetEdit.number || '',
+    provincia: carnetEdit.provincia || '',
+    deparment: carnetEdit.deparment || '',
+    firstAccross: carnetEdit.firstAccross || '',
+    secondAccross: carnetEdit.secondAccross || '',
+    floor: carnetEdit.floor || '',
+    reparto: carnetEdit.reparto || '',
+  });
+  /* 
   const {
     name,
     firstLastName,
@@ -73,8 +90,14 @@ export const ModalEditCarnet = ({
     secondAccross: carnetEdit.secondAccross ? carnetEdit.secondAccross : '',
     floor: carnetEdit.floor ? carnetEdit.floor : '',
     reparto: carnetEdit.reparto ? carnetEdit.reparto : '',
-  });
+  }); */
+  /* useEffect(() => {
+    console.log('carnetEdit', carnetEdit);
 
+    if (carnetEdit.name) {
+      onChange(carnetEdit.name, 'name');
+    }
+  }, [carnetEdit]); */
   const uno = useRef<any>();
   const dos = useRef<any>();
   const tres = useRef<any>();
@@ -108,56 +131,107 @@ export const ModalEditCarnet = ({
     reparto: '',
   });
 
+  useEffect(() => {
+    for (const key in carnetEdit) {
+      if (carnetEdit[key]) {
+        setDatos(prevState => ({
+          ...prevState,
+          [key]: carnetEdit[key],
+        }));
+      }
+    }
+    /* 
+    if (carnetEdit.name) {
+      setDatos({
+        ...datos,
+        name: carnetEdit.name,
+      });
+    } */
+  }, [carnetEdit]);
+
   const onSave = async () => {
     const carnetRegex = new RegExp(/^([0-9])*$/);
 
-    if (name?.trim() === '') {
+    if (datos.name?.trim() === '') {
       setError({...error, name: 'El nombre es obligatorio'});
-    } else if (firstLastName?.trim() === '') {
+    } else if (datos.firstLastName?.trim() === '') {
       setError({...error, firstLastName: 'El apellido es obligatorio'});
-    } else if (secondLastName?.trim() === '') {
+    } else if (datos.secondLastName?.trim() === '') {
       setError({...error, secondLastName: 'El apellido es obligatorio'});
-    } else if (carnet?.trim() === '') {
+    } else if (datos.carnet?.trim() === '') {
       setError({...error, carnet: 'El carnet es obligatorio'});
-    } else if (typeof carnet === 'string' && !carnetRegex.test(carnet)) {
+    } else if (
+      typeof datos.carnet === 'string' &&
+      !carnetRegex.test(datos.carnet)
+    ) {
       setError({...error, carnet: 'El carnet debe ser un número válido'});
-    } else if (carnet?.trim().length !== 11) {
+    } else if (datos.carnet?.trim().length !== 11) {
       setError({...error, carnet: 'El carnet debe tener 11 dígitos'});
-    } else if (address?.trim() === '') {
+    } else if (datos.address?.trim() === '') {
       setError({...error, address: 'La dirección es obligatoria'});
-    } else if (number?.trim() === '') {
+    } else if (datos.number?.trim() === '') {
       setError({...error, number: 'El número de la casa es obligatorio'});
-    } else if (municipio?.trim() === '') {
+    } else if (datos.municipio?.trim() === '') {
       setError({...error, municipio: 'El municipio es obligatorio'});
-    } else if (provincia?.trim() === '') {
+    } else if (datos.provincia?.trim() === '') {
       setError({...error, provincia: 'La provincia es obligatoria'});
-    } else if (phoneNumber?.trim() === '') {
+    } else if (datos.phoneNumber?.trim() === '') {
       setError({...error, phoneNumber: 'El teléfono es obligatorio'});
     } else if (
-      phoneNumber!.trim().length < 6 ||
-      !carnetRegex.test(phoneNumber!.trim().slice(1))
+      datos.phoneNumber!.trim().length < 6 ||
+      !carnetRegex.test(datos.phoneNumber!.trim().slice(1))
     ) {
       setError({...error, phoneNumber: 'Ingrese un teléfono válido'});
     } else {
       try {
         setIsLoading(true);
-        await api.post('/carnets/create', {
-          name,
-          firstLastName,
-          secondLastName,
-          carnet,
-          phoneNumber,
-          address,
-          municipio,
-          number,
-          provincia,
-          deparment,
-          firstAccross,
-          secondAccross,
-          floor,
-          reparto,
-          user: user?.id,
+        console.log('datos', datos.carnet);
+
+        const exist = await api.post('/carnets/getList', {
+          filter: {
+            user: ['=', user?.id],
+            carnet: ['=', datos.carnet],
+          },
         });
+        console.log('exist', exist.data.data);
+        if (exist.data.data.length > 0 && datos.carnet !== carnetEdit.carnet) {
+          console.log('Ya tienes este carnet guardado');
+
+          toast.show('Ya tienes guardados estos datos', {
+            type: 'normal',
+            placement: 'top',
+            duration: 3000,
+            style: {
+              zIndex: 9999,
+              justifyContent: 'center',
+              borderRadius: 50,
+              marginTop: 50,
+              paddingHorizontal: 20,
+              backgroundColor: 'red',
+            },
+            textStyle: {fontSize: 16},
+            animationType: 'zoom-in',
+          });
+        } else {
+          await api.put(`/carnets/update/${carnetEdit.id}`, {
+            name: datos.name,
+            firstLastName: datos.firstLastName,
+            secondLastName: datos.secondLastName,
+            carnet: datos.carnet,
+            phoneNumber: datos.phoneNumber,
+            address: datos.address,
+            municipio: datos.municipio,
+            number: datos.number,
+            provincia: datos.provincia,
+            deparment: datos.deparment,
+            firstAccross: datos.firstAccross,
+            secondAccross: datos.secondAccross,
+            floor: datos.floor,
+            reparto: datos.reparto,
+            user: user?.id,
+          });
+        }
+        /*  */
         setIsLoading(false);
         setOpenModal(false);
         loadCarnets();
@@ -197,6 +271,10 @@ export const ModalEditCarnet = ({
       setIsVisible(false);
     }
   }, [openModal]);
+  const onChange = (e: any, name: string) => {
+    setDatos({...datos, [name]: e});
+    setError({...error, [name]: ''});
+  };
   return (
     <Modal
       animationType="fade"
@@ -228,13 +306,8 @@ export const ModalEditCarnet = ({
                 autoFocus
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={name}
-                onChangeText={value => {
-                  onChange(value, 'name');
-                  if (error.name !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.name}
+                onChangeText={value => onChange(value, 'name')}
               />
               {error.name !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.name}</Text>
@@ -258,13 +331,8 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={firstLastName}
-                  onChangeText={value => {
-                    onChange(value, 'firstLastName');
-                    if (error.firstLastName !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.firstLastName}
+                  onChangeText={value => onChange(value, 'firstLastName')}
                 />
                 {error.firstLastName !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -289,13 +357,8 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={secondLastName}
-                  onChangeText={value => {
-                    onChange(value, 'secondLastName');
-                    if (error.secondLastName !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.secondLastName}
+                  onChangeText={value => onChange(value, 'secondLastName')}
                 />
                 {error.secondLastName !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -322,13 +385,8 @@ export const ModalEditCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={carnet}
-                onChangeText={value => {
-                  onChange(value, 'carnet');
-                  if (error.carnet !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.carnet}
+                onChangeText={value => onChange(value, 'carnet')}
               />
               {error.carnet !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.carnet}</Text>
@@ -351,13 +409,8 @@ export const ModalEditCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={address}
-                onChangeText={value => {
-                  onChange(value, 'address');
-                  if (error.address !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.address}
+                onChangeText={value => onChange(value, 'address')}
               />
               {error.address !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>
@@ -382,13 +435,8 @@ export const ModalEditCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={number}
-                onChangeText={value => {
-                  onChange(value, 'number');
-                  if (error.number !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.number}
+                onChangeText={value => onChange(value, 'number')}
               />
               {error.number !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>{error.number}</Text>
@@ -413,7 +461,7 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={firstAccross}
+                  value={datos.firstAccross}
                   onChangeText={value => onChange(value, 'firstAccross')}
                 />
               </View>
@@ -434,7 +482,7 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={secondAccross}
+                  value={datos.secondAccross}
                   onChangeText={value => onChange(value, 'secondAccross')}
                 />
               </View>
@@ -457,13 +505,8 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={municipio}
-                  onChangeText={value => {
-                    onChange(value, 'municipio');
-                    if (error.municipio !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.municipio}
+                  onChangeText={value => onChange(value, 'municipio')}
                 />
                 {error.municipio !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -488,13 +531,8 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={provincia}
-                  onChangeText={value => {
-                    onChange(value, 'provincia');
-                    if (error.provincia !== '') {
-                      clearError();
-                    }
-                  }}
+                  value={datos.provincia}
+                  onChangeText={value => onChange(value, 'provincia')}
                 />
                 {error.provincia !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -521,13 +559,8 @@ export const ModalEditCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={phoneNumber}
-                onChangeText={value => {
-                  onChange(value, 'phoneNumber');
-                  if (error.phoneNumber !== '') {
-                    clearError();
-                  }
-                }}
+                value={datos.phoneNumber}
+                onChangeText={value => onChange(value, 'phoneNumber')}
               />
               {error.phoneNumber !== '' && (
                 <Text style={{fontSize: 10, color: 'red'}}>
@@ -553,7 +586,7 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={deparment}
+                  value={datos.deparment}
                   onChangeText={value => onChange(value, 'deparment')}
                 />
               </View>
@@ -574,7 +607,7 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={floor}
+                  value={datos.floor}
                   onChangeText={value => onChange(value, 'floor')}
                 />
               </View>
@@ -596,15 +629,10 @@ export const ModalEditCarnet = ({
                 }}
                 autoCapitalize="words"
                 autoCorrect={false}
-                value={reparto}
+                value={datos.reparto}
                 onChangeText={value => onChange(value, 'reparto')}
               />
             </View>
-            {isLoading && (
-              <View style={{flex: 1}}>
-                <ActivityIndicator color={colors.primary} />
-              </View>
-            )}
 
             <View
               style={{
@@ -622,8 +650,19 @@ export const ModalEditCarnet = ({
 
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={{...styles.confirmButton, backgroundColor: colors.card}}
+                style={{
+                  ...styles.confirmButton,
+                  backgroundColor: colors.card,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
                 onPress={onSave}>
+                {isLoading && (
+                  <View style={{}}>
+                    <ActivityIndicator color={'white'} />
+                  </View>
+                )}
                 <Text style={{color: '#ffffff', fontSize: 16}}>Añadir</Text>
               </TouchableOpacity>
             </View>
