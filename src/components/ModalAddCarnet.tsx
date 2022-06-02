@@ -51,7 +51,6 @@ export const ModalAddCarnet = ({
 
   const toast = useToast();
   const [datos, setDatos] = useState<Partial<Carnet>>({
-    id: '',
     name: '',
     firstLastName: '',
     secondLastName: '',
@@ -133,6 +132,7 @@ export const ModalAddCarnet = ({
   });
   const [aviableMunicipios, setAviableMunicipios] = useState<any>([]);
   const onSave = async () => {
+    console.log(datos);
     const carnetRegex = new RegExp(/^([0-9])*$/);
 
     if (datos.name?.trim() === '') {
@@ -179,21 +179,8 @@ export const ModalAddCarnet = ({
         if (exist.data.data.length > 0) {
           console.log('Ya tienes este carnet guardado');
 
-          toast.show('Ya tienes guardados estos datos', {
-            type: 'normal',
-            placement: 'top',
-            duration: 3000,
-            style: {
-              zIndex: 9999,
-              justifyContent: 'center',
-              borderRadius: 50,
-              marginTop: 50,
-              paddingHorizontal: 20,
-              backgroundColor: 'red',
-            },
-            textStyle: {fontSize: 16},
-            animationType: 'zoom-in',
-          });
+          setIsLoading(false);
+          setError({...error, carnet: 'Ya tienes un carnet con este número'});
         } else {
           await api.post('/carnets/create', {
             name: datos.name,
@@ -212,6 +199,26 @@ export const ModalAddCarnet = ({
             reparto: datos.reparto,
             user: user?.id,
           });
+          setDatos({
+            name: '',
+            firstLastName: '',
+            secondLastName: '',
+            carnet: '',
+            phoneNumber: '',
+            address: '',
+            municipio: '',
+            number: '',
+            provincia: '',
+            deparment: '',
+            firstAccross: '',
+            secondAccross: '',
+            floor: '',
+            reparto: '',
+          });
+
+          setIsLoading(false);
+          setOpenModal(false);
+          loadCarnets();
         }
         /* 
         onChange('', 'name');
@@ -228,10 +235,6 @@ export const ModalAddCarnet = ({
         onChange('', 'secondAccross');
         onChange('', 'floor');
         onChange('', 'reparto'); */
-
-        setIsLoading(false);
-        setOpenModal(false);
-        loadCarnets();
       } catch (error) {
         setIsLoading(false);
         setOpenModal(false);
@@ -346,7 +349,7 @@ export const ModalAddCarnet = ({
                 <TextInput
                   placeholder="Torres"
                   ref={dos}
-                  onSubmitEditing={() => tres.current.focus()}
+                  onSubmitEditing={() => dos.current.focus()}
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
@@ -358,8 +361,8 @@ export const ModalAddCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={datos.secondLastName}
-                  onChangeText={value => onChange(value, 'secondLastName')}
+                  value={datos.firstLastName}
+                  onChangeText={value => onChange(value, 'firstLastName')}
                 />
                 {error.firstLastName !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
@@ -371,7 +374,7 @@ export const ModalAddCarnet = ({
                 <Text style={{fontSize: 14}}>Segundo Apellido*</Text>
                 <TextInput
                   ref={tres}
-                  onSubmitEditing={() => cuatro.current.focus()}
+                  onSubmitEditing={() => tres.current.focus()}
                   placeholder="Acosta"
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
@@ -398,7 +401,7 @@ export const ModalAddCarnet = ({
               <Text style={{fontSize: 14}}>Número de Carnet*</Text>
               <TextInput
                 ref={cuatro}
-                onSubmitEditing={() => cinco.current.focus()}
+                onSubmitEditing={() => cuatro.current.focus()}
                 placeholder="93150714909"
                 keyboardType="numeric"
                 // eslint-disable-next-line react-native/no-inline-styles
@@ -554,6 +557,11 @@ export const ModalAddCarnet = ({
                       setAviableMunicipios(municipios[0].municipios); /* 
                       onChange(municipios[0].municipios[0], 'municipio'); */
                     }}>
+                    <Picker.Item
+                      enabled={false}
+                      label="Seleccione su provincia"
+                      value=""
+                    />
                     {provincias.map((province, index) => (
                       <Picker.Item
                         key={index}
@@ -590,6 +598,11 @@ export const ModalAddCarnet = ({
                     onValueChange={value => {
                       onChange(value, 'municipio');
                     }}>
+                    <Picker.Item
+                      enabled={false}
+                      label="Seleccione su Municipio"
+                      value=""
+                    />
                     {aviableMunicipios.map((municipioS: any, index: any) => (
                       <Picker.Item
                         key={index}
@@ -708,11 +721,6 @@ export const ModalAddCarnet = ({
                 onChangeText={value => onChange(value, 'reparto')}
               />
             </View>
-            {isLoading && (
-              <View style={{flex: 1}}>
-                <ActivityIndicator color={colors.primary} />
-              </View>
-            )}
 
             {/*   <View
               style={{
@@ -757,6 +765,11 @@ export const ModalAddCarnet = ({
               }}
               activeOpacity={0.8}
               onPress={onSave}>
+              {isLoading && (
+                <View style={{position: 'absolute', left: 25, top: 10}}>
+                  <ActivityIndicator color={'white'} size={24} />
+                </View>
+              )}
               <Text
                 style={{
                   alignSelf: 'center',
