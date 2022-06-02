@@ -9,6 +9,7 @@ export const useHome = () => {
   const [mostSaleLastMonth, setMostSaleLastMonth] = useState<any[]>([]);
   const [lastSubcategories, setLastSubcategories] = useState<any[]>([]);
   const [imagesPromo, setImagesPromo] = useState<string[]>([]);
+  const [imagesPromoFinal, setImagesPromoFinal] = useState<string[]>([]);
   const [errorHome, setErrorHome] = useState<boolean>(false);
 
   const loadHome = async () => {
@@ -27,13 +28,53 @@ export const useHome = () => {
           },
         ],
       };
-      const [promos, resp] = await Promise.all([
+      const bodyFinal = {
+        filter: {status: ['=', true]},
+        sort: {updatedAt: 'ASC'},
+        population: [
+          {
+            path: 'image',
+            fields: {
+              url: true,
+            },
+          },
+          {
+            path: 'subcategory',
+            fields: {
+              status: true,
+              soldOut: true,
+              name: true,
+              category: true,
+              createdAt: true,
+              updatedAt: true,
+              images: true,
+              description: true,
+              aviableSizes: true,
+              id: true,
+              price: true,
+              priceGalore: true,
+              priceDiscount: true,
+              priceGaloreDiscount: true,
+              weight: true,
+              currency: true,
+              aviableColors: true,
+            },
+          },
+        ],
+      };
+      const [promos, resp, promoFinal] = await Promise.all([
         api.post<PromoResponse>('/promotions/getList', body),
         api.post<any>('/queries/home'),
+        api.post<PromoResponse>('/promotionsFinal/getList', bodyFinal),
       ]);
 
       const images = promos.data.data.map((promo: Datum) => promo.image.url);
       setImagesPromo(images);
+
+      const imagesFinal = promoFinal.data.data.map(
+        (promo: any) => promo.image.url,
+      );
+      setImagesPromoFinal(imagesFinal);
 
       setOffers(resp.data[0]);
       setMostSaleLastMonth(resp.data[1]);
@@ -41,6 +82,7 @@ export const useHome = () => {
 
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setErrorHome(true);
       setIsLoading(false);
     }
@@ -56,6 +98,7 @@ export const useHome = () => {
     mostSaleLastMonth,
     lastSubcategories,
     imagesPromo,
+    imagesPromoFinal,
     loadHome,
     errorHome,
   };

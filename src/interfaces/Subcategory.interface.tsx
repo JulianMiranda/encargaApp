@@ -11,6 +11,7 @@ export interface SubcategoryResp {
 
 export interface Subcategory {
   status: boolean;
+  soldOut: boolean;
   name: string;
   category: Category;
   createdAt: string;

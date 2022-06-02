@@ -38,6 +38,7 @@ export const HomeScreen = () => {
   const {
     isLoading,
     imagesPromo,
+    imagesPromoFinal,
     offers,
     mostSaleLastMonth,
     lastSubcategories,
@@ -268,8 +269,8 @@ export const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        {imagesPromo.length > 0 ? (
-          <AutoSliderFinal imagesPromoFinal={imagesPromo} />
+        {imagesPromoFinal.length > 0 ? (
+          <AutoSliderFinal imagesPromoFinal={imagesPromoFinal} />
         ) : (
           <View style={{height: 170}} />
         )}
