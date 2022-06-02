@@ -1,19 +1,28 @@
-import {CommonActions, useNavigation} from '@react-navigation/native';
 import React, {useContext} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {ThemeContext} from '../../context/theme/ThemeContext';
+import {ThemeContext} from '../context/theme/ThemeContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export const ShopSuccess = () => {
+interface Props {
+  pressNavigate: () => void;
+}
+export const ShopSuccess = ({pressNavigate}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
   const navigation = useNavigation();
   return (
     <>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 200,
+        }}>
         <Image
-          source={require('../../assets/successShop2.png')}
+          source={require('../assets/successShop2.png')}
           style={{width: 150, height: 150}}
         />
         <Text style={{fontWeight: 'bold', fontSize: 28, marginBottom: 50}}>
@@ -46,9 +55,7 @@ export const ShopSuccess = () => {
             backgroundColor: colors.card,
           }}
           activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate('ShopScreen');
-          }}>
+          onPress={pressNavigate}>
           <Text
             style={{
               alignSelf: 'center',

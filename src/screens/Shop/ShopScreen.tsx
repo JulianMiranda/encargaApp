@@ -20,6 +20,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useToast} from 'react-native-toast-notifications';
 import ScreenLoading from '../../components/LoadingSafe';
 import {useNavigation} from '@react-navigation/native';
+import {Modalize} from 'react-native-modalize';
+import {ShopSuccess} from '../../components/ShpSuccessComponent';
 
 const {width} = Dimensions.get('window');
 export const ShopScreen = () => {
@@ -41,8 +43,14 @@ export const ShopScreen = () => {
   const {top} = useSafeAreaInsets();
   const toast = useToast();
   const navigation = useNavigation();
+  const modalizeRef = useRef<Modalize>(null);
 
   const barWidth = useRef(new Animated.Value(0)).current;
+
+  const pressNavigate = () => {
+    modalizeRef.current?.close();
+    navigation.navigate('HomeScreen');
+  };
 
   const handleButton = async () => {
     if (progress === 2) {
@@ -92,7 +100,8 @@ export const ShopScreen = () => {
         useNativeDriver: false,
       }).reset();
       if (respShop) {
-        navigation.navigate('ShopSuccess');
+        modalizeRef.current?.open();
+        /* navigation.navigate('ShopSuccess');  */
       }
     }
   };
@@ -193,6 +202,9 @@ export const ShopScreen = () => {
           <ScreenLoading size={32} text="" />
         </View>
       )}
+      <Modalize ref={modalizeRef}>
+        <ShopSuccess pressNavigate={pressNavigate} />
+      </Modalize>
     </>
   );
 };

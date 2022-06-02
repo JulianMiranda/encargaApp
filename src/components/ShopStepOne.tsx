@@ -257,16 +257,16 @@ export const ShopStepOne = ({handleButton}: Props) => {
             style={{...styles.button, backgroundColor: colors.card}}
             activeOpacity={0.8}
             onPress={() => {
+              console.log('Paq 1.5', cantPaqOS.oneandhalfkgPrice);
               if (
-                relleno.golosina ||
-                relleno.lapicero ||
-                relleno.maquina ||
-                relleno.noone ||
-                relleno.plantilla ||
-                relleno.refresco
+                !relleno.golosina &&
+                !relleno.lapicero &&
+                !relleno.maquina &&
+                !relleno.noone &&
+                !relleno.plantilla &&
+                !relleno.refresco &&
+                cantPaqOS.oneandhalfkgPrice > 0
               ) {
-                handleButton();
-              } else {
                 toast.show('Debe seleccionar un relleno', {
                   type: 'normal',
                   placement: 'bottom',
@@ -281,6 +281,8 @@ export const ShopStepOne = ({handleButton}: Props) => {
                   textStyle: {fontSize: 16},
                   animationType: 'zoom-in',
                 });
+              } else {
+                handleButton();
               }
               //handleButton();
               /* navigation.navigate('EnterPhoneScreen') */
