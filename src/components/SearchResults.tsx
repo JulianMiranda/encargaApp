@@ -24,6 +24,7 @@ export const SearchResults = ({search}: Props) => {
 
   const searchProductsApi = async (searchWord: string) => {
     const body = {
+      filter: {status: ['=', true]},
       docsPerPage: 22,
       sort: {name: 'asc'},
       search: {text: searchWord.trim(), fields: ['name']},

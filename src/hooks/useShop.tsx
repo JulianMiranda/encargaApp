@@ -2,6 +2,8 @@ import {useState, useEffect, useContext} from 'react';
 import {Linking} from 'react-native';
 import {AuthContext} from '../context/auth/AuthContext';
 import {ShopContext} from '../context/shop/ShopContext';
+import {discount} from '../utils/discount';
+import {discountGalore} from '../utils/discountGalore';
 
 export const useShop = () => {
   const {car, emptyCar, makeShop} = useContext(ShopContext);
@@ -91,10 +93,17 @@ export const useShop = () => {
     };
     car.forEach(function (item) {
       if (totalPaqReCalc > 4 || item.cantidad > 5) {
-        const valor = item.cantidad * item.subcategory.priceGalore;
+        const valor =
+          item.cantidad *
+          discountGalore(
+            item.subcategory.priceGalore,
+            item.subcategory.priceGaloreDiscount,
+          );
         totalCalc += valor;
       } else {
-        const valor = item.cantidad * item.subcategory.price;
+        const valor =
+          item.cantidad *
+          discount(item.subcategory.price, item.subcategory.priceDiscount);
         totalCalc += valor;
       }
       if (item.subcategory.weight < 1440) {
