@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
+  ScrollView,
   Dimensions,
   KeyboardAvoidingView,
   Modal,
@@ -12,13 +12,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ThemeContext} from '../context/theme/ThemeContext';
-import {Carnet} from '../interfaces/CarnetResponse.interface';
-import {ScrollView} from 'react-native';
-import {useForm} from '../hooks/useForm';
-import api from '../api/api';
-import {AuthContext} from '../context/auth/AuthContext';
 import {useToast} from 'react-native-toast-notifications';
+import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Picker} from '@react-native-picker/picker';
+import {ThemeContext} from '../context/theme/ThemeContext';
+import {AuthContext} from '../context/auth/AuthContext';
+import api from '../api/api';
+import {Carnet} from '../interfaces/CarnetResponse.interface';
+import {provincias} from '../utils/provincias';
 
 interface Props {
   openModal: boolean;
@@ -41,6 +43,8 @@ export const ModalEditCarnet = ({
 
   const {user} = useContext(AuthContext);
   const toast = useToast();
+
+  const [aviableMunicipios, setAviableMunicipios] = useState<any>([]);
   const [datos, setDatos] = useState<Partial<Carnet>>({
     id: carnetEdit.id || '',
     name: carnetEdit.name || '',
@@ -58,46 +62,7 @@ export const ModalEditCarnet = ({
     floor: carnetEdit.floor || '',
     reparto: carnetEdit.reparto || '',
   });
-  /* 
-  const {
-    name,
-    firstLastName,
-    secondLastName,
-    carnet,
-    phoneNumber,
-    address,
-    municipio,
-    number,
-    provincia,
-    deparment,
-    firstAccross,
-    secondAccross,
-    floor,
-    reparto,
-    onChange,
-  } = useForm<Partial<Carnet>>({
-    name: carnetEdit.name ? carnetEdit.name : 'Algo',
-    firstLastName: carnetEdit.firstLastName ? carnetEdit.firstLastName : '',
-    secondLastName: carnetEdit.secondLastName ? carnetEdit.secondLastName : '',
-    carnet: carnetEdit.carnet ? carnetEdit.carnet : '',
-    phoneNumber: carnetEdit.phoneNumber ? carnetEdit.phoneNumber : '',
-    address: carnetEdit.address ? carnetEdit.address : '',
-    municipio: carnetEdit.municipio ? carnetEdit.municipio : '',
-    number: carnetEdit.number ? carnetEdit.number : '',
-    provincia: carnetEdit.provincia ? carnetEdit.provincia : '',
-    deparment: carnetEdit.deparment ? carnetEdit.deparment : '',
-    firstAccross: carnetEdit.firstAccross ? carnetEdit.firstAccross : '',
-    secondAccross: carnetEdit.secondAccross ? carnetEdit.secondAccross : '',
-    floor: carnetEdit.floor ? carnetEdit.floor : '',
-    reparto: carnetEdit.reparto ? carnetEdit.reparto : '',
-  }); */
-  /* useEffect(() => {
-    console.log('carnetEdit', carnetEdit);
 
-    if (carnetEdit.name) {
-      onChange(carnetEdit.name, 'name');
-    }
-  }, [carnetEdit]); */
   const uno = useRef<any>();
   const dos = useRef<any>();
   const tres = useRef<any>();
@@ -107,7 +72,6 @@ export const ModalEditCarnet = ({
   const siete = useRef<any>();
   const ocho = useRef<any>();
   const nueve = useRef<any>();
-  const diez = useRef<any>();
   const once = useRef<any>();
   const doce = useRef<any>();
   const trece = useRef<any>();
@@ -139,15 +103,22 @@ export const ModalEditCarnet = ({
           [key]: carnetEdit[key],
         }));
       }
+      if (carnetEdit.provincia) {
+        const municipios = provincias.filter(
+          province => province.nombre === carnetEdit.provincia,
+        );
+        setAviableMunicipios(municipios[0].municipios);
+      }
     }
-    /* 
-    if (carnetEdit.name) {
-      setDatos({
-        ...datos,
-        name: carnetEdit.name,
-      });
-    } */
   }, [carnetEdit]);
+
+  useEffect(() => {
+    if (openModal) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [openModal]);
 
   const onSave = async () => {
     const carnetRegex = new RegExp(/^([0-9])*$/);
@@ -185,18 +156,13 @@ export const ModalEditCarnet = ({
     } else {
       try {
         setIsLoading(true);
-        console.log('datos', datos.carnet);
-
         const exist = await api.post('/carnets/getList', {
           filter: {
             user: ['=', user?.id],
             carnet: ['=', datos.carnet],
           },
         });
-        console.log('exist', exist.data.data);
         if (exist.data.data.length > 0 && datos.carnet !== carnetEdit.carnet) {
-          console.log('Ya tienes este carnet guardado');
-
           toast.show('Ya tienes guardados estos datos', {
             type: 'normal',
             placement: 'top',
@@ -231,7 +197,6 @@ export const ModalEditCarnet = ({
             user: user?.id,
           });
         }
-        /*  */
         setIsLoading(false);
         setOpenModal(false);
         loadCarnets();
@@ -246,31 +211,6 @@ export const ModalEditCarnet = ({
     setIsVisible(false);
     setOpenModal(false);
   };
-  const clearError = () => {
-    setError({
-      name: '',
-      firstLastName: '',
-      secondLastName: '',
-      carnet: '',
-      phoneNumber: '',
-      address: '',
-      municipio: '',
-      number: '',
-      provincia: '',
-      deparment: '',
-      firstAccross: '',
-      secondAccross: '',
-      floor: '',
-      reparto: '',
-    });
-  };
-  useEffect(() => {
-    if (openModal) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  }, [openModal]);
   const onChange = (e: any, name: string) => {
     setDatos({...datos, [name]: e});
     setError({...error, [name]: ''});
@@ -285,13 +225,24 @@ export const ModalEditCarnet = ({
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           style={styles.shadowContainer}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.cancelButton}
+            onPress={closeModal}>
+            <IconMaterial
+              name="close-circle-outline"
+              color="red"
+              size={32}
+              style={{}}
+            />
+          </TouchableOpacity>
           <ScrollView>
             {/* <View style={{flex: 1}}> */}
             <View style={{marginTop: 3}}>
-              <Text style={styles.title}>Datos</Text>
+              <Text style={styles.title}>{carnetEdit.name}</Text>
               <Text style={{fontSize: 14}}>Nombre(s)*</Text>
               <TextInput
-                placeholder="Jorge"
+                placeholder="Juan Carlos"
                 ref={uno}
                 onSubmitEditing={() => dos.current.focus()}
                 // eslint-disable-next-line react-native/no-inline-styles
@@ -304,6 +255,7 @@ export const ModalEditCarnet = ({
                   top: Platform.OS === 'ios' ? 0 : 2,
                 }}
                 autoFocus
+                selectTextOnFocus
                 autoCapitalize="words"
                 autoCorrect={false}
                 value={datos.name}
@@ -315,11 +267,12 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Apellido Paterno*</Text>
+                <Text style={{fontSize: 14}}>Primer Apellido*</Text>
                 <TextInput
-                  placeholder="Pérez"
+                  placeholder="Torres"
                   ref={dos}
-                  onSubmitEditing={() => tres.current.focus()}
+                  selectTextOnFocus
+                  onSubmitEditing={() => dos.current.focus()}
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
@@ -341,11 +294,12 @@ export const ModalEditCarnet = ({
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Apellido Materno*</Text>
+                <Text style={{fontSize: 14}}>Segundo Apellido*</Text>
                 <TextInput
                   ref={tres}
-                  onSubmitEditing={() => cuatro.current.focus()}
-                  placeholder="García"
+                  onSubmitEditing={() => tres.current.focus()}
+                  placeholder="Acosta"
+                  selectTextOnFocus
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
@@ -368,10 +322,11 @@ export const ModalEditCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Carnet</Text>
+              <Text style={{fontSize: 14}}>Número de Carnet*</Text>
               <TextInput
+                selectTextOnFocus
                 ref={cuatro}
-                onSubmitEditing={() => cinco.current.focus()}
+                onSubmitEditing={() => cuatro.current.focus()}
                 placeholder="93150714909"
                 keyboardType="numeric"
                 // eslint-disable-next-line react-native/no-inline-styles
@@ -393,8 +348,9 @@ export const ModalEditCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Calle principal</Text>
+              <Text style={{fontSize: 14}}>Calle Principal*</Text>
               <TextInput
+                selectTextOnFocus
                 ref={cinco}
                 onSubmitEditing={() => seis.current.focus()}
                 placeholder="Calle José Martí"
@@ -419,11 +375,12 @@ export const ModalEditCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de casa</Text>
+              <Text style={{fontSize: 14}}>Número de Casa*</Text>
               <TextInput
+                selectTextOnFocus
                 ref={seis}
                 onSubmitEditing={() => siete.current.focus()}
-                placeholder="127"
+                placeholder="127A"
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
@@ -445,8 +402,9 @@ export const ModalEditCarnet = ({
 
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>1 Entre Calle Opcional</Text>
+                <Text style={{fontSize: 14}}>Entre Calle 1</Text>
                 <TextInput
+                  selectTextOnFocus
                   ref={siete}
                   onSubmitEditing={() => ocho.current.focus()}
                   placeholder="Calle Abel Díaz"
@@ -466,8 +424,9 @@ export const ModalEditCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>2 Entre Calle Opcional</Text>
+                <Text style={{fontSize: 14}}>Entre Calle 2</Text>
                 <TextInput
+                  selectTextOnFocus
                   ref={ocho}
                   onSubmitEditing={() => nueve.current.focus()}
                   placeholder="Calle Félix Pérez"
@@ -489,12 +448,12 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Municipio</Text>
-                <TextInput
-                  ref={nueve}
+                <Text style={{fontSize: 14}}>Provincia*</Text>
+                {/* <TextInput
+                  selectTextOnFocusref
+                  ={nueve}
                   onSubmitEditing={() => diez.current.focus()}
                   placeholder="Cabaiguán"
-                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
                     height: 40,
@@ -505,49 +464,108 @@ export const ModalEditCarnet = ({
                   }}
                   autoCapitalize="words"
                   autoCorrect={false}
-                  value={datos.municipio}
-                  onChangeText={value => onChange(value, 'municipio')}
-                />
-                {error.municipio !== '' && (
-                  <Text style={{fontSize: 10, color: 'red'}}>
-                    {error.municipio}
+                  value={municipio}
+                  onChangeText={value => {
+                    onChange(value, 'municipio');
+                    if (error.municipio !== '') {
+                      clearError();
+                    }
+                  }}
+                /> */}
+                <View style={{flex: 1}}>
+                  <Picker
+                    style={{}}
+                    mode="dropdown"
+                    selectedValue={datos.provincia}
+                    onValueChange={value => {
+                      onChange(value, 'provincia');
+
+                      const municipios = provincias.filter(
+                        province => province.nombre === value,
+                      );
+                      console.log(municipios[0].municipios);
+                      setAviableMunicipios(municipios[0].municipios);
+                    }}>
+                    <Picker.Item
+                      enabled={false}
+                      label="Seleccione su provincia"
+                      value=""
+                    />
+                    {provincias.map((province, index) => (
+                      <Picker.Item
+                        key={index}
+                        label={province.nombre}
+                        value={province.nombre}
+                      />
+                    ))}
+                  </Picker>
+                  <Text
+                    style={{
+                      width: '100%',
+                      height: 60,
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                    }}>
+                    {' '}
                   </Text>
-                )}
-              </View>
-              <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Provincia</Text>
-                <TextInput
-                  ref={diez}
-                  onSubmitEditing={() => once.current.focus()}
-                  placeholder="Sancti-Spíritus"
-                  // eslint-disable-next-line react-native/no-inline-styles
-                  style={{
-                    fontSize: 14,
-                    height: 40,
-                    borderColor: '#c1c1c1',
-                    borderWidth: 1,
-                    borderRadius: 8,
-                    top: Platform.OS === 'ios' ? 0 : 2,
-                  }}
-                  autoCapitalize="words"
-                  autoCorrect={false}
-                  value={datos.provincia}
-                  onChangeText={value => onChange(value, 'provincia')}
-                />
+                </View>
                 {error.provincia !== '' && (
                   <Text style={{fontSize: 10, color: 'red'}}>
                     {error.provincia}
                   </Text>
                 )}
               </View>
+              <View style={{flex: 1, marginLeft: 2}}>
+                <Text style={{fontSize: 14}}>Municipio*</Text>
+
+                <View style={{flex: 1}}>
+                  <Picker
+                    style={{}}
+                    mode="dropdown"
+                    selectedValue={datos.municipio}
+                    onValueChange={value => {
+                      onChange(value, 'municipio');
+                    }}>
+                    <Picker.Item
+                      enabled={false}
+                      label="Seleccione su Municipio"
+                      value=""
+                    />
+                    {aviableMunicipios.map((municipioS: any, index: any) => (
+                      <Picker.Item
+                        key={index}
+                        label={municipioS}
+                        value={municipioS}
+                      />
+                    ))}
+                  </Picker>
+                  <Text
+                    style={{
+                      width: '100%',
+                      height: 60,
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                    }}>
+                    {' '}
+                  </Text>
+                </View>
+                {error.municipio !== '' && (
+                  <Text style={{fontSize: 10, color: 'red'}}>
+                    {error.municipio}
+                  </Text>
+                )}
+              </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Teléfono</Text>
+              <Text style={{fontSize: 14}}>Número de Teléfono*</Text>
               <TextInput
+                selectTextOnFocus
                 ref={once}
                 onSubmitEditing={() => doce.current.focus()}
                 keyboardType="phone-pad"
-                placeholder="+53 55213165"
+                placeholder="55213165"
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
@@ -570,8 +588,9 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Departameno (Opcional)</Text>
+                <Text style={{fontSize: 14}}>Departameno</Text>
                 <TextInput
+                  selectTextOnFocus
                   ref={doce}
                   onSubmitEditing={() => trece.current.focus()}
                   placeholder="203"
@@ -591,8 +610,9 @@ export const ModalEditCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Piso (Opcional)</Text>
+                <Text style={{fontSize: 14}}>Piso</Text>
                 <TextInput
+                  selectTextOnFocus
                   ref={trece}
                   onSubmitEditing={() => catorce.current.focus()}
                   placeholder="1ro"
@@ -615,6 +635,7 @@ export const ModalEditCarnet = ({
             <View style={{marginTop: 3}}>
               <Text style={{fontSize: 14}}>Reparto</Text>
               <TextInput
+                selectTextOnFocus
                 ref={catorce}
                 onSubmitEditing={() => onSave()}
                 placeholder="Reparto Militar"
@@ -634,39 +655,51 @@ export const ModalEditCarnet = ({
               />
             </View>
 
-            <View
+            <TouchableOpacity
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-                marginTop: 20,
-              }}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.cancelButton}
-                onPress={closeModal}>
-                <Text style={{color: '#000', fontSize: 16}}>Cancelar</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
+                marginTop: 30,
+                padding: 10,
+                paddingHorizontal: 50,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                borderRadius: 50,
+                marginBottom: 30,
+                width: '80%',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                backgroundColor: colors.card,
+              }}
+              activeOpacity={0.8}
+              onPress={onSave}>
+              {isLoading && (
+                <View style={{position: 'absolute', left: 25, top: 10}}>
+                  <ActivityIndicator color={'white'} size={24} />
+                </View>
+              )}
+              <Text
                 style={{
-                  ...styles.confirmButton,
-                  backgroundColor: colors.card,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-                onPress={onSave}>
-                {isLoading && (
-                  <View style={{}}>
-                    <ActivityIndicator color={'white'} />
-                  </View>
-                )}
-                <Text style={{color: '#ffffff', fontSize: 16}}>Añadir</Text>
-              </TouchableOpacity>
-            </View>
-            {/* </View> */}
+                  alignSelf: 'center',
+                  color: 'white',
+                  fontSize: 20,
+                  marginHorizontal: 15,
+                }}>
+                Guardar
+              </Text>
+
+              <Icon
+                name="arrow-right"
+                color="white"
+                size={24}
+                style={{position: 'absolute', right: 14, top: 10}}
+              />
+            </TouchableOpacity>
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
@@ -695,10 +728,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancelButton: {
-    backgroundColor: '#eeebeb',
+    zIndex: 9999,
     padding: 6,
     borderRadius: 8,
     paddingHorizontal: 12,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   title: {fontSize: 20, fontWeight: 'bold', alignSelf: 'center'},
   confirmButton: {

@@ -15,15 +15,12 @@ import {
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {Carnet} from '../interfaces/CarnetResponse.interface';
 import {ScrollView} from 'react-native';
-import {useForm} from '../hooks/useForm';
 import api from '../api/api';
 import {AuthContext} from '../context/auth/AuthContext';
 import {provincias} from '../utils/provincias';
-import RNPickerSelect from 'react-native-picker-select';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useToast} from 'react-native-toast-notifications';
 
 interface Props {
   title: string;
@@ -49,7 +46,6 @@ export const ModalAddCarnet = ({
 
   const {user} = useContext(AuthContext);
 
-  const toast = useToast();
   const [datos, setDatos] = useState<Partial<Carnet>>({
     name: '',
     firstLastName: '',
@@ -66,38 +62,7 @@ export const ModalAddCarnet = ({
     floor: '',
     reparto: '',
   });
-  /* const {
-    name,
-    firstLastName,
-    secondLastName,
-    carnet,
-    phoneNumber,
-    address,
-    municipio,
-    number,
-    provincia,
-    deparment,
-    firstAccross,
-    secondAccross,
-    floor,
-    reparto,
-    onChange,
-  } = useForm<Partial<Carnet>>({
-    name: '',
-    firstLastName: '',
-    secondLastName: '',
-    carnet: '',
-    phoneNumber: '',
-    address: '',
-    municipio: '',
-    number: '',
-    provincia: '',
-    deparment: '',
-    firstAccross: '',
-    secondAccross: '',
-    floor: '',
-    reparto: '',
-  }); */
+
   const uno = useRef<any>();
   const dos = useRef<any>();
   const tres = useRef<any>();
@@ -107,7 +72,6 @@ export const ModalAddCarnet = ({
   const siete = useRef<any>();
   const ocho = useRef<any>();
   const nueve = useRef<any>();
-  const diez = useRef<any>();
   const once = useRef<any>();
   const doce = useRef<any>();
   const trece = useRef<any>();
@@ -220,21 +184,6 @@ export const ModalAddCarnet = ({
           setOpenModal(false);
           loadCarnets();
         }
-        /* 
-        onChange('', 'name');
-        onChange('', 'firstLastName');
-        onChange('', 'secondLastName');
-        onChange('', 'carnet');
-        onChange('', 'phoneNumber');
-        onChange('', 'address');
-        onChange('', 'municipio');
-        onChange('', 'number');
-        onChange('', 'provincia');
-        onChange('', 'deparment');
-        onChange('', 'firstAccross');
-        onChange('', 'secondAccross');
-        onChange('', 'floor');
-        onChange('', 'reparto'); */
       } catch (error) {
         setIsLoading(false);
         setOpenModal(false);
@@ -246,24 +195,6 @@ export const ModalAddCarnet = ({
     setIsVisible(false);
     setOpenModal(false);
   };
-  const clearError = () => {
-    setError({
-      name: '',
-      firstLastName: '',
-      secondLastName: '',
-      carnet: '',
-      phoneNumber: '',
-      address: '',
-      municipio: '',
-      number: '',
-      provincia: '',
-      deparment: '',
-      firstAccross: '',
-      secondAccross: '',
-      floor: '',
-      reparto: '',
-    });
-  };
   useEffect(() => {
     if (openModal) {
       setIsVisible(true);
@@ -271,24 +202,6 @@ export const ModalAddCarnet = ({
       setIsVisible(false);
     }
   }, [openModal]);
-
-  /* useEffect(() => {
-    setDatos({...datos, provincia: 'La Habana'});
-    const municipios = provincias.filter(
-      province => province.nombre === 'La Habana',
-    );
-    const value = municipios[0].municipios;
-    setAviableMunicipios(value);
-  }, []); */
-  /* useEffect(() => {
-    if (datos.provincia?.trim() !== '' && datos.provincia !== undefined) {
-      const municipios = provincias.filter(
-        province => province.nombre === datos.provincia.trim(),
-      );
-      const value = municipios[0].municipios[0];
-      setDatos({...datos, municipio: value});
-    }
-  }, [datos.provincia]); */
 
   const onChange = (e: any, name: string) => {
     setDatos({...datos, [name]: e});
@@ -830,27 +743,5 @@ const styles = StyleSheet.create({
     padding: 6,
     borderRadius: 8,
     paddingHorizontal: 12,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
