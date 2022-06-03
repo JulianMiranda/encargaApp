@@ -215,25 +215,40 @@ export const SubcategoryScreen = (props: Props) => {
           setIsVisible={setIsVisible}
           setImageIndex={setImageIndex}
         />
+        {subcategory.soldOut && (
+          <View
+            style={{
+              alignSelf: 'center',
+              padding: 5,
+              backgroundColor: 'rgba(0,0,0,0.1)',
+              borderRadius: 20,
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              left: 0,
+              top: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../assets/agotado.png')}
+              style={{width: 500, height: 500}}
+            />
+          </View>
+        )}
         {days < 24 && (
           <Image
             source={require('../../assets/nuevo_producto3.png')}
             style={styles.newImageProduct}
           />
         )}
-
+        {/* {soldOut && (
+            <Image
+              source={require('../assets/agotado.png')}
+              style={{...styles.soldOut}}
+            />
+          )} */}
         <View style={styles.textContainer}>
-          {subcategory.soldOut && (
-            <View
-              style={{
-                alignSelf: 'center',
-                padding: 5,
-                backgroundColor: 'rgba(0,0,0,0.1)',
-                borderRadius: 20,
-              }}>
-              <Text style={{fontSize: 18}}>Agotado</Text>
-            </View>
-          )}
           <View style={{padding: 5}}>
             <View style={styles.row}>
               <Text style={styles.name}>{name}</Text>

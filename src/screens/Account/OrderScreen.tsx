@@ -112,7 +112,7 @@ export const OrderScreen = () => {
         </View>
         <View style={{marginTop: 40}}>
           {orders.map((order, index) => (
-            <OrderComponent key={index} singleOrder={order} />
+            <OrderComponent key={index} singleOrder={order} colors={colors} />
           ))}
           {!isLoading && orders && orders.length < 1 && (
             <View
@@ -165,24 +165,67 @@ export const OrderScreen = () => {
   );
 };
 
-const OrderComponent = ({singleOrder}: any) => {
+const OrderComponent = ({singleOrder, colors}: any) => {
   const navigation = useNavigation();
   const order: Order = singleOrder;
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('SingleOrderScreen', {order})}
-      style={styles.card}>
-      <Text style={styles.firstText}>
-        Compra realizada {moment(order.createdAt).calendar()}
-      </Text>
-      <Text style={styles.firstText}>
-        Valor de compra: {formatToCurrency(order.cost)}
-      </Text>
-      <Text style={{...styles.firstText, marginTop: 7, color: '#2684FD'}}>
-        Ver Detalles
-      </Text>
-    </TouchableOpacity>
+    <>
+      <View
+        style={{
+          height: 1,
+          width: '90%',
+          alignSelf: 'center',
+          backgroundColor: '#f1f1f1',
+        }}
+      />
+
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('SingleOrderScreen', {order})}
+        style={styles.card}>
+        <Text style={styles.firstText}>
+          Compra realizada {moment(order.createdAt).calendar()}
+        </Text>
+        <Text style={styles.firstText}>
+          Valor de compra: {formatToCurrency(order.cost)}
+        </Text>
+        <View
+          style={{
+            backgroundColor: colors.card,
+            alignSelf: 'flex-start',
+            paddingRight: 30,
+            paddingLeft: 10,
+            borderRadius: 208,
+            marginTop: 7,
+            alignItems: 'center',
+            paddingVertical: 1,
+            flexDirection: 'row',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+          }}>
+          <Text
+            style={{
+              ...styles.firstText,
+              color: 'white',
+              alignSelf: 'flex-start',
+            }}>
+            Factura
+          </Text>
+          <Icon
+            name="arrow-right"
+            color="white"
+            size={16}
+            style={{position: 'absolute', right: 5}}
+          />
+        </View>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -199,7 +242,6 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 5,
-    backgroundColor: '#f8f7f7',
     borderRadius: 3,
     padding: 5,
   },

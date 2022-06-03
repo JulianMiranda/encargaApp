@@ -36,7 +36,7 @@ export const AutoSliderFinal = ({imagesPromoFinal}: Props) => {
         paginationBoxVerticalPadding={20}
         autoplay
         circleLoop
-        autoplayInterval={10000}
+        autoplayInterval={7000}
         resizeMethod={'resize'}
         resizeMode={'cover'}
         paginationBoxStyle={styles.paginationBox}

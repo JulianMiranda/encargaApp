@@ -53,14 +53,14 @@ export const SubcategoryCardHome = ({item}: Props) => {
         <View style={{borderRadius: 10}}>
           {days < 24 && (
             <Image
-              source={require('../assets/bestSeller.png')}
+              source={require('../assets/nuevo2.png')}
               style={styles.newImageProduct}
             />
           )}
           {soldOut && (
             <Image
-              source={require('../assets/soldOut.png')}
-              style={styles.soldOut}
+              source={require('../assets/agotado.png')}
+              style={{...styles.soldOut}}
             />
           )}
           <FadeInImage uri={images[0].url} style={styles.productImage} />
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     zIndex: 999999,
     top: 0,
     left: 0,
-    height: 120,
-    width: 150,
+    height: 80,
+    width: 80,
   },
 });
