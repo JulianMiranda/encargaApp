@@ -31,7 +31,10 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
       <View style={styles.buttonRow}>
         {cantidad > 0 && (
           <TouchableOpacity
-            style={{...styles.leftContainer, backgroundColor: colors.card}}
+            style={{
+              ...styles.leftContainer,
+              backgroundColor: subcategory.soldOut ? '#f1f1f1' : colors.card,
+            }}
             activeOpacity={0.8}
             onPress={() => setCarItem('remove')}>
             <Text style={styles.left}> -</Text>
@@ -41,15 +44,15 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
         <View
           style={{
             ...styles.numberContainer,
-            borderColor: colors.card,
-            backgroundColor: colors.card,
+            borderColor: subcategory.soldOut ? '#f1f1f1' : colors.card,
+            backgroundColor: subcategory.soldOut ? '#f1f1f1' : colors.card,
           }}>
           <View
             style={{
               backgroundColor: 'white',
               borderRadius: 100,
               height: 30,
-              borderColor: colors.card,
+              borderColor: subcategory.soldOut ? '#f1f1f1' : colors.card,
               borderWidth: 1,
               width: 30,
               justifyContent: 'center',
@@ -68,7 +71,7 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
             <Text
               style={{
                 ...styles.number,
-                color: colors.card,
+                color: subcategory.soldOut ? '#f1f1f1' : colors.card,
                 fontSize: cantidad > 99 ? 14 : 18,
               }}>
               {cantidad}
@@ -76,7 +79,10 @@ export const SetItemCar = ({subcategory, cantidad, updateCantidad}: Prop) => {
           </View>
         </View>
         <TouchableOpacity
-          style={{...styles.addContainer, backgroundColor: colors.card}}
+          style={{
+            ...styles.addContainer,
+            backgroundColor: subcategory.soldOut ? '#f1f1f1' : colors.card,
+          }}
           activeOpacity={0.8}
           onPress={() => setCarItem('add')}>
           <Text style={styles.add}>+</Text>

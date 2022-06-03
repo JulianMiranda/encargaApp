@@ -90,11 +90,11 @@ export const useShop = () => {
       tenkgPrice: 0,
     };
     car.forEach(function (item) {
-      if (totalPaqReCalc < 5) {
-        const valor = item.cantidad * item.subcategory.price;
+      if (totalPaqReCalc > 4 || item.cantidad > 5) {
+        const valor = item.cantidad * item.subcategory.priceGalore;
         totalCalc += valor;
       } else {
-        const valor = item.cantidad * item.subcategory.priceGalore;
+        const valor = item.cantidad * item.subcategory.price;
         totalCalc += valor;
       }
       if (item.subcategory.weight < 1440) {

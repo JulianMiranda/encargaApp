@@ -24,8 +24,8 @@ export const SearchResults = ({search}: Props) => {
 
   const searchProductsApi = async (searchWord: string) => {
     const body = {
-      docsPerPage: 10,
-      sort: 'desc',
+      docsPerPage: 22,
+      sort: {name: 'asc'},
       search: {text: searchWord.trim(), fields: ['name']},
       population: [
         {
@@ -45,6 +45,7 @@ export const SearchResults = ({search}: Props) => {
       ],
     };
     console.log('body', body);
+
     api
       .post<SubcategoryResp>('/subcategories/getList', body)
 
@@ -88,9 +89,10 @@ export const SearchResults = ({search}: Props) => {
         <View style={{margin: 5}}>
           <FlatList
             data={products}
+            scrollEventThrottle={16}
             keyExtractor={(subcategory, index) => index.toString()}
             showsVerticalScrollIndicator={false}
-            numColumns={3}
+            numColumns={2}
             // Header
             ListHeaderComponent={
               <View
@@ -103,10 +105,9 @@ export const SearchResults = ({search}: Props) => {
             }
             renderItem={({item}) => <SubcategoryCard item={item} />}
             // infinite scroll
-            onEndReachedThreshold={0.4}
             ListFooterComponent={
               <>
-                <View style={{height: 80}} />
+                <View style={{height: 150}} />
               </>
             }
           />

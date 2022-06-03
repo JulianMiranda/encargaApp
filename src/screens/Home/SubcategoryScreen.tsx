@@ -46,6 +46,7 @@ export const SubcategoryScreen = (props: Props) => {
     aviableSizes,
     aviableColors,
     weight,
+    soldOut,
   } = subcategory;
   const {car, errorAddCar, clearErrorAdd, addCarLoading, setItem} =
     useContext(ShopContext);
@@ -283,17 +284,19 @@ export const SubcategoryScreen = (props: Props) => {
       <TouchableOpacity
         style={{
           ...loginStyles.button,
-          backgroundColor: colors.card,
+          backgroundColor: soldOut ? '#f1f1f1' : colors.card,
         }}
         activeOpacity={0.8}
         onPress={handleButton}>
         <View>
           <View
             style={{
-              borderColor: colors.card,
+              borderColor: soldOut ? '#f1f1f1' : colors.card,
               ...styles.button,
             }}>
-            <Text style={{color: colors.card}}>{cantidad}</Text>
+            <Text style={{color: soldOut ? '#f1f1f1' : colors.card}}>
+              {cantidad}
+            </Text>
           </View>
 
           <Text style={loginStyles.textButton}>Añadir</Text>

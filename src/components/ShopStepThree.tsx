@@ -53,16 +53,12 @@ export const ShopStepThree = ({handleButton}: Props) => {
     );
   };
   const handleGuardar = () => {
-    if (terms) {
-      if (
-        selectedCarnet.length <
-        totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
-      ) {
-        noCarnetSelected();
-      } else {
-        handleButton();
-      }
-    } else {
+    if (
+      selectedCarnet.length <
+      totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
+    ) {
+      noCarnetSelected();
+    } else if (!terms) {
       toast.show('Debe aceptar las condiciones de envío', {
         type: 'normal',
         placement: 'bottom',
@@ -77,6 +73,19 @@ export const ShopStepThree = ({handleButton}: Props) => {
         textStyle: {fontSize: 16},
         animationType: 'zoom-in',
       });
+    } else {
+      handleButton();
+    }
+  };
+  const almostOneNoSelected = (): boolean => {
+    if (
+      selectedCarnet.length <
+        totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets ||
+      !terms
+    ) {
+      return true;
+    } else {
+      return false;
     }
   };
   return (
@@ -93,7 +102,7 @@ export const ShopStepThree = ({handleButton}: Props) => {
       <TouchableOpacity
         style={{
           ...styles.button,
-          backgroundColor: terms ? colors.card : '#ccc',
+          backgroundColor: almostOneNoSelected() ? '#ccc' : colors.card,
         }}
         activeOpacity={terms ? 0.8 : 1}
         onPress={handleGuardar}>

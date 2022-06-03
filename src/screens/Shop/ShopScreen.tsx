@@ -101,7 +101,8 @@ export const ShopScreen = () => {
       }).reset();
       if (respShop) {
         modalizeRef.current?.open();
-        /* navigation.navigate('ShopSuccess');  */
+
+        /*  navigation.navigate('HomeScreen'); */
       }
     }
   };
