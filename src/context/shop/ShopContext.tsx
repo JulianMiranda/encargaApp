@@ -8,6 +8,8 @@ import {AuthContext} from '../auth/AuthContext';
 import {User} from '../../interfaces/User.interface';
 import {useToast} from 'react-native-toast-notifications';
 import {Dimensions} from 'react-native';
+import {RellenoInterface} from '../../screens/Shop/ShopScreen';
+import {Prices} from '../../interfaces/Prices.interface';
 
 type ShopContextProps = {
   addCarLoading: boolean;
@@ -20,7 +22,14 @@ type ShopContextProps = {
   emptyCar: () => Promise<any>;
   removeAlert: () => void;
   clearErrorAdd: () => void;
-  makeShop: (total: number, description: string) => Promise<boolean>;
+  makeShop: (
+    total: number,
+    description: string,
+    totalPaqReCalc: number,
+    prices: Prices,
+    selectedCarnet: string[],
+    relleno: RellenoInterface,
+  ) => Promise<boolean>;
 };
 const shopInicialState: ShopState = {
   car: [],
@@ -244,6 +253,10 @@ export const ShopProvider = ({children}: any) => {
   const makeShop = async (
     total: number,
     description: string,
+    totalPaqReCalc: number,
+    prices: Prices,
+    selectedCarnet: string[],
+    relleno: RellenoInterface,
   ): Promise<boolean> => {
     try {
       dispatch({type: 'add_car_loading', payload: true});
@@ -254,6 +267,10 @@ export const ShopProvider = ({children}: any) => {
           cost: total,
           car: state.car,
           description,
+          totalPaqReCalc,
+          prices,
+          selectedCarnet,
+          relleno,
         });
         if (a.status === 201) {
           dispatch({type: 'empty_car'});

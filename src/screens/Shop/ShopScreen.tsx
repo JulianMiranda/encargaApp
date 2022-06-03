@@ -22,8 +22,17 @@ import ScreenLoading from '../../components/LoadingSafe';
 import {useNavigation} from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize';
 import {ShopSuccess} from '../../components/ShpSuccessComponent';
+import {AuthContext} from '../../context/auth/AuthContext';
 
 const {width} = Dimensions.get('window');
+export interface RellenoInterface {
+  noone: boolean;
+  refresco: boolean;
+  maquina: boolean;
+  golosina: boolean;
+  plantilla: boolean;
+  lapicero: boolean;
+}
 export const ShopScreen = () => {
   const {
     isLoading,
@@ -36,14 +45,25 @@ export const ShopScreen = () => {
     confirmModal,
     total,
     totalMoneyReCalc,
+    totalPaqReCalc,
   } = useShop();
 
   const [progress, setProgress] = useState(2);
   const {car, makeShop, addCarLoading} = useContext(ShopContext);
+  const {prices} = useContext(AuthContext);
   const {top} = useSafeAreaInsets();
   const toast = useToast();
   const navigation = useNavigation();
   const modalizeRef = useRef<Modalize>(null);
+  const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
+  const [relleno, setRelleno] = useState<RellenoInterface>({
+    noone: false,
+    refresco: false,
+    maquina: false,
+    golosina: false,
+    plantilla: false,
+    lapicero: false,
+  });
 
   const barWidth = useRef(new Animated.Value(0)).current;
 
@@ -87,7 +107,14 @@ export const ShopScreen = () => {
       }).start();
       setProgress(progress - 1);
     } else {
-      const respShop = await makeShop(total + totalMoneyReCalc, '');
+      const respShop = await makeShop(
+        total + totalMoneyReCalc,
+        '',
+        totalPaqReCalc,
+        prices,
+        selectedCarnet,
+        relleno,
+      );
       setProgress(2);
       const newBarWith =
         progress === 2
@@ -185,9 +212,21 @@ export const ShopScreen = () => {
           {useNativeDriver: false},
         )} */
       >
-        {progress === 2 && <ShopStepOne handleButton={handleButton} />}
+        {progress === 2 && (
+          <ShopStepOne
+            handleButton={handleButton}
+            relleno={relleno}
+            setRelleno={setRelleno}
+          />
+        )}
         {progress === 1 && <ShopStepTwo handleButton={handleButton} />}
-        {progress === 0 && <ShopStepThree handleButton={handleButton} />}
+        {progress === 0 && (
+          <ShopStepThree
+            handleButton={handleButton}
+            selectedCarnet={selectedCarnet}
+            setSelectedCarnet={setSelectedCarnet}
+          />
+        )}
         <View style={{height: 80}} />
       </ScrollView>
       <ModalComponent

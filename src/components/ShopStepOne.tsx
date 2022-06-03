@@ -18,12 +18,15 @@ import {JabaComponent} from './JabaComponent';
 import {ProductShop} from './ProductShop';
 import {Productos} from './Productos';
 import {Relleno} from './Relleno';
+import {RellenoInterface} from '../screens/Shop/ShopScreen';
 interface Props {
   handleButton: () => void;
+  relleno: RellenoInterface;
+  setRelleno: (relleno: RellenoInterface) => void;
 }
 
 const {width, height} = Dimensions.get('window');
-export const ShopStepOne = ({handleButton}: Props) => {
+export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
   const navigation = useNavigation();
   const toast = useToast();
   const {
@@ -32,15 +35,6 @@ export const ShopStepOne = ({handleButton}: Props) => {
 
   const {car} = useContext(ShopContext);
   const {weigth, totalPaqReCalc, cantPaqOS} = useShop();
-
-  const [relleno, setRelleno] = useState({
-    noone: false,
-    refresco: false,
-    maquina: false,
-    golosina: false,
-    plantilla: false,
-    lapicero: false,
-  });
 
   const navigateSubcategory = async (id: string) => {
     try {

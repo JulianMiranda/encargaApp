@@ -242,7 +242,7 @@ function generateOptions(selectedComponent: any) {
       onPress: () => selectedComponent('whatsapp'),
     },
 
-    {
+    /* {
       title: 'Enviar dinero',
       iconType: 'material-community',
       iconNameLeft: 'currency-usd',
@@ -250,7 +250,7 @@ function generateOptions(selectedComponent: any) {
       iconSizeRight: 26,
       color: '#008d0c',
       onPress: () => selectedComponent('money'),
-    },
+    }, */
 
     {
       title: 'Cerrar sesión',

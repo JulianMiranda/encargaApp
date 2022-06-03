@@ -14,10 +14,16 @@ import {GetInputCarnet} from './GetInputCarnet';
 
 interface Props {
   handleButton: () => void;
+  selectedCarnet: string[];
+  setSelectedCarnet: (selectedCarnet: string[]) => void;
 }
 
 const {height} = Dimensions.get('window');
-export const ShopStepThree = ({handleButton}: Props) => {
+export const ShopStepThree = ({
+  handleButton,
+  selectedCarnet,
+  setSelectedCarnet,
+}: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -27,7 +33,6 @@ export const ShopStepThree = ({handleButton}: Props) => {
 
   const [terms, setTerms] = useState(false);
 
-  const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
   const noCarnetSelected = () => {
     toast.show(
       `Faltan ${
