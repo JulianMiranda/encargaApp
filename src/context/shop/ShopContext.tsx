@@ -10,6 +10,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {Dimensions} from 'react-native';
 import {RellenoInterface} from '../../screens/Shop/ShopScreen';
 import {Prices} from '../../interfaces/Prices.interface';
+import {CantPaqOS} from '../../interfaces/CantPaq.interface';
 
 type ShopContextProps = {
   addCarLoading: boolean;
@@ -25,6 +26,7 @@ type ShopContextProps = {
   makeShop: (
     total: number,
     description: string,
+    cantPaqOS: CantPaqOS,
     totalPaqReCalc: number,
     prices: Prices,
     selectedCarnet: string[],
@@ -253,6 +255,7 @@ export const ShopProvider = ({children}: any) => {
   const makeShop = async (
     total: number,
     description: string,
+    cantPaqOS: CantPaqOS,
     totalPaqReCalc: number,
     prices: Prices,
     selectedCarnet: string[],
@@ -267,6 +270,7 @@ export const ShopProvider = ({children}: any) => {
           cost: total,
           car: state.car,
           description,
+          cantPaqOS,
           totalPaqReCalc,
           prices,
           selectedCarnet,

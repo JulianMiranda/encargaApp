@@ -106,7 +106,7 @@ export const useShop = () => {
           discount(item.subcategory.price, item.subcategory.priceDiscount);
         totalCalc += valor;
       }
-      if (item.subcategory.weight < 1440) {
+      if (item.subcategory.weight <= 1440) {
         if (
           item.subcategory.aviableSizes &&
           item.subcategory.aviableSizes.length > 0

@@ -17,6 +17,7 @@ export const OfferCard = ({offer}: Props) => {
     priceGaloreDiscount && priceGaloreDiscount !== 0
       ? (100 * (priceGalore - priceGaloreDiscount)) / priceGalore
       : (100 * (price - priceDiscount)) / price;
+
   return (
     <>
       <View

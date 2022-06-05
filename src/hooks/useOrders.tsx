@@ -11,6 +11,28 @@ export const useOrders = () => {
   const loadOrders = async () => {
     const body = {
       filter: {user: ['=', user?.id]},
+      population: [
+        {
+          path: 'carnet',
+          fields: {
+            name: true,
+            firstLastName: true,
+            secondLastName: true,
+            carnet: true,
+            address: true,
+            deparment: true,
+            floor: true,
+            number: true,
+            firstAccross: true,
+            secondAccross: true,
+            reparto: true,
+            municipio: true,
+            provincia: true,
+            phoneNumber: true,
+            status: true,
+          },
+        },
+      ],
     };
     try {
       const resp = await api.post<OrderResponse>('/orders/getList', body);

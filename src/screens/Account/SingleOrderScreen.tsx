@@ -21,7 +21,7 @@ export const SingleOrderScreen = (props: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
-  const [cantPaqOS, setCantPaqOS] = useState<CantPaqOS>({
+  /* const [cantPaqOS, setCantPaqOS] = useState<CantPaqOS>({
     oneandhalfkgPrice: 0,
     twokgPrice: 0,
     threekgPrice: 0,
@@ -32,8 +32,8 @@ export const SingleOrderScreen = (props: Props) => {
     eigthkgPrice: 0,
     ninekgPrice: 0,
     tenkgPrice: 0,
-  });
-  useEffect(() => {
+  }); */
+  /* useEffect(() => {
     let totalWeigth = 0;
     const object: CantPaqOS = {
       oneandhalfkgPrice: 0,
@@ -48,7 +48,6 @@ export const SingleOrderScreen = (props: Props) => {
       tenkgPrice: 0,
     };
     order.car.forEach(product => {
-      console.log('Product', product.subcategory.aviableSizes);
       const a = product.subcategory.weight / 1000;
       if (a < 2) {
         if (
@@ -116,18 +115,16 @@ export const SingleOrderScreen = (props: Props) => {
           tenkgPrice: 1,
         });
       }
-    });
-    const cantPaq15 = Math.floor(totalWeigth / 1440);
-    console.log('cantPaq15', cantPaq15);
-    object.oneandhalfkgPrice = cantPaq15;
-    console.log('cantPaqOS', cantPaqOS);
+    }); */
+  /* console.log('cantPaq15', cantPaq15); */
+  /* console.log('cantPaqOS', cantPaqOS);
     console.log('object', object);
-    console.log('totalWeigth', totalWeigth);
+    console.log('totalWeigth', totalWeigth); */
 
-    setCantPaqOS(object);
+  /*     setCantPaqOS(object);
   }, [order, setCantPaqOS]);
-
-  console.log('cantPaqOS', cantPaqOS);
+ */
+  console.log('ooreder', order);
 
   return (
     <>
@@ -155,7 +152,7 @@ export const SingleOrderScreen = (props: Props) => {
             <Text style={styles.txtTotal}>{formatToCurrency(order.cost)}</Text>
           </View>
         </View>
-        <ProductosShop cantPaqOS={cantPaqOS} />
+        <ProductosShop cantPaqOS={order.cantPaqOS} />
 
         <View
           style={{

@@ -110,6 +110,7 @@ export const ShopScreen = () => {
       const respShop = await makeShop(
         total + totalMoneyReCalc,
         '',
+        cantPaqOS,
         totalPaqReCalc,
         prices,
         selectedCarnet,
