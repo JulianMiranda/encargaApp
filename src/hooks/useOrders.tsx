@@ -13,7 +13,7 @@ export const useOrders = () => {
       filter: {user: ['=', user?.id]},
       population: [
         {
-          path: 'carnet',
+          path: 'selectedCarnet',
           fields: {
             name: true,
             firstLastName: true,

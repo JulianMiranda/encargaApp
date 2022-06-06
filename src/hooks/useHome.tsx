@@ -21,7 +21,7 @@ export const useHome = () => {
     setErrorHome(false);
     try {
       const body = {
-        filter: {status: ['=', true]},
+        filter: {status: ['=', true], owner: ['=', 'ENCARGA']},
         sort: {updatedAt: 'ASC'},
         population: [
           {
@@ -33,7 +33,7 @@ export const useHome = () => {
         ],
       };
       const bodyFinal = {
-        filter: {status: ['=', true]},
+        filter: {status: ['=', true], owner: ['=', 'ENCARGA']},
         sort: {updatedAt: 'ASC'},
         population: [
           {

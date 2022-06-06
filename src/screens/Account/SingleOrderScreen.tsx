@@ -9,6 +9,8 @@ import {formatToCurrency} from '../../utils/formatToCurrency';
 import {FacturaShop} from '../../components/FacturaShop';
 import {ProductosShop} from '../../components/ProductosShop';
 import {CantPaqOS} from '../../interfaces/CantPaq.interface';
+import {discountGalore} from '../../utils/discountGalore';
+import {discount} from '../../utils/discount';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'SingleOrderScreen'> {}
@@ -21,6 +23,8 @@ export const SingleOrderScreen = (props: Props) => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  const [totalProduct, setTotalProduct] = useState<number>(0);
+  const [totalEnvio, setTotalEnvio] = useState<number>(0);
   /* const [cantPaqOS, setCantPaqOS] = useState<CantPaqOS>({
     oneandhalfkgPrice: 0,
     twokgPrice: 0,
@@ -124,7 +128,36 @@ export const SingleOrderScreen = (props: Props) => {
   /*     setCantPaqOS(object);
   }, [order, setCantPaqOS]);
  */
-  console.log('ooreder', order);
+
+  useEffect(() => {
+    let totalProd = 0;
+    let totalEnvioSum = 0;
+    const catnPaq = order.cantPaqOS;
+    console.log('order', order.selectedCarnet);
+    for (const cant in catnPaq) {
+      if (catnPaq[cant] !== 0) {
+        totalEnvioSum += catnPaq[cant] * order.prices[cant];
+      }
+    }
+    setTotalEnvio(totalEnvioSum);
+
+    order.car.forEach(product => {
+      if (order.totalPaqReCalc > 4 || product.cantidad > 5) {
+        totalProd +=
+          discountGalore(
+            product.subcategory.priceGalore,
+            product.subcategory.priceGaloreDiscount,
+          ) * product.cantidad;
+      } else {
+        totalProd +=
+          discount(
+            product.subcategory.price,
+            product.subcategory.priceDiscount,
+          ) * product.cantidad;
+      }
+    });
+    setTotalProduct(totalProd);
+  }, [order]);
 
   return (
     <>
@@ -149,7 +182,9 @@ export const SingleOrderScreen = (props: Props) => {
           }}>
           <View style={styles.priceCont}>
             <Text style={styles.priceProd}>Productos:</Text>
-            <Text style={styles.txtTotal}>{formatToCurrency(order.cost)}</Text>
+            <Text style={styles.txtTotal}>
+              {formatToCurrency(totalProduct)}
+            </Text>
           </View>
         </View>
         <ProductosShop cantPaqOS={order.cantPaqOS} />
@@ -165,7 +200,7 @@ export const SingleOrderScreen = (props: Props) => {
           <View style={styles.sendPrice}>
             <Text style={styles.sendPriceTxt}>Envío:</Text>
             <Text style={styles.sendPriceTxtCalc}>
-              {formatToCurrency(order.cost)}
+              {formatToCurrency(totalEnvio)}
             </Text>
           </View>
 
@@ -188,51 +223,36 @@ export const SingleOrderScreen = (props: Props) => {
             fontSize: 22,
             fontWeight: '300',
           }}>
-          Realizada {moment(order.createdAt).fromNow()}
+          Información de la compra:
         </Text>
-        {/* <View style={{backgroundColor: '#f1f1f1', borderRadius: 10}}> */}
+
         <Text
           style={{
-            fontSize: 22,
-            fontWeight: '300',
-            marginTop: 15,
-            marginBottom: 7,
+            fontSize: 18,
           }}>
-          Productos Comprados:
+          - Enviada a:
         </Text>
-        {/* </View> */}
-        {order.car.map((item, index) => (
+        {order.selectedCarnet.map(carnet => (
           <View
-            key={index.toString()}
-            style={{marginHorizontal: 5, flexDirection: 'row'}}>
-            <Text
-              style={{
-                marginLeft: 2,
-                fontSize: 18,
-                width: 50,
-              }}>
-              {item.cantidad}
+            key={carnet.carnet}
+            style={{
+              padding: 5,
+              borderBottomColor: '#f1f1f1',
+              borderBottomWidth: 1,
+            }}>
+            <Text>
+              {carnet.name} {carnet.firstLastName} {carnet.secondLastName}
             </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 4,
-              }}>
-              {item.subcategory.name}
-            </Text>
+            <Text>{carnet.carnet}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>
+                {carnet.municipio} {carnet.provincia}
+              </Text>
+            </View>
           </View>
         ))}
-        <Text
-          style={{
-            fontSize: 22,
-            marginTop: 60,
-            marginBottom: 80,
-            alignSelf: 'flex-end',
-            marginRight: 10,
-            fontWeight: '300',
-          }}>
-          Valor de compra: {formatToCurrency(order.cost)}
-        </Text>
+
+        <View style={{height: 100}} />
       </ScrollView>
     </>
   );
