@@ -4,6 +4,9 @@ import api from '../../api/api';
 import {User} from '../../interfaces/User.interface';
 import {CountryCode} from '../../utils/countryTypes';
 
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
 import {authReducer, AuthState} from './authReducer';
 import {Login} from '../../interfaces/Login.interface';
 
@@ -127,6 +130,31 @@ export const AuthProvider = ({children}: any) => {
   const signInPhone = async (resp: Login) => {
     try {
       dispatch({type: 'initCheck'});
+      PushNotification.configure({
+        onRegister: async function (token) {
+          if (token.token) {
+            console.log('TOKEN:', token);
+
+            await api.put(`/users/update/${resp.user!.id}`, {
+              notificationTokens: token.token,
+            });
+          }
+        },
+
+        onRegistrationError: function (err) {
+          console.error(err.message, err);
+        },
+
+        permissions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+
+        popInitialNotification: true,
+
+        requestPermissions: true,
+      });
 
       checkToken(true);
     } catch (error) {
@@ -140,7 +168,32 @@ export const AuthProvider = ({children}: any) => {
   const signUpPhone = async (name: string, user: any) => {
     dispatch({type: 'initCheck'});
     try {
-      api.put<Login>('users/update/' + user.id, {name}).then(async resp => {
+      PushNotification.configure({
+        onRegister: async function (token) {
+          if (token.token) {
+            console.log('TOKEN:', token);
+
+            await api.put(`/users/update/${user.id}`, {
+              notificationTokens: token.token,
+            });
+          }
+        },
+
+        onRegistrationError: function (err) {
+          console.error(err.message, err);
+        },
+
+        permissions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+
+        popInitialNotification: true,
+
+        requestPermissions: true,
+      });
+      api.put<Login>('users/update/' + user.id, {name}).then(() => {
         checkToken(true);
       });
     } catch (error) {
@@ -177,7 +230,7 @@ export const AuthProvider = ({children}: any) => {
     if (state.user) {
       const newCodes = state.user.codes.filter(code => code !== deletecode);
       try {
-        const resp = await api.put<Boolean>('/users/update/' + state.user?.id, {
+        await api.put<Boolean>('/users/update/' + state.user?.id, {
           codes: newCodes,
         });
         const newUser = {
@@ -194,7 +247,7 @@ export const AuthProvider = ({children}: any) => {
     if (state.user) {
       const newCodes = [setcode, ...state.user.codes];
       try {
-        const resp = await api.put<Boolean>('/users/update/' + state.user?.id, {
+        await api.put<Boolean>('/users/update/' + state.user?.id, {
           codes: newCodes,
         });
 

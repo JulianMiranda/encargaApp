@@ -13,6 +13,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {homeStyles} from '../../styles/homeTheme';
 import {StackScreenProps} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {AuthContext} from '../../context/auth/AuthContext';
 import {useHome} from '../../hooks/useHome';
 import {AutoSlider} from '../../components/AutoSlider';
@@ -23,6 +25,8 @@ import {OfferCard} from '../../components/OfferCard';
 import {useNavigation} from '@react-navigation/native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {AutoSliderFinal} from '../../components/AutoSliderFinal';
+import api from '../../api/api';
+import {Subcategory} from '../../interfaces/Subcategory.interface';
 
 interface Props extends StackScreenProps<any, any> {}
 const {width, height} = Dimensions.get('window');
@@ -51,6 +55,47 @@ export const HomeScreen = () => {
       SplashScreen.hide();
     }
   }, [isLoading, user]);
+
+  useEffect(() => {
+    PushNotification.configure({
+      onNotification: async function (notification) {
+        /*  console.log('notification.data.click_action', notification.data); */
+
+        if (
+          notification.data.click_action === 'UPDATE_ENVIO_NOTIFICATION_CLICK'
+        ) {
+          console.log('navegar Precios');
+          navigation.navigate('Settings', {screen: 'PricesScreen'});
+          /*   navigation.navigate('PricesScreen'); */
+        }
+        if (
+          notification.data.click_action === 'SUBCATEGORY_NOTIFICATION_CLICK'
+        ) {
+          const subcategory = await api.get<Subcategory>(
+            `subcategories/getOne/${notification.data.subcategory}`,
+          );
+          navigation.navigate('SubcategoryScreen', {
+            subcategory: subcategory.data,
+          });
+        }
+
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+      onAction: function (notification) {
+        console.log('ACTION:', notification.action);
+        console.log('NOTIFICATION:', notification);
+      },
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      popInitialNotification: true,
+
+      requestPermissions: true,
+    });
+  }, [navigation]);
 
   return (
     <>
