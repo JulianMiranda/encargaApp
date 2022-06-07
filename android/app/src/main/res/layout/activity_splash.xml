@@ -40,7 +40,7 @@
         android:text="Hecho por\nJulian MIranda"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
