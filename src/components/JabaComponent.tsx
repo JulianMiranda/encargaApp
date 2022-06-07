@@ -39,7 +39,7 @@ export const JabaComponent = ({i, cantPaq, weigth}: Props) => {
           alignSelf: 'center',
           color: '#000',
         }}>
-        {cantPaq !== i + 1 ? '1.5 Kg' : weigth - i * 1440 + ' g'}
+        {cantPaq !== i + 1 ? '1.5 Kg' : (weigth - i * 1440).toFixed(0) + ' g'}
       </Text>
 
       <View

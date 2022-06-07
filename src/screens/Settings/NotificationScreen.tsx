@@ -174,7 +174,6 @@ export const NotificationScreen = () => {
             bottom: 10,
             paddingHorizontal: 30,
             alignSelf: 'center',
-            width: '60%',
             borderRadius: 100,
             padding: 5,
             marginBottom: 80,
@@ -192,7 +191,9 @@ export const NotificationScreen = () => {
           activeOpacity={0.8}
           onPress={handleButton}>
           <View>
-            <Text style={loginStyles.textButton}>Guardar Cambios</Text>
+            <Text style={{...loginStyles.textButton, paddingHorizontal: 5}}>
+              Guardar Cambios
+            </Text>
           </View>
         </TouchableOpacity>
       )}

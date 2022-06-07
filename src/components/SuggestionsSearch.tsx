@@ -56,6 +56,9 @@ export const SuggestionsSearch = ({
   };
   return (
     <View style={{marginTop: 20, marginLeft: 5}}>
+      {suggestions.length > 0 && (
+        <Text style={{fontWeight: 'bold'}}>Sugerencias</Text>
+      )}
       {suggestions.map((item, index) => (
         <View key={index} style={{}}>
           <TouchableOpacity
@@ -66,8 +69,6 @@ export const SuggestionsSearch = ({
               alignItems: 'center',
             }}
             onPress={() => {
-              console.log('pressed');
-
               setSearchQuery(item.name);
               onSearch(item.name);
             }}>

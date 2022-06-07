@@ -154,42 +154,6 @@ export const OffersScreen = () => {
           </>
         }
       />
-      {/* <ScrollView
-    style={{flex: 1}}
-    scrollEventThrottle={16}
-    onScroll={Animated.event([
-      {nativeEvent: {contentOffset: {y: scrollY}}},
-    ])}>
-    <Animated.View
-      style={{
-        height: profileImageHeight,
-        width: profileImageHeight,
-        borderRadius: PROFILE_IMAGE_MAX_HEIGHT / 2,
-        borderColor: 'white',
-        borderWidth: 3,
-        overflow: 'hidden',
-        marginTop: profileImageMarginTop,
-        marginLeft: 10,
-      }}>
-      <Image
-        source={require('../assets/porciento.jpg')}
-        style={{flex: 1, width: undefined, height: undefined}}
-      />
-    </Animated.View>
-    <View style={{alignItems: 'center'}}>
-      <Text
-        style={{
-          fontWeight: 'bold',
-          fontSize: 26,
-          paddingLeft: 10,
-          marginTop: -100,
-        }}>
-        Varun Nath
-      </Text>
-    </View>
-
-    
-  </ScrollView> */}
     </View>
   );
 };

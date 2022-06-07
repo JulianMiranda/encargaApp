@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
   pressNavigate: () => void;
 }
+const {height} = Dimensions.get('window');
 export const ShopSuccess = ({pressNavigate}: Props) => {
   const {
     theme: {colors},
@@ -19,7 +20,7 @@ export const ShopSuccess = ({pressNavigate}: Props) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: 200,
+          marginTop: height * 0.1,
         }}>
         <Image
           source={require('../assets/successShop2.png')}
@@ -36,7 +37,7 @@ export const ShopSuccess = ({pressNavigate}: Props) => {
         <TouchableOpacity
           style={{
             flexDirection: 'row',
-            marginTop: 1,
+            marginTop: height * 0.1,
             padding: 10,
             paddingHorizontal: 50,
             alignSelf: 'center',

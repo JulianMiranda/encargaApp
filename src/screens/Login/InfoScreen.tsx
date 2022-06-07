@@ -17,7 +17,7 @@ export const InfoScreen = () => {
   return (
     <>
       <Image
-        source={require('../../assets/info.jpg')}
+        source={require('../../assets/encargaInfo.png')}
         style={{width: '100%', height: '100%'}}
       />
       <TouchableOpacity

@@ -65,13 +65,12 @@ export const HomeScreen = () => {
           backgroundColor: 'rgba(255,255,255,0.92)',
         }}>
         <Image
-          source={require('../../assets/encarga4.png')}
+          source={require('../../assets/logoEncarga.png')}
           style={{
             alignSelf: 'center',
             marginTop: top + 6,
             height: 45,
             width: 100,
-            marginRight: 30,
             marginBottom: -2,
           }}
         />
@@ -84,7 +83,12 @@ export const HomeScreen = () => {
         )}
 
         <View style={{marginTop: 10}}>
-          <Text style={{...homeStyles.carouselTitles, marginLeft: 10}}>
+          <Text
+            style={{
+              ...homeStyles.carouselTitles,
+              marginLeft: 10,
+              fontFamily: 'NovaSlim-Regular',
+            }}>
             Categorías
           </Text>
           <CategoryCarousel />
@@ -112,6 +116,7 @@ export const HomeScreen = () => {
                   fontSize: 24,
                   fontWeight: 'bold',
                   alignSelf: 'center',
+                  fontFamily: 'NovaSlim-Regular',
                 }}>
                 REBAJAS
               </Text>

@@ -103,7 +103,12 @@ export const GetInputCarnet = ({
           }}
         />
         {carnets.map((carnet, index) => (
-          <>
+          <View
+            key={index}
+            style={{
+              borderBottomColor: '#f1f1f1',
+              borderBottomWidth: 1,
+            }}>
             <View
               style={{
                 width: '100%',
@@ -136,15 +141,15 @@ export const GetInputCarnet = ({
               </View>
             </View>
 
-            <View
+            {/* <View
               style={{
                 height: 1,
                 width: '90%',
                 alignSelf: 'center',
                 backgroundColor: '#f1f1f1',
               }}
-            />
-          </>
+            /> */}
+          </View>
         ))}
       </View>
       {isLoading && (

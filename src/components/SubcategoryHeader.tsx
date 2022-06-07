@@ -161,61 +161,6 @@ export const SubcategoryHeader = ({id, name, image}: Props) => {
           </>
         }
       />
-      {/* <ScrollView
-        style={{flex: 1}}
-        scrollEventThrottle={16}
-        onScroll={Animated.event([
-          {nativeEvent: {contentOffset: {y: scrollY}}},
-        ])}>
-        <Animated.View
-          style={{
-            height: profileImageHeight,
-            width: profileImageHeight,
-            borderRadius: PROFILE_IMAGE_MAX_HEIGHT / 2,
-            borderColor: 'white',
-            borderWidth: 3,
-            overflow: 'hidden',
-            marginTop: profileImageMarginTop,
-            marginLeft: 10,
-          }}>
-          <Image
-            source={require('../assets/avion.jpg')}
-            style={{flex: 1, width: undefined, height: undefined}}
-          />
-        </Animated.View>
-        <View style={{alignItems: 'center'}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 26,
-              paddingLeft: 10,
-              marginTop: -100,
-            }}>
-            Varun Nath
-          </Text>
-        </View>
-
-        
-      </ScrollView> */}
     </View>
   );
 };
-/* 
-<FlatList
-          data={subcategories}
-          keyExtractor={(subcategory, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          numColumns={3}
-          
-          renderItem={({item}) => <SubcategoryCard item={item} />}
-  
-          onEndReached={loadSubcategories}
-          onEndReachedThreshold={0.4}
-          ListFooterComponent={
-            <>
-              {isLoading && <ActivityIndicator color={'#fb2331'} />}
-
-              <View style={{height: 80}} />
-            </>
-          }
-        /> */
