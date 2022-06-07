@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0.0"
-        android:text="Hecho por\nJulian MIranda"
+        android:text="Activity\nJulian MIranda"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:textColor="#000"
