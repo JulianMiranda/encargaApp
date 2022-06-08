@@ -135,6 +135,7 @@ export const ModalAddCarnet = ({
 
         const exist = await api.post('/carnets/getList', {
           filter: {
+            status: ['=', true],
             user: ['=', user?.id],
             carnet: ['=', datos.carnet],
           },

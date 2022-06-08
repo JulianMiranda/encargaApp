@@ -10,9 +10,9 @@
     android:background="@drawable/gradient">
     <ImageView
         android:id="@+id/logoImageView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:src="@drawable/encargalogo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logoencarganew"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

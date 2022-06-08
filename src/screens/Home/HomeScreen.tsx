@@ -51,10 +51,8 @@ export const HomeScreen = () => {
   } = useHome();
 
   useEffect(() => {
-    if (!isLoading) {
-      SplashScreen.hide();
-    }
-  }, [isLoading, user]);
+    SplashScreen.hide();
+  }, [user]);
 
   useEffect(() => {
     PushNotification.configure({
@@ -115,7 +113,7 @@ export const HomeScreen = () => {
             alignSelf: 'center',
             marginTop: top + 6,
             height: 45,
-            width: 100,
+            width: 80,
             marginBottom: -2,
           }}
         />
