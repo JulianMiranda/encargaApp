@@ -51,7 +51,7 @@ export const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    width: 75,
+    width: 74,
     alignItems: 'center',
   },
   background: {
