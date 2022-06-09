@@ -23,4 +23,5 @@ export interface User {
   theme: string;
   image: Image;
   codes: string[];
+  notificationTokens: string[];
 }
