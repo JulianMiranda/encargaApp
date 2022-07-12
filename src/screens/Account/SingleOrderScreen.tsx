@@ -172,7 +172,7 @@ export const SingleOrderScreen = (props: Props) => {
           flex: 1,
           margin: 10,
         }}>
-        <FacturaShop car={order.car} totalPaqReCalc={order.car.length} />
+        <FacturaShop car={order.car} totalPaqReCalc={order.totalPaqReCalc} />
         <View
           style={{
             padding: 10,
