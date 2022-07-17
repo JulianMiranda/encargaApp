@@ -173,7 +173,6 @@ export const HomeScreen = () => {
             style={{
               ...homeStyles.carouselTitles,
               marginLeft: 10,
-              fontFamily: 'NovaSlim-Regular',
             }}>
             Categorías
           </Text>
@@ -202,7 +201,6 @@ export const HomeScreen = () => {
                   fontSize: 24,
                   fontWeight: 'bold',
                   alignSelf: 'center',
-                  fontFamily: 'NovaSlim-Regular',
                 }}>
                 REBAJAS
               </Text>
