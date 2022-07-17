@@ -132,7 +132,7 @@ export default function PhoneNumber(props: any) {
           Si continúas, es posible que recibas un SMS de verificación. Pueden
           aplicarse las tarifas de mensajes y datos
         </Text>
-        <MovilButtons />
+        {/* <MovilButtons /> */}
       </View>
     </>
   );
