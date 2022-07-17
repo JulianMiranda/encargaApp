@@ -49,7 +49,10 @@ export const Tabs = () => {
           fontSize: 11,
         },
         tabStyle: {
-          backgroundColor: 'rgba(255,255,255,0.92)',
+          backgroundColor:
+            Platform.OS === 'android'
+              ? 'rgba(255,255,255,0.92)'
+              : 'transparent',
         },
         activeTintColor: colors.card,
       }}>
@@ -127,7 +130,8 @@ const styles = StyleSheet.create({
   },
   navigator: {
     borderTopWidth: 0,
-    backgroundColor: 'transparent',
+    backgroundColor:
+      Platform.OS === 'ios' ? 'rgba(255,255,255,0.92)' : 'transparent',
     elevation: 30,
   },
   xFillLine: {

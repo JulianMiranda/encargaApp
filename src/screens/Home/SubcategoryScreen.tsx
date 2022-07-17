@@ -7,6 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import {ShopContext} from '../../context/shop/ShopContext';
 import {RootStackParams} from '../../navigation/HomeStack';
@@ -29,6 +31,8 @@ interface Props
 
 interface PropsNavigation
   extends StackNavigationProp<RootStackParams, 'SubcategoryScreen'> {}
+
+const {height} = Dimensions.get('window');
 
 export const SubcategoryScreen = (props: Props) => {
   const {route, navigation} = props;
@@ -300,6 +304,8 @@ export const SubcategoryScreen = (props: Props) => {
         style={{
           ...loginStyles.button,
           backgroundColor: soldOut ? '#f1f1f1' : colors.card,
+          marginBottom: Platform.OS === 'ios' ? 110 : 80,
+          width: 170,
         }}
         activeOpacity={0.8}
         onPress={handleButton}>
@@ -328,7 +334,7 @@ export const SubcategoryScreen = (props: Props) => {
 const styles = StyleSheet.create({
   newImageProduct: {
     position: 'absolute',
-    top: 350,
+    top: height * 0.4,
     alignSelf: 'flex-start',
     marginLeft: 5,
     height: 75,

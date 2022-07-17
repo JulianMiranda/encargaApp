@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {
   Dimensions,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -107,6 +108,7 @@ export const ShopStepThree = ({
       <TouchableOpacity
         style={{
           ...styles.button,
+          marginBottom: Platform.OS === 'ios' ? 30 : 15,
           backgroundColor: almostOneNoSelected() ? '#ccc' : colors.card,
         }}
         activeOpacity={terms ? 0.8 : 1}

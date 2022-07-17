@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {AuthContext} from '../../context/auth/AuthContext';
 import api from '../../api/api';
 import {CustomSwitch} from '../../components/CustomSwitch';
@@ -176,8 +182,7 @@ export const NotificationScreen = () => {
             alignSelf: 'center',
             borderRadius: 100,
             padding: 5,
-            marginBottom: 80,
-
+            marginBottom: Platform.OS === 'ios' ? 110 : 80,
             shadowColor: '#000',
             shadowOffset: {
               width: 0,

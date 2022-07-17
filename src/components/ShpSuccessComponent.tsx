@@ -20,7 +20,7 @@ export const ShopSuccess = ({pressNavigate}: Props) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: height * 0.1,
+          marginTop: height < 600 ? 0 : height * 0.1,
         }}>
         <Image
           source={require('../assets/successShop2.png')}

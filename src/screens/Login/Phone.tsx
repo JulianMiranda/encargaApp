@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import {ThemeContext} from '../../context/theme/ThemeContext';
@@ -16,6 +18,7 @@ import {AuthContext} from '../../context/auth/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TopScreen} from '../../components/TopScreen';
 import {MovilButtons} from '../../components/MovilButtons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function PhoneNumber(props: any) {
   const {
@@ -26,6 +29,7 @@ export default function PhoneNumber(props: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const {top} = useSafeAreaInsets();
   const onChangePhone = (number: string) => {
     if (inputRef.current.isValidNumber()) {
       inputRef.current.blur();
@@ -41,7 +45,9 @@ export default function PhoneNumber(props: any) {
 
   return (
     <>
-      <Text style={loginStyles.title}>Ingresa tu número de teléfono</Text>
+      <Text style={{...loginStyles.title, marginTop: top + 10}}>
+        Ingresa tu número de teléfono
+      </Text>
 
       <View style={loginStyles.screen}>
         <View style={{marginLeft: 20, marginRight: 35}}>
@@ -132,7 +138,9 @@ export default function PhoneNumber(props: any) {
           Si continúas, es posible que recibas un SMS de verificación. Pueden
           aplicarse las tarifas de mensajes y datos
         </Text>
-        {/* <MovilButtons /> */}
+        <View style={{height: 300}}>
+          <MovilButtons />
+        </View>
       </View>
     </>
   );
@@ -149,7 +157,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     borderRadius: 50,
-    marginBottom: 15,
+    marginBottom: 5,
     width: '80%',
     shadowColor: '#000',
     shadowOffset: {

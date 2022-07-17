@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
 import {BottomTabBarButtonProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TabBg} from '../svg';
@@ -18,7 +18,10 @@ export const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => {
 
   return (
     <View style={styles.container} pointerEvents="box-none">
-      <TabBg color={'rgba(255,255,255,0.92)'} style={styles.background} />
+      <TabBg
+        color={Platform.OS === 'ios' ? 'transparent' : 'rgba(255,255,255,0.92)'}
+        style={styles.background}
+      />
       <TouchableOpacity
         activeOpacity={0.8}
         style={{...styles.button, backgroundColor: colors.primary}}

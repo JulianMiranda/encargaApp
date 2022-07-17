@@ -37,8 +37,9 @@ export const TopScreen = (props: Props) => {
           <Text
             style={{
               ...styles.mainName,
-              top: top + 35,
+              top: height * 0.4,
               alignSelf: 'center',
+              justifyContent: 'center',
             }}>
             {text}
           </Text>

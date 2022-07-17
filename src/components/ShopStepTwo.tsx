@@ -1,6 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Dimensions,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -36,7 +37,11 @@ export const ShopStepTwo = ({handleButton}: Props) => {
       </View>
       <View style={{}}>
         <TouchableOpacity
-          style={{...styles.button, backgroundColor: colors.card}}
+          style={{
+            ...styles.button,
+            backgroundColor: colors.card,
+            marginBottom: Platform.OS === 'ios' ? 30 : 15,
+          }}
           activeOpacity={0.8}
           onPress={() => handleButton()}>
           <Text style={styles.buttonText}>Continuar</Text>

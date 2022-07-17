@@ -1,4 +1,4 @@
-import React, {useRef, useState, useContext} from 'react';
+import React, {useRef, useState, useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -24,7 +24,7 @@ import {Modalize} from 'react-native-modalize';
 import {ShopSuccess} from '../../components/ShpSuccessComponent';
 import {AuthContext} from '../../context/auth/AuthContext';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 export interface RellenoInterface {
   noone: boolean;
   refresco: boolean;
@@ -54,6 +54,7 @@ export const ShopScreen = () => {
   const {top} = useSafeAreaInsets();
   const toast = useToast();
   const navigation = useNavigation();
+  const scrollRef = useRef<any>();
   const modalizeRef = useRef<Modalize>(null);
   const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
   const [relleno, setRelleno] = useState<RellenoInterface>({
@@ -71,6 +72,10 @@ export const ShopScreen = () => {
     modalizeRef.current?.close();
     navigation.navigate('HomeScreen');
   };
+  useEffect(() => {
+    (progress === 1 || progress === 0) &&
+      scrollRef.current.scrollTo({x: 0, y: 0, animated: true});
+  }, [progress]);
 
   const handleButton = async () => {
     if (progress === 2) {
@@ -165,34 +170,34 @@ export const ShopScreen = () => {
             Datos
           </Text>
         )}
+
+        {progress < 2 && (
+          <TouchableOpacity
+            onPress={() => setProgress(progress + 1)}
+            activeOpacity={0.8}
+            style={{
+              marginLeft: 10,
+              padding: 6,
+              backgroundColor: 'white',
+              borderRadius: 50,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+
+              position: 'absolute',
+              bottom: 10,
+              zIndex: 999999999,
+              left: 10,
+            }}>
+            <Icon name="arrow-back-outline" color={'black'} size={26} />
+          </TouchableOpacity>
+        )}
       </View>
-      {progress < 2 && (
-        <TouchableOpacity
-          onPress={() => setProgress(progress + 1)}
-          activeOpacity={0.8}
-          style={{
-            top: top + 20,
-            marginLeft: 10,
-            padding: 6,
-            backgroundColor: 'white',
-            borderRadius: 50,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-
-            position: 'absolute',
-            zIndex: 999999999,
-            left: 10,
-          }}>
-          <Icon name="arrow-back-outline" color={'black'} size={26} />
-        </TouchableOpacity>
-      )}
-
       {car.length > 0 && (
         <>
           <View
@@ -206,7 +211,7 @@ export const ShopScreen = () => {
       )}
       <ScrollView
         style={{flex: 1}}
-
+        ref={scrollRef}
         /*  scrollEventThrottle={16}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
@@ -261,16 +266,19 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: '#FFB0A5',
-    height: 130,
+    height: height * 0.15,
     overflow: 'hidden',
     zIndex: 999,
     alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   titleList: {
     color: 'white',
-    alignSelf: 'center',
-    marginTop: 50,
+    /* marginTop: 10, */
     fontSize: 40,
+    alignSelf: 'flex-end',
+    marginBottom: 10,
   },
   headerTitle: {
     position: 'absolute',

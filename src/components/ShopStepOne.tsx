@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native';
 import {useToast} from 'react-native-toast-notifications';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -248,10 +249,13 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
       {car.length > 0 && (
         <>
           <TouchableOpacity
-            style={{...styles.button, backgroundColor: colors.card}}
+            style={{
+              ...styles.button,
+              backgroundColor: colors.card,
+              marginBottom: Platform.OS === 'ios' ? 30 : 15,
+            }}
             activeOpacity={0.8}
             onPress={() => {
-              console.log('Paq 1.5', cantPaqOS.oneandhalfkgPrice);
               if (
                 !relleno.golosina &&
                 !relleno.lapicero &&
@@ -290,31 +294,6 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
               style={styles.icon}
             />
           </TouchableOpacity>
-          {/* <View style={styles.emptyButton}>
-              <TouchableOpacity onPress={emptyCarConfirm}>
-                <Text style={{color: colors.card, fontSize: 14}}>Vaciar</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                ...styles.shopButton,
-                backgroundColor: colors.card,
-                marginLeft: 50,
-              }}>
-              <TouchableOpacity
-                activeOpacity={car.length < 1 ? 1 : 0.8}
-                onPress={
-                  car.length < 1
-                    ? () => {}
-                    : () =>
-                        navigation.navigate('InputCarnetScreen', {
-                          paquetes: cantPaqOS.oneandhalfkgPrice,
-                        })
-                }>
-                <Text style={{color: 'white', fontSize: 14}}>Comprar</Text>
-              </TouchableOpacity>
-            </View> */}
         </>
       )}
     </>

@@ -56,7 +56,7 @@ export const SearchScreen = () => {
         style={{
           flexDirection: 'row',
           paddingHorizontal: 10,
-          marginTop: top + 15,
+          marginTop: top + 5,
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
