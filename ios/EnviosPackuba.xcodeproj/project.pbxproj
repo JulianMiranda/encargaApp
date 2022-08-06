@@ -56,6 +56,7 @@
 		5E41916B2883A3850036E566 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5E509D032884677400925BC3 /* logo_encarga.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_encarga.png; sourceTree = "<group>"; };
 		5E509D05288468D900925BC3 /* logo_encarga_width.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_encarga_width.png; sourceTree = "<group>"; };
+		5E509D07288493F600925BC3 /* EnviosPackuba.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EnviosPackuba.entitlements; path = EnviosPackuba/EnviosPackuba.entitlements; sourceTree = "<group>"; };
 		6B16A8865AD04B04F028D269 /* Pods-EnviosPackuba-EnviosPackubaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnviosPackuba-EnviosPackubaTests.debug.xcconfig"; path = "Target Support Files/Pods-EnviosPackuba-EnviosPackubaTests/Pods-EnviosPackuba-EnviosPackubaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		75002D997FD247AE941C42A4 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		7C45D363D51346BF9D4C1BB9 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* EnviosPackuba */ = {
 			isa = PBXGroup;
 			children = (
+				5E509D07288493F600925BC3 /* EnviosPackuba.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -547,21 +549,26 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X4598HARTA;
+				CODE_SIGN_ENTITLEMENTS = EnviosPackuba/EnviosPackuba.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = C58QK2SKN9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = EnviosPackuba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.julianmiranda.encargaApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.julianmiranda.encargaAppDev;
 				PRODUCT_NAME = EnviosPackuba;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -574,20 +581,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X4598HARTA;
+				CODE_SIGN_ENTITLEMENTS = EnviosPackuba/EnviosPackuba.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = C58QK2SKN9;
 				INFOPLIST_FILE = EnviosPackuba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.julianmiranda.encargaApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.julianmiranda.encargaAppDev;
 				PRODUCT_NAME = EnviosPackuba;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -138,9 +138,9 @@ export default function PhoneNumber(props: any) {
           Si continúas, es posible que recibas un SMS de verificación. Pueden
           aplicarse las tarifas de mensajes y datos
         </Text>
-        <View style={{height: 300}}>
+        {/* <View style={{height: 300}}>
           <MovilButtons />
-        </View>
+        </View> */}
       </View>
     </>
   );

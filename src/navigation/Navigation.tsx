@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {AuthContext} from '../context/auth/AuthContext';
@@ -23,12 +23,21 @@ export const StackNavigator = () => {
   if (status === 'not-internet') {
     return <NotInternetConection />;
   }
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'rgba(255,255,255,0.92)',
+    },
+  };
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer theme={navTheme}>
       <Stack.Navigator
         /*  headerMode="none" */
         screenOptions={{
           headerShown: false,
+          headerStyle: {elevation: 0},
+          cardStyle: {backgroundColor: 'white'},
         }}>
         {status !== 'authenticated' ? (
           <>

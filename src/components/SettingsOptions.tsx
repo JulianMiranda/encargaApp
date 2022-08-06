@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../context/auth/AuthContext';
 import {ShopContext} from '../context/shop/ShopContext';
 import {ModalComponent} from './ModalComponent';
+import api from '../api/api';
 
 type Key =
   | 'historial'
@@ -22,6 +23,8 @@ type Key =
   | 'app'
   | 'money'
   | 'prices'
+  | 'delete'
+  | 'privacity'
   | 'token';
 
 export default function SettingsOptions() {
@@ -35,6 +38,7 @@ export default function SettingsOptions() {
   const [handleOpt, setHandleOpt] = useState(0);
 
   const confirmModal = () => {
+    console.log('confirmModal', handleOpt);
     switch (handleOpt) {
       case 0:
         closeSesion();
@@ -44,6 +48,12 @@ export default function SettingsOptions() {
         break;
       case 2:
         redirectCorreo();
+        break;
+      case 3:
+        deleteAccount();
+        break;
+      case 4:
+        privacity();
         break;
       default:
         break;
@@ -56,11 +66,23 @@ export default function SettingsOptions() {
     logOut();
   };
 
+  const deleteAccount = async () => {
+    setOpenModal(false);
+    await emptyCar();
+    await api.put('/users/delete/' + user?.id);
+    logOut();
+  };
+
   const redirectWhatsapp = () => {
     setOpenModal(false);
     Linking.openURL(
       'http://api.whatsapp.com/send?text=Hola 📦 *enCarga*, me podría ayudar?&phone=+593962914922',
     );
+  };
+
+  const privacity = () => {
+    setOpenModal(false);
+    Linking.openURL('https://encarga-politics.herokuapp.com/');
   };
 
   const redirectCorreo = () => {
@@ -74,7 +96,12 @@ export default function SettingsOptions() {
     setBody('¿Deseas cerrar sesión?');
     setOpenModal(true);
   };
-
+  const deleteAccountOpt = () => {
+    setHandleOpt(3);
+    setTitle('Eliminar cuenta');
+    setBody('¿Deseas eliminar tu cuenta?');
+    setOpenModal(true);
+  };
   const rastrearCompra = () => {
     setHandleOpt(2);
     setTitle('Rastrear mi Compra');
@@ -86,6 +113,14 @@ export default function SettingsOptions() {
     setHandleOpt(1);
     setTitle('Contáctanos vía WhatsApp');
     setBody('¿Necesita ayuda de enCarga?');
+    setOpenModal(true);
+  };
+
+  const irPrivacity = () => {
+    console.log('Privacity');
+    setHandleOpt(4);
+    setTitle('Ver Políticas');
+    setBody('¿Quieres ver nuestras políticas de privacidad de datos?');
     setOpenModal(true);
   };
   const selectedComponent = (key: Key) => {
@@ -113,6 +148,12 @@ export default function SettingsOptions() {
 
       case 'money':
         setMoney();
+        break;
+      case 'delete':
+        deleteAccountOpt();
+        break;
+      case 'privacity':
+        irPrivacity();
         break;
 
       case 'logout':
@@ -173,6 +214,7 @@ export default function SettingsOptions() {
           </View>
         </View>
       ))}
+      <View style={{height: 100}} />
       <ModalComponent
         isLoading={false}
         title={title}
@@ -202,7 +244,7 @@ function generateOptions(selectedComponent: any) {
       iconNameLeft: 'bell',
       iconNameRight: 'chevron-right',
       iconSizeRight: 32,
-      color: '#FF2E00',
+      color: '#2684FD',
       onPress: () => selectedComponent('token'),
     },
     {
@@ -251,7 +293,24 @@ function generateOptions(selectedComponent: any) {
       color: '#008d0c',
       onPress: () => selectedComponent('money'),
     }, */
-
+    {
+      title: 'Borrar mi Cuenta',
+      iconType: 'material-community',
+      iconNameLeft: 'delete-alert-outline',
+      iconNameRight: 'chevron-right',
+      iconSizeRight: 26,
+      color: '#FF5733',
+      onPress: () => selectedComponent('delete'),
+    },
+    {
+      title: 'Política de Privacidad',
+      iconType: 'material-community',
+      iconNameLeft: 'power',
+      iconNameRight: 'arrow-top-right',
+      iconSizeRight: 26,
+      color: '#24A10A',
+      onPress: () => selectedComponent('privacity'),
+    },
     {
       title: 'Cerrar sesión',
       iconType: 'material-community',

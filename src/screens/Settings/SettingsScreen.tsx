@@ -16,6 +16,7 @@ export const SettingsScreen = () => {
         height={height * 0.18}
       />
       <SettingsOptions />
+
       {/* <Toast ref={toastRef.current} position="center" opacity={0.9} /> */}
     </>
   );
