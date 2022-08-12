@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -21,18 +21,23 @@ import {Fab} from './Fab';
 import {ModalAddCarnet} from './ModalAddCarnet';
 import {ModalEditCarnet} from './ModalEditCarnet';
 import {useShop} from '../hooks/useShop';
+import {FadeInImageFinger} from './FadeInImageFinger';
 
 interface Props {
   setSelectedCarnet: (carnet: string[]) => void;
   setTerms: (term: boolean) => void;
+  setShowFinger: (term: boolean) => void;
   terms: boolean;
+  showFinger: boolean;
   selectedCarnet: string[];
 }
 export const GetInputCarnet = ({
   selectedCarnet,
   setSelectedCarnet,
   terms,
+  showFinger,
   setTerms,
+  setShowFinger,
 }: Props) => {
   const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
@@ -43,9 +48,17 @@ export const GetInputCarnet = ({
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [carnetEdit, setCarnetEdit] = useState<Partial<Carnet>>({});
+
+  useEffect(() => {
+    console.log('Primera');
+    if (carnets.length > 0 && selectedCarnet.length === 0) {
+      setSelectedCarnet([carnets[0].id]);
+    }
+  }, [carnets, selectedCarnet]);
 
   const addCarnet = () => {
     setTitle('Datos');
@@ -78,22 +91,18 @@ export const GetInputCarnet = ({
           alignItems: 'center',
           marginBottom: 60,
         }}>
-        <Text style={{fontSize: 18}}>
-          Necesitamos datos de{' '}
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              backgroundColor: 'black',
-              color: 'white',
-            }}>
-            {' '}
-            {totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets}{' '}
-          </Text>{' '}
-          {totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets === 1
-            ? 'persona'
-            : 'personas'}
-        </Text>
+        <Text style={{fontSize: 18}}>Necesitamos datos de 1 persona</Text>
+        <FadeInImageFinger
+          setShowFinger={setShowFinger}
+          show={showFinger}
+          style={{
+            height: 60,
+            width: 60,
+            top: 10,
+            left: 0,
+            position: 'absolute',
+          }}
+        />
         <View
           style={{
             height: 1,
@@ -125,9 +134,9 @@ export const GetInputCarnet = ({
                   name={
                     selectedCarnet.includes(carnet.id)
                       ? 'check-circle-outline'
-                      : 'circle-outline'
+                      : 'check-circle-outline'
                   }
-                  size={22}
+                  size={30}
                   color={
                     selectedCarnet.includes(carnet.id) ? colors.card : '#e0e0e0'
                   }
@@ -137,7 +146,12 @@ export const GetInputCarnet = ({
                 />
               </TouchableOpacity>
               <View style={{flex: 1}}>
-                <CarnetComponent carnet={carnet} />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={{}}
+                  onPress={() => handleCheck(carnet.id)}>
+                  <CarnetComponent carnet={carnet} />
+                </TouchableOpacity>
               </View>
             </View>
 

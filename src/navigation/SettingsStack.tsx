@@ -8,7 +8,6 @@ import {AppScreen} from '../screens/Settings/AppScreen';
 import {TrackScreen} from '../screens/Settings/TrackScreen';
 import {SingleTrackScreen} from '../screens/Settings/SingleTackScreen';
 import {NotificationScreen} from '../screens/Settings/NotificationScreen';
-import {PricesScreen} from '../screens/Settings/PricesScreen';
 
 const Stack = createStackNavigator();
 
@@ -91,15 +90,6 @@ export const SettingsStack = () => {
       <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
-        options={{
-          headerShown: false,
-          /* title: 'Orden',
-          headerBackTitleVisible: false, */
-        }}
-      />
-      <Stack.Screen
-        name="PricesScreen"
-        component={PricesScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

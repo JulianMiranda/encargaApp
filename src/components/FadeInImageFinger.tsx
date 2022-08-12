@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -11,18 +11,25 @@ import {
 import {useAnimation} from '../hooks/useAnimation';
 
 interface Props {
-  uri: string;
   style?: StyleProp<ImageStyle>;
+  show: boolean;
+  setShowFinger: (term: boolean) => void;
 }
 
-export const FadeInImage = ({uri, style = {}}: Props) => {
-  const {opacity, fadeIn} = useAnimation();
+export const FadeInImageFinger = ({show, setShowFinger, style = {}}: Props) => {
+  const {opacity, fadeInFinger} = useAnimation();
   const [isLoading, setIsLoading] = useState(true);
 
   const finishLoading = () => {
     setIsLoading(false);
-    fadeIn();
+    /*     fadeIn(); */
   };
+  useEffect(() => {
+    if (show) {
+      fadeInFinger();
+      setShowFinger(false);
+    }
+  }, [show, fadeInFinger]);
 
   const onError = (err: NativeSyntheticEvent<ImageErrorEventData>) => {
     setIsLoading(false);
@@ -44,7 +51,7 @@ export const FadeInImage = ({uri, style = {}}: Props) => {
       )}
 
       <Animated.Image
-        source={{uri}}
+        source={require('../assets/dedo_nofound.png')}
         onError={onError}
         onLoad={finishLoading}
         style={{

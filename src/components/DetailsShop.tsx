@@ -1,18 +1,19 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ThemeContext} from '../context/theme/ThemeContext';
+import {CantPaqOS} from '../interfaces/CantPaq.interface';
 import {Prices} from '../interfaces/Prices.interface';
-import {CantPaq} from '../interfaces/Shop.Interface';
 import {formatToCurrency} from '../utils/formatToCurrency';
 import {Factura} from './Factura';
 import {Productos} from './Productos';
+import {ProductosTest} from './ProductosTest';
 
 interface Props {
   total: number;
   totalPaqReCalc: number;
   totalMoneyReCalc: number;
   prices: Prices;
-  cantPaqOS: CantPaq;
+  cantPaqOS: CantPaqOS;
 }
 export const DetailsShop = ({
   total,
@@ -63,7 +64,7 @@ export const DetailsShop = ({
           <Text style={styles.txtTotal}>{formatToCurrency(total)}</Text>
         </View>
       </View>
-      <Productos />
+      <ProductosTest />
       <View
         style={{
           padding: 10,

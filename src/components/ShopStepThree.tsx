@@ -32,37 +32,28 @@ export const ShopStepThree = ({
   const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
 
-  const [terms, setTerms] = useState(false);
+  const [terms, setTerms] = useState(true);
+  const [showFinger, setShowFinger] = useState(false);
 
   const noCarnetSelected = () => {
-    toast.show(
-      `Faltan ${
-        totalPaqReCalc -
-        cantPaqOS.oneandhalfkgPrice +
-        cantCarnets -
-        selectedCarnet.length
-      } datos `,
-      {
-        type: 'normal',
-        placement: 'bottom',
-        duration: 3000,
-        style: {
-          justifyContent: 'center',
-          marginBottom: 150,
-          borderRadius: 50,
-          paddingHorizontal: 20,
-          backgroundColor: 'rgba(0,0,0,0.8)',
-        },
-        textStyle: {fontSize: 16},
-        animationType: 'zoom-in',
+    setShowFinger(true);
+    toast.show(`Seleccione 1 destinatario`, {
+      type: 'normal',
+      placement: 'bottom',
+      duration: 3000,
+      style: {
+        justifyContent: 'center',
+        marginBottom: 150,
+        borderRadius: 50,
+        paddingHorizontal: 20,
+        backgroundColor: 'rgba(0,0,0,0.8)',
       },
-    );
+      textStyle: {fontSize: 16},
+      animationType: 'zoom-in',
+    });
   };
   const handleGuardar = () => {
-    if (
-      selectedCarnet.length <
-      totalPaqReCalc - cantPaqOS.oneandhalfkgPrice + cantCarnets
-    ) {
+    if (selectedCarnet.length < 1) {
       noCarnetSelected();
     } else if (!terms) {
       toast.show('Debe aceptar las condiciones de envío', {
@@ -102,6 +93,8 @@ export const ShopStepThree = ({
           setSelectedCarnet={setSelectedCarnet}
           terms={terms}
           setTerms={setTerms}
+          showFinger={showFinger}
+          setShowFinger={setShowFinger}
         />
       </View>
 

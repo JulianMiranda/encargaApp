@@ -23,6 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize';
 import {ShopSuccess} from '../../components/ShpSuccessComponent';
 import {AuthContext} from '../../context/auth/AuthContext';
+import {CheckWeigth} from '../../utils/checkWeigth';
 
 const {width, height} = Dimensions.get('window');
 export interface RellenoInterface {
@@ -57,6 +58,7 @@ export const ShopScreen = () => {
   const scrollRef = useRef<any>();
   const modalizeRef = useRef<Modalize>(null);
   const [selectedCarnet, setSelectedCarnet] = useState<string[]>([]);
+  const [warning, setWarning] = useState<boolean>(true);
   const [relleno, setRelleno] = useState<RellenoInterface>({
     noone: false,
     refresco: false,
@@ -77,14 +79,18 @@ export const ShopScreen = () => {
       scrollRef.current.scrollTo({x: 0, y: 0, animated: true});
   }, [progress]);
 
+  useEffect(() => {
+    setWarning(true);
+  }, [weigth]);
+
   const handleButton = async () => {
     if (progress === 2) {
-      const paquete = 1440 + (weigth - 1 - cantPaqOS.oneandhalfkgPrice * 1440);
-      if (paquete < 1300) {
-        toast.show('Completa el último paquete', {
+      const resp = CheckWeigth(weigth, cantPaqOS, warning, setWarning);
+      if (resp.problem) {
+        toast.show(resp.message, {
           type: 'normal',
           placement: 'bottom',
-          duration: 3000,
+          duration: 4000,
           style: {
             justifyContent: 'center',
             marginBottom: 150,
@@ -92,7 +98,10 @@ export const ShopScreen = () => {
             paddingHorizontal: 20,
             backgroundColor: 'rgba(0,0,0,0.8)',
           },
-          textStyle: {fontSize: 16},
+          textStyle: {
+            fontSize: 16,
+            alignSelf: 'center',
+          },
           animationType: 'zoom-in',
         });
 

@@ -6,7 +6,17 @@ export interface CantPaqOS {
   fivekgPrice: number;
   sixkgPrice: number;
   sevenkgPrice: number;
-  eigthkgPrice: number;
+  eightkgPrice: number;
   ninekgPrice: number;
   tenkgPrice: number;
+  elevenkgPrice: number;
+  twelvekgPrice: number;
+  thirteenkgPrice: number;
+  fourteenkgPrice: number;
+  fifteenkgPrice: number;
+  sixteenkgPrice: number;
+  seventeenkgPrice: number;
+  eighteenkgPrice: number;
+  nineteenkgPrice: number;
+  twentykgPrice: number;
 }

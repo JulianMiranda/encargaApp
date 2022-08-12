@@ -7,6 +7,7 @@ export interface PricesResponse {
 export interface Prices {
   mlc: number;
   mn: number;
+  rate: number;
   oneandhalfkgPrice: number;
   twokgPrice: number;
   threekgPrice: number;
@@ -14,9 +15,19 @@ export interface Prices {
   fivekgPrice: number;
   sixkgPrice: number;
   sevenkgPrice: number;
-  eigthkgPrice: number;
+  eightkgPrice: number;
   ninekgPrice: number;
   tenkgPrice: number;
+  elevenkgPrice: number;
+  twelvekgPrice: number;
+  thirteenkgPrice: number;
+  fourteenkgPrice: number;
+  fifteenkgPrice: number;
+  sixteenkgPrice: number;
+  seventeenkgPrice: number;
+  eighteenkgPrice: number;
+  nineteenkgPrice: number;
+  twentykgPrice: number;
   createdAt?: string;
   updatedAt?: string;
   id?: string;

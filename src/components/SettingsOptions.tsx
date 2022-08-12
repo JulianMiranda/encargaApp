@@ -128,9 +128,6 @@ export default function SettingsOptions() {
       case 'token':
         navigation.navigate('NotificationScreen');
         break;
-      case 'prices':
-        navigation.navigate('PricesScreen');
-        break;
       case 'about':
         navigation.navigate('TandCScreen');
         break;
@@ -229,15 +226,6 @@ export default function SettingsOptions() {
 
 function generateOptions(selectedComponent: any) {
   return [
-    {
-      title: 'Precios envíos',
-      iconType: 'material-community',
-      iconNameLeft: 'cube-send',
-      iconNameRight: 'chevron-right',
-      iconSizeRight: 32,
-      color: '#EE23C0',
-      onPress: () => selectedComponent('prices'),
-    },
     {
       title: 'Notificaciones',
       iconType: 'material-community',

@@ -5,11 +5,16 @@ import {Order} from '../interfaces/Order.interface';
 import {SingleOrderScreen} from '../screens/Account/SingleOrderScreen';
 import {OrderScreen} from '../screens/Account/OrderScreen';
 import {CarnetScreen} from '../screens/Account/CarnetScreen';
+import {PricesScreen} from '../screens/Account/PricesScreen';
+import {RateScreen} from '../screens/Account/RateScreen';
+import {AduanaScreen} from '../screens/Account/AduanaScreen';
 
 const Stack = createStackNavigator();
 
 export type RootStackParams = {
   OrdersScreen: undefined;
+  PricesScreen: undefined;
+  RateScreen: undefined;
   SingleOrderScreen: {order: Order};
 };
 
@@ -46,6 +51,33 @@ export const AccountStack = () => {
       <Stack.Screen
         name="CarnetScreen"
         component={CarnetScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="PricesScreen"
+        component={PricesScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="RateScreen"
+        component={RateScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="AduanaScreen"
+        component={AduanaScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

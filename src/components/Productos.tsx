@@ -8,10 +8,11 @@ import {formatToCurrency} from '../utils/formatToCurrency';
 
 export const Productos = () => {
   const {prices} = useContext(AuthContext);
-  const {cantPaqOS} = useShop();
+  const {cantPaqOS, weigth} = useShop();
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  console.log('weigth', weigth);
   return (
     <>
       <View
@@ -75,7 +76,7 @@ export const Productos = () => {
             </Text>
           </View>
         </View>
-        {cantPaqOS.oneandhalfkgPrice !== 0 && (
+        {cantPaqOS.threekgPrice !== 0 && weigth < 1440 && (
           <View
             style={{
               flexDirection: 'row',
@@ -85,9 +86,7 @@ export const Productos = () => {
               borderBottomWidth: 1,
             }}>
             <Text style={{flex: 2, marginLeft: 5}}>1.5</Text>
-            <Text style={{flex: 2, marginRight: 3, marginLeft: 3}}>
-              {cantPaqOS.oneandhalfkgPrice}
-            </Text>
+            <Text style={{flex: 2, marginRight: 3, marginLeft: 3}}>1</Text>
             <Text style={{flex: 2}}>
               {formatToCurrency(prices.oneandhalfkgPrice)}
             </Text>
@@ -96,16 +95,12 @@ export const Productos = () => {
                 flex: 2,
                 alignItems: 'center',
               }}>
-              <Text>
-                {formatToCurrency(
-                  prices.oneandhalfkgPrice * cantPaqOS.oneandhalfkgPrice,
-                )}
-              </Text>
+              <Text>{formatToCurrency(prices.oneandhalfkgPrice)}</Text>
             </View>
           </View>
         )}
 
-        {cantPaqOS.twokgPrice !== 0 && (
+        {cantPaqOS.threekgPrice !== 0 && weigth > 1440 && weigth <= 2000 && (
           <View
             style={{
               flexDirection: 'row',
@@ -115,22 +110,18 @@ export const Productos = () => {
               borderBottomWidth: 1,
             }}>
             <Text style={{flex: 2, marginLeft: 5}}>2.0</Text>
-            <Text style={{flex: 2, marginRight: 3, marginLeft: 3}}>
-              {cantPaqOS.twokgPrice}
-            </Text>
+            <Text style={{flex: 2, marginRight: 3, marginLeft: 3}}>1</Text>
             <Text style={{flex: 2}}>{formatToCurrency(prices.twokgPrice)}</Text>
             <View
               style={{
                 flex: 2,
                 alignItems: 'center',
               }}>
-              <Text>
-                {formatToCurrency(prices.twokgPrice * cantPaqOS.twokgPrice)}
-              </Text>
+              <Text>{formatToCurrency(prices.twokgPrice)}</Text>
             </View>
           </View>
         )}
-        {cantPaqOS.threekgPrice !== 0 && (
+        {cantPaqOS.threekgPrice !== 0 && weigth > 2000 && (
           <View
             style={{
               flexDirection: 'row',
@@ -263,7 +254,7 @@ export const Productos = () => {
             </View>
           </View>
         )}
-        {cantPaqOS.eigthkgPrice !== 0 && (
+        {cantPaqOS.eightkgPrice !== 0 && (
           <View
             style={{
               flexDirection: 'row',
@@ -274,10 +265,10 @@ export const Productos = () => {
             }}>
             <Text style={{flex: 2, marginLeft: 5}}>8.0</Text>
             <Text style={{flex: 2, marginRight: 3, marginLeft: 3}}>
-              {cantPaqOS.eigthkgPrice}
+              {cantPaqOS.eightkgPrice}
             </Text>
             <Text style={{flex: 2}}>
-              {formatToCurrency(prices.eigthkgPrice)}
+              {formatToCurrency(prices.eightkgPrice)}
             </Text>
             <View
               style={{
@@ -285,7 +276,7 @@ export const Productos = () => {
                 alignItems: 'center',
               }}>
               <Text>
-                {formatToCurrency(prices.eigthkgPrice * cantPaqOS.eigthkgPrice)}
+                {formatToCurrency(prices.eightkgPrice * cantPaqOS.eightkgPrice)}
               </Text>
             </View>
           </View>

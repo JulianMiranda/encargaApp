@@ -20,9 +20,19 @@ export const useShop = () => {
     fivekgPrice: 0,
     sixkgPrice: 0,
     sevenkgPrice: 0,
-    eigthkgPrice: 0,
+    eightkgPrice: 0,
     ninekgPrice: 0,
     tenkgPrice: 0,
+    elevenkgPrice: 0,
+    twelvekgPrice: 0,
+    thirteenkgPrice: 0,
+    fourteenkgPrice: 0,
+    fifteenkgPrice: 0,
+    sixteenkgPrice: 0,
+    seventeenkgPrice: 0,
+    eighteenkgPrice: 0,
+    nineteenkgPrice: 0,
+    twentykgPrice: 0,
   });
 
   const [weigth, setWeigth] = useState(0);
@@ -87,26 +97,22 @@ export const useShop = () => {
       fivekgPrice: 0,
       sixkgPrice: 0,
       sevenkgPrice: 0,
-      eigthkgPrice: 0,
+      eightkgPrice: 0,
       ninekgPrice: 0,
       tenkgPrice: 0,
+      elevenkgPrice: 0,
+      twelvekgPrice: 0,
+      thirteenkgPrice: 0,
+      fourteenkgPrice: 0,
+      fifteenkgPrice: 0,
+      sixteenkgPrice: 0,
+      seventeenkgPrice: 0,
+      eighteenkgPrice: 0,
+      nineteenkgPrice: 0,
+      twentykgPrice: 0,
     };
     car.forEach(function (item) {
-      if (totalPaqReCalc > 4 || item.cantidad > 5) {
-        const valor =
-          item.cantidad *
-          discountGalore(
-            item.subcategory.priceGalore,
-            item.subcategory.priceGaloreDiscount,
-          );
-        totalCalc += valor;
-      } else {
-        const valor =
-          item.cantidad *
-          discount(item.subcategory.price, item.subcategory.priceDiscount);
-        totalCalc += valor;
-      }
-      if (item.subcategory.weight <= 1440) {
+      if (item.subcategory.weight <= 20000) {
         if (
           item.subcategory.aviableSizes &&
           item.subcategory.aviableSizes.length > 0
@@ -120,47 +126,83 @@ export const useShop = () => {
         } else {
           totalWeight += item.cantidad * item.subcategory.weight;
         }
+      }
+
+      if (totalWeight > 5000 || item.cantidad > 5) {
+        const valor =
+          item.cantidad *
+          discountGalore(
+            item.subcategory.priceGalore,
+            item.subcategory.priceGaloreDiscount,
+          );
+        totalCalc += valor;
       } else {
-        if (item.subcategory.weight > 1440 && item.subcategory.weight <= 2000) {
-          kilos.twokgPrice = kilos.twokgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 2000 && item.subcategory.weight <= 3000) {
-          kilos.threekgPrice = kilos.threekgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 3000 && item.subcategory.weight <= 4000) {
-          kilos.fourkgPrice = kilos.fourkgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 4000 && item.subcategory.weight <= 5000) {
-          kilos.fivekgPrice = kilos.fivekgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 5000 && item.subcategory.weight <= 6000) {
-          kilos.sixkgPrice = kilos.sixkgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 6000 && item.subcategory.weight <= 7000) {
-          kilos.sevenkgPrice = kilos.sevenkgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 7000 && item.subcategory.weight <= 8000) {
-          kilos.eigthkgPrice = kilos.eigthkgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 8000 && item.subcategory.weight <= 9000) {
-          kilos.ninekgPrice = kilos.ninekgPrice + item.cantidad;
-        }
-        if (item.subcategory.weight > 9000) {
-          kilos.tenkgPrice = kilos.tenkgPrice + item.cantidad;
-        }
+        const valor =
+          item.cantidad *
+          discount(item.subcategory.price, item.subcategory.priceDiscount);
+        totalCalc += valor;
       }
     });
     setTotal(totalCalc);
     setWeigth(totalWeight);
 
     if (totalWeight > 0) {
-      const cant = totalWeight / 1440;
-      if (totalWeight <= 1440) {
+      const cant = totalWeight / 1000;
+      const cant20 = totalWeight / 20000;
+      console.log(
+        'Calculo de TotalWeight: ' +
+          totalWeight +
+          ' Ceil: ' +
+          Math.ceil(cant20),
+      );
+      const sobrante = totalWeight - (Math.ceil(cant20) - 1) * 20000;
+      console.log('Sobrante', sobrante);
+
+      if (sobrante < 1440) {
         kilos.oneandhalfkgPrice = 1;
-      } else if (cant < 2) {
-        kilos.oneandhalfkgPrice = 2;
+      } else if (sobrante > 1440 && sobrante <= 2000) {
+        kilos.twokgPrice = 1;
+      } else if (sobrante > 2000 && sobrante <= 3000) {
+        kilos.threekgPrice = 1;
+      } else if (sobrante > 3000 && sobrante <= 4000) {
+        kilos.fourkgPrice = 1;
+      } else if (sobrante > 4000 && sobrante <= 5000) {
+        kilos.fivekgPrice = 1;
+      } else if (sobrante > 5000 && sobrante <= 6000) {
+        kilos.sixkgPrice = 1;
+      } else if (sobrante > 6000 && sobrante <= 7000) {
+        kilos.sevenkgPrice = 1;
+      } else if (sobrante > 7000 && sobrante <= 8000) {
+        kilos.sixkgPrice = 1;
+      } else if (sobrante > 8000 && sobrante <= 9000) {
+        kilos.ninekgPrice = 1;
+      } else if (sobrante > 9000 && sobrante <= 10000) {
+        kilos.tenkgPrice = 1;
+      } else if (sobrante > 10000 && sobrante <= 11000) {
+        kilos.elevenkgPrice = 1;
+      } else if (sobrante > 11000 && sobrante <= 12000) {
+        kilos.twelvekgPrice = 1;
+      } else if (sobrante > 12000 && sobrante <= 13000) {
+        kilos.thirteenkgPrice = 1;
+      } else if (sobrante > 13000 && sobrante <= 14000) {
+        kilos.fourteenkgPrice = 1;
+      } else if (sobrante > 14000 && sobrante <= 15000) {
+        kilos.fifteenkgPrice = 1;
+      } else if (sobrante > 15000 && sobrante <= 16000) {
+        kilos.sixteenkgPrice = 1;
+      } else if (sobrante > 16000 && sobrante <= 17000) {
+        kilos.seventeenkgPrice = 1;
+      } else if (sobrante > 17000 && sobrante <= 18000) {
+        kilos.eighteenkgPrice = 1;
+      } else if (sobrante > 18000 && sobrante <= 19000) {
+        kilos.nineteenkgPrice = 1;
       } else {
-        kilos.oneandhalfkgPrice = Math.ceil(cant);
+      }
+      if (totalWeight > 20000) {
+        kilos.twentykgPrice = Math.ceil(cant20 - 1);
+      }
+      if (sobrante > 19000) {
+        kilos.twentykgPrice = kilos.twentykgPrice + 1;
       }
     }
     setCantPaqOS(kilos);

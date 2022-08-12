@@ -33,7 +33,10 @@ export const Tabs = () => {
               style={[
                 styles.xFillLine,
                 {
-                  backgroundColor: 'red',
+                  backgroundColor:
+                    Platform.OS === 'ios'
+                      ? 'transparent'
+                      : 'rgba(255,255,255,0.92)',
                   overflow: 'hidden',
                   zIndex: -1,
                 },

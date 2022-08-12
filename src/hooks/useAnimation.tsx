@@ -13,6 +13,14 @@ export const useAnimation = () => {
     }).start();
   };
 
+  const fadeInFinger = (duration: number = 700) => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration,
+      useNativeDriver: true,
+    }).start(() => fadeOut());
+  };
+
   const fadeOut = () => {
     Animated.timing(opacity, {
       toValue: 0,
@@ -35,12 +43,13 @@ export const useAnimation = () => {
       // easing: Easing.bounce
     }).start();
   };
- 
+
   return {
     opacity,
     position,
     fadeIn,
     fadeOut,
     startMovingPosition,
+    fadeInFinger,
   };
 };

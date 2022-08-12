@@ -56,7 +56,7 @@ export const AccountScreen = () => {
         </View>
         <View
           style={{
-            height: 1,
+            height: 2,
             width: '90%',
             alignSelf: 'center',
             backgroundColor: '#f1f1f1',
@@ -95,12 +95,121 @@ export const AccountScreen = () => {
         </View>
         <View
           style={{
-            height: 1,
+            height: 2,
             width: '90%',
             alignSelf: 'center',
             backgroundColor: '#f1f1f1',
           }}
         />
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: 10,
+            marginLeft: 10,
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PricesScreen')}
+            style={{
+              width: '80%',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              marginLeft: 10,
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: '500',
+                color: '#615e5e',
+              }}>
+              Precios de Envío
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PricesScreen')}
+            style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Icon name={'chevron-right'} color="#ccc" size={26} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            height: 2,
+            width: '90%',
+            alignSelf: 'center',
+            backgroundColor: '#f1f1f1',
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: 10,
+            marginLeft: 10,
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('RateScreen')}
+            style={{
+              width: '80%',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              marginLeft: 10,
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: '500',
+                color: '#615e5e',
+              }}>
+              Tasa de Cambio
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('RateScreen')}
+            style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Icon name={'chevron-right'} color="#ccc" size={26} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            height: 2,
+            width: '90%',
+            alignSelf: 'center',
+            backgroundColor: '#f1f1f1',
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: 10,
+            marginLeft: 10,
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AduanaScreen')}
+            style={{
+              width: '80%',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              marginLeft: 10,
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: '500',
+                color: '#615e5e',
+              }}>
+              Impuestos Aduana
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AduanaScreen')}
+            style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Icon name={'chevron-right'} color="#ccc" size={26} />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </>
   );

@@ -20,6 +20,8 @@ import {ProductShop} from './ProductShop';
 import {Productos} from './Productos';
 import {Relleno} from './Relleno';
 import {RellenoInterface} from '../screens/Shop/ShopScreen';
+import {ProductosTest} from './ProductosTest';
+import {convertPeso} from '../utils/convertPeso';
 interface Props {
   handleButton: () => void;
   relleno: RellenoInterface;
@@ -55,64 +57,36 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
     }
   };
   const sliders = [];
-  for (let i = 0; i < cantPaqOS.oneandhalfkgPrice; i++) {
-    console.log('cant1.5', cantPaqOS.oneandhalfkgPrice);
-    sliders.push(
-      <JabaComponent
-        key={i + 'oneandhalfkgPrice'}
-        i={i}
-        cantPaq={cantPaqOS.oneandhalfkgPrice}
-        weigth={weigth}
-      />,
-    );
-  }
 
   for (const paq in cantPaqOS) {
-    if (paq !== 'oneandhalfkgPrice') {
-      let kg = 2.0;
-      if (paq === 'twokgPrice') {
-        kg = 2.0;
-      } else if (paq === 'threekgPrice') {
-        kg = 3.0;
-      } else if (paq === 'fourkgPrice') {
-        kg = 4.0;
-      } else if (paq === 'fivekgPrice') {
-        kg = 5.0;
-      } else if (paq === 'sixkgPrice') {
-        kg = 6.0;
-      } else if (paq === 'sevenkgPrice') {
-        kg = 7.0;
-      } else if (paq === 'eigthkgPrice') {
-        kg = 8.0;
-      } else if (paq === 'ninekgPrice') {
-        kg = 9.0;
-      } else {
-        kg = 10;
-      }
-      for (let i = 0; i < cantPaqOS[paq]; i++) {
-        sliders.push(
-          <View
-            key={i + paq}
+    const kg = convertPeso(paq);
+
+    for (let i = 0; i < cantPaqOS[paq]; i++) {
+      sliders.push(
+        <View
+          key={i + paq}
+          style={{
+            margin: 15,
+            borderBottomStartRadius: 10,
+            borderBottomEndRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={require('../assets/bolsabaria.png')}
+            style={{height: 110, width: width * 0.16}}
+          />
+          <Text
             style={{
-              margin: 15,
-              borderBottomStartRadius: 10,
-              borderBottomEndRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
+              alignSelf: 'center',
+              zIndex: 1000,
+              marginBottom: 3,
             }}>
-            <Image
-              source={require('../assets/cajabaria.png')}
-              style={{height: 70, width: width * 0.16}}
-            />
-            <Text
-              style={{
-                alignSelf: 'center',
-                zIndex: 1000,
-                marginBottom: 3,
-              }}>
-              {kg}.0 Kg
-            </Text>
-            <View
+            {paq === 'twentykgPrice'
+              ? '20 Kg'
+              : `${weigth - 20000 * cantPaqOS['twentykgPrice']} g`}
+          </Text>
+          {/* <View
               style={{
                 backgroundColor: 'black',
                 alignSelf: 'center',
@@ -126,10 +100,9 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
                 }}>
                 100%
               </Text>
-            </View>
-          </View>,
-        );
-      }
+            </View> */}
+        </View>,
+      );
     }
   }
 
@@ -220,7 +193,7 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
               {sliders}
             </View>
 
-            <Productos />
+            <ProductosTest />
             <View
               style={{
                 marginHorizontal: 10,
@@ -236,15 +209,13 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
                   fontSize: 14,
                   fontWeight: '400',
                 }}>
-                *La cantidad de paquetes de 1.5 Kg es aproximada, podrá variar
-                ligeramente al embalarse tu compra.
+                *El peso es aproximado, podrá variar ligeramente al embalarse tu
+                compra.
               </Text>
             </View>
           </View>
         )}
-        {cantPaqOS.oneandhalfkgPrice > 0 && (
-          <Relleno relleno={relleno} setRelleno={setRelleno} />
-        )}
+        {weigth > 0 && <Relleno relleno={relleno} setRelleno={setRelleno} />}
       </View>
       {car.length > 0 && (
         <>
