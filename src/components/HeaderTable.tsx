@@ -48,9 +48,7 @@ export const HeaderTable = ({editHeader}: Props) => {
           </Text>
         </View>
         <View style={{flex: 2}}>
-          <Text style={{ textAlign: 'center'}}>
-            {editHeader}
-          </Text>
+          <Text style={{textAlign: 'center'}}>{editHeader}</Text>
         </View>
       </View>
     </>

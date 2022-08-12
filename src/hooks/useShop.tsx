@@ -173,7 +173,7 @@ export const useShop = () => {
       } else if (sobrante > 6000 && sobrante <= 7000) {
         kilos.sevenkgPrice = 1;
       } else if (sobrante > 7000 && sobrante <= 8000) {
-        kilos.sixkgPrice = 1;
+        kilos.eightkgPrice = 1;
       } else if (sobrante > 8000 && sobrante <= 9000) {
         kilos.ninekgPrice = 1;
       } else if (sobrante > 9000 && sobrante <= 10000) {

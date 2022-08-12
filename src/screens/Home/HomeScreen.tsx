@@ -157,7 +157,6 @@ export const HomeScreen = () => {
             height: 45,
             width: 85,
             resizeMode: 'contain',
-            marginBottom: -2,
           }}
         />
       </View>
