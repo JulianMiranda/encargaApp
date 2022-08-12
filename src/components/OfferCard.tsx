@@ -31,6 +31,7 @@ export const OfferCard = ({offer}: Props) => {
 
       <TouchableOpacity
         activeOpacity={0.9}
+        style={{width: '95%'}}
         onPress={() => {
           console.log('subcat');
 

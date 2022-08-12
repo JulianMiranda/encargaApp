@@ -58,7 +58,7 @@ export const Tabs = () => {
             Platform.OS === 'android'
               ? 'rgba(255,255,255,0.92)'
               : 'transparent',
-          marginBottom: 4,
+          marginBottom: 0,
         },
         activeTintColor: colors.card,
       }}>
