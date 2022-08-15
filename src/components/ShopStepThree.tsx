@@ -102,7 +102,7 @@ export const ShopStepThree = ({
         style={{
           ...styles.button,
           marginBottom: Platform.OS === 'ios' ? 30 : 15,
-          backgroundColor: almostOneNoSelected() ? '#ccc' : colors.card,
+          backgroundColor: colors.card,
         }}
         activeOpacity={terms ? 0.8 : 1}
         onPress={handleGuardar}>
