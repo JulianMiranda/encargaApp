@@ -39,7 +39,7 @@ export const StackNavigator = () => {
           headerStyle: {elevation: 0},
           cardStyle: {backgroundColor: 'white'},
         }}>
-        {status !== 'authenticated' ? (
+        {status !== 'authenticated' && status !== 'invited' ? (
           <>
             <Stack.Screen name="InfoScreen" component={InfoScreen} />
             <Stack.Screen

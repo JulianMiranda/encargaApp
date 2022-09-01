@@ -18,6 +18,8 @@ import {Fab} from '../../components/Fab';
 import {ModalAddCarnet} from '../../components/ModalAddCarnet';
 import {ModalComponent} from '../../components/ModalComponent';
 import {ModalEditCarnet} from '../../components/ModalEditCarnet';
+import {NoPropsInvited} from '../../components/NoPropsInvited';
+import {AuthContext} from '../../context/auth/AuthContext';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useCarnets} from '../../hooks/useCarnets';
 import {Carnet} from '../../interfaces/CarnetResponse.interface';
@@ -30,6 +32,7 @@ export const CarnetScreen = () => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  const {status} = useContext(AuthContext);
   const navigation = useNavigation();
 
   const [openModal, setOpenModal] = useState(false);
@@ -95,6 +98,15 @@ export const CarnetScreen = () => {
     outputRange: [-30, -30, -30, 5],
     extrapolate: 'clamp',
   });
+
+  if (status !== 'authenticated') {
+    return (
+      <>
+        <BackButton navigation={navigation} color="black" />
+        <NoPropsInvited />
+      </>
+    );
+  }
 
   return (
     <>

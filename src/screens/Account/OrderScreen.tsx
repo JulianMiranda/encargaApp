@@ -18,6 +18,8 @@ import {formatToCurrency} from '../../utils/formatToCurrency';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {BackButton} from '../../components/BackButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {NoPropsInvited} from '../../components/NoPropsInvited';
+import {AuthContext} from '../../context/auth/AuthContext';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
@@ -27,6 +29,7 @@ export const OrderScreen = () => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  const {status} = useContext(AuthContext);
   const navigation = useNavigation();
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -52,7 +55,14 @@ export const OrderScreen = () => {
     outputRange: [-30, -30, -30, 5],
     extrapolate: 'clamp',
   });
-
+  if (status !== 'authenticated') {
+    return (
+      <>
+        <BackButton navigation={navigation} color="black" />
+        <NoPropsInvited />
+      </>
+    );
+  }
   return (
     <>
       <BackButton navigation={navigation} />

@@ -18,6 +18,7 @@ type Key =
   | 'historial'
   | 'whatsapp'
   | 'logout'
+  | 'invitedLogin'
   | 'about'
   | 'radar'
   | 'app'
@@ -29,7 +30,8 @@ type Key =
 
 export default function SettingsOptions() {
   const navigation = useNavigation();
-  const {user, logOut, setMoney} = useContext(AuthContext);
+  const {status, user, logOut, setMoney, invitedLogin} =
+    useContext(AuthContext);
   const {emptyCar} = useContext(ShopContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -156,9 +158,13 @@ export default function SettingsOptions() {
       case 'logout':
         sinOut();
         break;
+
+      case 'invitedLogin':
+        invitedLogin();
+        break;
     }
   };
-  const menuOptions = generateOptions(selectedComponent);
+  const menuOptions = generateOptions(selectedComponent, status);
 
   return (
     <ScrollView>
@@ -224,7 +230,7 @@ export default function SettingsOptions() {
   );
 }
 
-function generateOptions(selectedComponent: any) {
+function generateOptions(selectedComponent: any, status: string) {
   return [
     {
       title: 'Notificaciones',
@@ -247,10 +253,10 @@ function generateOptions(selectedComponent: any) {
     {
       title: 'Acerca de la aplicacón',
       iconType: 'material-community',
-      iconNameLeft: 'google-play',
+      iconNameLeft: 'domain',
       iconNameRight: 'chevron-right',
       iconSizeRight: 26,
-      color: '#ecf024',
+      color: '#E5C825',
       onPress: () => selectedComponent('app'),
     },
     {
@@ -293,20 +299,21 @@ function generateOptions(selectedComponent: any) {
     {
       title: 'Política de Privacidad',
       iconType: 'material-community',
-      iconNameLeft: 'power',
+      iconNameLeft: 'cellphone-lock',
       iconNameRight: 'arrow-top-right',
       iconSizeRight: 26,
       color: '#24A10A',
       onPress: () => selectedComponent('privacity'),
     },
     {
-      title: 'Cerrar sesión',
+      title: status === 'invited' ? 'Iniciar sesión' : 'Cerrar sesión',
       iconType: 'material-community',
       iconNameLeft: 'power',
       iconNameRight: 'chevron-right',
       iconSizeRight: 26,
       color: '#fa1818',
-      onPress: () => selectedComponent('logout'),
+      onPress: () =>
+        selectedComponent(status === 'invited' ? 'invitedLogin' : 'logout'),
     },
   ];
 }

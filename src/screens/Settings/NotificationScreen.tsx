@@ -16,9 +16,10 @@ import {useNavigation} from '@react-navigation/native';
 import {BackButton} from '../../components/BackButton';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {NoPropsInvited} from '../../components/NoPropsInvited';
 
 export const NotificationScreen = () => {
-  const {user, updateReciveNotifications} = useContext(AuthContext);
+  const {status, user, updateReciveNotifications} = useContext(AuthContext);
   const toast = useToast();
   const navigation = useNavigation();
 
@@ -28,7 +29,9 @@ export const NotificationScreen = () => {
   const [reciveNot, setReciveNot] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setReciveNot(user!.reciveNotifications);
+    if (status === 'authenticated') {
+      setReciveNot(user!.reciveNotifications);
+    }
   }, []);
 
   const onChange = (value: boolean) => {
@@ -124,6 +127,14 @@ export const NotificationScreen = () => {
       requestPermissions: true,
     });
   };
+  if (status !== 'authenticated') {
+    return (
+      <>
+        <BackButton navigation={navigation} color="black" />
+        <NoPropsInvited />
+      </>
+    );
+  }
   return (
     <>
       <BackButton navigation={navigation} color="black" />

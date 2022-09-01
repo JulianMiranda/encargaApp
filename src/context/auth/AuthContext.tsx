@@ -15,7 +15,12 @@ import DeviceCountry from 'react-native-device-country';
 import {Prices, PricesResponse} from '../../interfaces/Prices.interface';
 
 type AuthContextProps = {
-  status: 'checking' | 'authenticated' | 'not-authenticated' | 'not-internet';
+  status:
+    | 'checking'
+    | 'authenticated'
+    | 'not-authenticated'
+    | 'not-internet'
+    | 'invited';
   utility: 'choose' | 'shop' | 'money';
   wait: boolean;
   user: User | null;
@@ -33,6 +38,7 @@ type AuthContextProps = {
   setMoney: () => void;
   refreshApp: () => void;
   updatePrices: () => void;
+  invitedLogin: () => void;
   updateReciveNotifications: (user: User) => void;
   prices: Prices;
   countryCode: CountryCode;
@@ -50,16 +56,28 @@ const authInicialState: AuthState = {
   prices: {
     mlc: 125,
     mn: 100,
-    oneandhalfkgPrice: 21,
-    twokgPrice: 25,
+    rate: 150,
+    oneandhalfkgPrice: 18,
+    twokgPrice: 24,
     threekgPrice: 30,
     fourkgPrice: 37,
     fivekgPrice: 46,
     sixkgPrice: 52,
     sevenkgPrice: 58,
-    eigthkgPrice: 61,
-    ninekgPrice: 70,
-    tenkgPrice: 80,
+    eightkgPrice: 61,
+    ninekgPrice: 85,
+
+    tenkgPrice: 94,
+    elevenkgPrice: 103,
+    twelvekgPrice: 114,
+    thirteenkgPrice: 124,
+    fourteenkgPrice: 134,
+    fifteenkgPrice: 145,
+    sixteenkgPrice: 155,
+    seventeenkgPrice: 166,
+    eighteenkgPrice: 176,
+    nineteenkgPrice: 187,
+    twentykgPrice: 197,
   },
 };
 
@@ -98,8 +116,11 @@ export const AuthProvider = ({children}: any) => {
 
     const token = await AsyncStorage.getItem('token');
     // No token, no autenticado
-    if (!token) return dispatch({type: 'notAuthenticated'});
-
+    if (!token) {
+      console.log('No token, no autenticado');
+      return dispatch({type: 'invited'});
+    }
+    console.log('Paso a check');
     // Hay token
     try {
       const resp = await api.get<Login>('/tokenRenew');
@@ -119,6 +140,7 @@ export const AuthProvider = ({children}: any) => {
         },
       });
     } catch (error) {
+      console.log(JSON.stringify(error));
       console.log(error.message);
       if (error.message === 'Network Error') {
         dispatch({type: 'notInternet'});
@@ -161,7 +183,7 @@ export const AuthProvider = ({children}: any) => {
         requestPermissions: true,
       });
 
-      checkToken(true);
+      await checkToken(true);
     } catch (error) {
       dispatch({
         type: 'addError',
@@ -209,10 +231,12 @@ export const AuthProvider = ({children}: any) => {
     }
   };
 
+  const invitedLogin = async () => {
+    dispatch({type: 'notAuthenticated'});
+  };
   const loginB = async () => {
     dispatch({type: 'loginB'});
   };
-
   const logOut = async () => {
     await AsyncStorage.removeItem('token');
     dispatch({type: 'utilityChoose'});
@@ -300,6 +324,7 @@ export const AuthProvider = ({children}: any) => {
         refreshApp,
         updateReciveNotifications,
         updatePrices,
+        invitedLogin,
       }}>
       {children}
     </AuthContext.Provider>

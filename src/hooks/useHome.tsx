@@ -75,9 +75,12 @@ export const useHome = () => {
         ],
       };
       const [promos, resp, promoFinal] = await Promise.all([
-        api.post<PromoResponse>('/promotions/getList', body),
-        api.post<any>('/queries/home'),
-        api.post<PromoFinalResponse>('/promotionsFinal/getList', bodyFinal),
+        api.post<PromoResponse>('/promotions/getListInvited', body),
+        api.post<any>('/queries/home-invited'),
+        api.post<PromoFinalResponse>(
+          '/promotionsFinal/getListInvited',
+          bodyFinal,
+        ),
       ]);
 
       const images = promos.data.data.map((promo: Datum) => promo.image.url);

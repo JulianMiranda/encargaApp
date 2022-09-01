@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import {useToast} from 'react-native-toast-notifications';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../context/auth/AuthContext';
 import {ThemeContext} from '../context/theme/ThemeContext';
 import {useShop} from '../hooks/useShop';
 import {GetInputCarnet} from './GetInputCarnet';
+import {NoPropsInvited} from './NoPropsInvited';
 
 interface Props {
   handleButton: () => void;
@@ -28,6 +30,8 @@ export const ShopStepThree = ({
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+
+  const {status} = useContext(AuthContext);
   const toast = useToast();
   const {cantPaqOS, totalPaqReCalc} = useShop();
   const cantCarnets = Math.ceil(cantPaqOS.oneandhalfkgPrice / 10);
@@ -85,6 +89,21 @@ export const ShopStepThree = ({
       return false;
     }
   };
+
+  if (status !== 'authenticated') {
+    return (
+      <View
+        style={{
+          flex: 1,
+          height: height * 0.7,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <NoPropsInvited />
+      </View>
+    );
+  }
+
   return (
     <>
       <View style={{minHeight: height * 0.65}}>
