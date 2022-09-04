@@ -106,11 +106,12 @@ export const AuthProvider = ({children}: any) => {
   const checkToken = async (isLogin = false) => {
     /*  const headers = await getHeaders(); */
     try {
-      const prices = await api.get<PricesResponse>('/prices/getPrices');
+      const prices = await api.get<PricesResponse>('/prices/getPricesNoAuth');
       console.log(prices.data.prices);
 
       dispatch({type: 'setPrices', payload: prices.data.prices});
     } catch (error) {
+      console.log(JSON.stringify(error));
       console.log('dio err el ip');
     }
 

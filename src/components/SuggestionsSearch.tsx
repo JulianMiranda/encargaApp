@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import api from '../api/api';
+import {AuthContext} from '../context/auth/AuthContext';
 import {useDebouncedValue} from '../hooks/useDebouncedValue';
 import {
   SubcategoryResp,
@@ -18,6 +19,7 @@ export const SuggestionsSearch = ({
   onSearch,
   setSearchQuery,
 }: Props) => {
+  const {status} = useContext(AuthContext);
   const [suggestions, setSuggestions] = useState<Subcategory[]>([]);
 
   const deboncedValue = useDebouncedValue(searchQuery);
@@ -49,10 +51,19 @@ export const SuggestionsSearch = ({
         },
       ],
     };
-
-    api.post<SubcategoryResp>('/subcategories/getList', body).then(response => {
-      setSuggestions(response.data.data.map(item => item));
-    });
+    if (status === 'authenticated') {
+      api
+        .post<SubcategoryResp>('/subcategories/getList', body)
+        .then(response => {
+          setSuggestions(response.data.data.map(item => item));
+        });
+    } else {
+      api
+        .post<SubcategoryResp>('/subcategories/getListUnAuth', body)
+        .then(response => {
+          setSuggestions(response.data.data.map(item => item));
+        });
+    }
   };
   return (
     <View style={{marginTop: 20, marginLeft: 5}}>

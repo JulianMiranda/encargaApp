@@ -16,18 +16,18 @@ export const NoPropsInvited = () => {
         justifyContent: 'center',
         backgroundColor: 'white',
       }}>
-      {/* <Image
-        source={require('../assets/nowifi.png')}
-        style={{height: 200, width: 200, alignSelf: 'center'}}
-      /> */}
+      <Image
+        source={require('../assets/account.png')}
+        style={{height: 150, width: 150, alignSelf: 'center'}}
+      />
       <Text
         style={{
-          fontSize: 28,
+          fontSize: 18,
           textAlign: 'center',
           marginBottom: 10,
           alignSelf: 'center',
         }}>
-        Debe iniciar sesión para tener acceso
+        Inicia sesión para obtener mejor experiencia
       </Text>
       <TouchableOpacity
         onPress={invitedLogin}

@@ -22,8 +22,8 @@ export const AduanaScreen = () => {
         <View style={styles.divider} />
         <Image
           style={{
-            height: 400,
-            width: '90%',
+            height: 600,
+            width: '99%',
             justifyContent: 'center',
             alignSelf: 'center',
             resizeMode: 'contain',
