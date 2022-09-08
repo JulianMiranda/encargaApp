@@ -39,7 +39,7 @@ export const useSubcategoryPaginated = (id: string) => {
       if (nextPage.current <= totalPages.current + 2) {
         setIsLoading(true);
         const resp = await api.post<SubcategoryResp>(
-          '/subcategories/getList',
+          '/subcategories/getListUnAuth',
           body,
         );
 

@@ -146,6 +146,10 @@ export const AuthProvider = ({children}: any) => {
       if (error.message === 'Network Error') {
         dispatch({type: 'notInternet'});
       }
+      if (error.message === 'Request failed with status code 503') {
+        await AsyncStorage.setItem('token', '');
+        dispatch({type: 'invited'});
+      }
 
       // return dispatch({type: 'notAuthenticated'});
     }

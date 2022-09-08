@@ -60,9 +60,11 @@ export const SearchBody = ({
       ],
     };
 
-    api.post<SubcategoryResp>('/subcategories/getList', body).then(response => {
-      setSuggestions(response.data.data.map(item => item.name));
-    });
+    api
+      .post<SubcategoryResp>('/subcategories/getListUnAuth', body)
+      .then(response => {
+        setSuggestions(response.data.data.map(item => item.name));
+      });
   };
   return (
     <View style={[openBody ? styles.history : styles.hidden, {top: 0}]}>

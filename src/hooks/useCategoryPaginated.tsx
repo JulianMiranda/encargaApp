@@ -29,7 +29,7 @@ export const useCategoryPaginated = () => {
         setIsLoading(true);
 
         const resp = await api.post<CategoriesPaginated>(
-          '/categories/getList',
+          '/categories/getListUnAuth',
           body,
         );
 
