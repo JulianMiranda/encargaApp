@@ -9,6 +9,7 @@ import {
   Platform,
   ActivityIndicator,
   Image,
+  Dimensions,
 } from 'react-native';
 import {useOrders} from '../../hooks/useOrders';
 import {Order} from '../../interfaces/Order.interface';
@@ -19,11 +20,15 @@ import {ThemeContext} from '../../context/theme/ThemeContext';
 import {BackButton} from '../../components/BackButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {NoPropsInvited} from '../../components/NoPropsInvited';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../context/auth/AuthContext';
+import LinearGradient from 'react-native-linear-gradient';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
+const {height} = Dimensions.get('window');
+
 export const OrderScreen = () => {
   const {orders, isLoading} = useOrders();
   const {
@@ -65,36 +70,25 @@ export const OrderScreen = () => {
   }
   return (
     <>
-      <BackButton navigation={navigation} />
       <Animated.View
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: 'lightskyblue',
+          ...styles.top,
           height: headerHeight,
           zIndex: headerZindex,
-          elevation: headerZindex, //required for android
-          alignItems: 'center',
+          elevation: headerZindex,
         }}>
         <Animated.View
           style={{
-            position: 'absolute',
+            ...styles.topBox,
             bottom: headerTitleBottom,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
           }}>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}>
-            Compras
-          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.pop()}
+            activeOpacity={0.8}
+            style={{position: 'absolute', left: 5, bottom: -5}}>
+            <Ionicons name="arrow-back-outline" color="white" size={35} />
+          </TouchableOpacity>
+          <Text style={styles.textTitle}>Datos</Text>
         </Animated.View>
       </Animated.View>
       <ScrollView
@@ -104,23 +98,18 @@ export const OrderScreen = () => {
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
           {useNativeDriver: false},
         )}>
-        <View
+        <LinearGradient
+          colors={['#4EB2E4', '#94CFEC', '#fff']}
           style={{
-            ...styles.headerContainer,
-            height: 150,
-            overflow: 'hidden',
+            ...styles.linearGradient,
+            height: height * 0.2,
+            marginBottom: -height * 0.1,
           }}>
-          <Text
-            style={{
-              ...styles.titleList,
-              color: 'white',
-              alignSelf: 'center',
-              marginTop: 80,
-            }}>
-            Compras
-          </Text>
-        </View>
-        <View style={{marginTop: 40}}>
+          <Text style={styles.buttonText}>Datos</Text>
+        </LinearGradient>
+
+        <BackButton navigation={navigation} />
+        <View style={{marginTop: 70}}>
           {orders.map((order, index) => (
             <OrderComponent key={index} singleOrder={order} colors={colors} />
           ))}
@@ -292,5 +281,49 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     marginHorizontal: 15,
+  },
+  add: {
+    backgroundColor: '#fb2331',
+    marginRight: -10,
+    height: 30,
+    paddingRight: 20,
+    paddingLeft: 10,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  top: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    backgroundColor: 'lightskyblue',
+  },
+  topBox: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  textTitle: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
 });

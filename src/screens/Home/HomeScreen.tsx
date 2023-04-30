@@ -153,8 +153,8 @@ export const HomeScreen = () => {
           source={require('../../assets/logo_enc.png')}
           style={{
             alignSelf: 'center',
-            marginTop: top + 6,
-            height: 45,
+            marginTop: top,
+            height: height * 0.04,
             width: 85,
             resizeMode: 'contain',
           }}

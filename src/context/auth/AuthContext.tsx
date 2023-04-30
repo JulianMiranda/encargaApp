@@ -31,6 +31,7 @@ type AuthContextProps = {
   setCountryCode: (countryCode: CountryCode) => void;
   setCountryCallCode: (countryCallCode: string) => void;
   signInPhone: (resp: Login) => void;
+  updateUser: (user: User) => void;
   logOut: () => void;
   removeError: () => void;
   loginB: () => void;
@@ -57,6 +58,7 @@ const authInicialState: AuthState = {
     mlc: 125,
     mn: 100,
     rate: 150,
+    ratemlc: 1,
     oneandhalfkgPrice: 18,
     twokgPrice: 24,
     threekgPrice: 30,
@@ -156,7 +158,8 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const updatePrices = async () => {
-    const prices = await api.get<PricesResponse>('/prices/getPrices');
+    const prices = await api.get<PricesResponse>('/prices/getPricesNoAuth');
+
     dispatch({type: 'setPrices', payload: prices.data.prices});
   };
   const signInPhone = async (resp: Login) => {
@@ -299,7 +302,16 @@ export const AuthProvider = ({children}: any) => {
   const setShop = () => {
     dispatch({type: 'utilityShop'});
   };
-
+  const updateUser = async (user: User) => {
+    try {
+      dispatch({
+        type: 'updateUser',
+        payload: {
+          user,
+        },
+      });
+    } catch (error) {}
+  };
   const refreshApp = () => {
     checkToken();
   };
@@ -326,6 +338,7 @@ export const AuthProvider = ({children}: any) => {
         setCode,
         setShop,
         setMoney,
+        updateUser,
         refreshApp,
         updateReciveNotifications,
         updatePrices,

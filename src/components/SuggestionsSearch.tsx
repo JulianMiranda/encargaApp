@@ -1,13 +1,13 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import api from '../api/api';
-import {AuthContext} from '../context/auth/AuthContext';
 import {useDebouncedValue} from '../hooks/useDebouncedValue';
 import {
   SubcategoryResp,
   Subcategory,
 } from '../interfaces/Subcategory.interface';
 import {FadeInImage} from './FadeInImage';
+import {AuthContext} from '../context/auth/AuthContext';
 
 interface Props {
   searchQuery: string;
@@ -33,7 +33,7 @@ export const SuggestionsSearch = ({
       filter: {status: ['=', true]},
       docsPerPage: 5,
       sort: 'desc',
-      search: {text: search, fields: ['name']},
+      search: {text: search, fields: ['textSearch']},
       population: [
         {
           path: 'category',
@@ -51,24 +51,14 @@ export const SuggestionsSearch = ({
         },
       ],
     };
-    if (status === 'authenticated') {
-      api
-        .post<SubcategoryResp>('/subcategories/getList', body)
-        .then(response => {
-          setSuggestions(response.data.data.map(item => item));
-        });
-    } else {
-      api
-        .post<SubcategoryResp>('/subcategories/getListUnAuth', body)
-        .then(response => {
-          setSuggestions(response.data.data.map(item => item));
-        });
-    }
+    api.post<SubcategoryResp>('/queries/searchByText', body).then(response => {
+      setSuggestions(response.data.data.map(item => item));
+    });
   };
   return (
     <View style={{marginTop: 20, marginLeft: 5}}>
       {suggestions.length > 0 && (
-        <Text style={{fontWeight: 'bold'}}>Sugerencias</Text>
+        <Text style={{color: '#000', fontWeight: 'bold'}}>Sugerencias</Text>
       )}
       {suggestions.map((item, index) => (
         <View key={index} style={{}}>
@@ -87,7 +77,7 @@ export const SuggestionsSearch = ({
               uri={item.images[0].url}
               style={{height: 50, width: 50, borderRadius: 8}}
             />
-            <Text style={{marginHorizontal: 20, fontSize: 16}}>
+            <Text style={{marginHorizontal: 20, fontSize: 16, color: '#000'}}>
               {item.name}
             </Text>
           </TouchableOpacity>

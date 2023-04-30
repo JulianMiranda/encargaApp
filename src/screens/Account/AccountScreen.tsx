@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {TopScreen} from '../../components/TopScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TopScrollGradient} from '../../components/TopScrollGradient';
 const {height} = Dimensions.get('screen');
 
 export const AccountScreen = () => {
@@ -21,10 +22,12 @@ export const AccountScreen = () => {
 
   return (
     <>
-      <TopScreen text="Mi Perfil" backButton={false} height={height * 0.18} />
-      <ScrollView>
+      {/* <TopScreen text="Mi Perfil" backButton={false} height={height * 0.18} />
+      <ScrollView> */}
+      <TopScrollGradient title="Mi Perfil">
         <View
           style={{
+            marginTop: 70,
             flexDirection: 'row',
             paddingVertical: 10,
             marginLeft: 10,
@@ -210,7 +213,8 @@ export const AccountScreen = () => {
             <Icon name={'chevron-right'} color="#ccc" size={26} />
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        {/*  </ScrollView> */}
+      </TopScrollGradient>
     </>
   );
 };

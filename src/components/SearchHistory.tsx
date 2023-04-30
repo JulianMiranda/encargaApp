@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
   },
   historyItem: {
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20 /* 
     borderWidth: 0.2,
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    width: '100%',
+    width: '100%', */,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

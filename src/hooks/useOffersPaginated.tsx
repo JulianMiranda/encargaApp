@@ -17,6 +17,7 @@ export const useOffersPaginated = () => {
         priceDiscount: ['>', 0],
         priceGaloreDiscount: ['>', 0],
         status: ['=', true],
+        soldOut: ['=', false],
       },
       docsPerPage: 12,
       sort: 'ASC',
@@ -43,7 +44,7 @@ export const useOffersPaginated = () => {
       if (nextPage.current <= totalPages.current + 2) {
         setIsLoading(true);
         const resp = await api.post<SubcategoryResp>(
-          '/subcategories/getList',
+          '/subcategories/getListUnAuth',
           body,
         );
 

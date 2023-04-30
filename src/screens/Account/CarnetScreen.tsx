@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
+  Dimensions,
   Image,
   Platform,
   ScrollView,
@@ -11,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BackButton} from '../../components/BackButton';
 import {CarnetComponent} from '../../components/CarnetComponent';
@@ -23,10 +25,13 @@ import {AuthContext} from '../../context/auth/AuthContext';
 import {ThemeContext} from '../../context/theme/ThemeContext';
 import {useCarnets} from '../../hooks/useCarnets';
 import {Carnet} from '../../interfaces/CarnetResponse.interface';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const HEADER_MAX_HEIGHT = 170;
 const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
+const {height} = Dimensions.get('window');
+
 export const CarnetScreen = () => {
   const {carnets, loadCarnets, deleteCarnet, isLoading} = useCarnets();
   const {
@@ -110,36 +115,25 @@ export const CarnetScreen = () => {
 
   return (
     <>
-      <BackButton navigation={navigation} />
       <Animated.View
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: 'lightskyblue',
+          ...styles.top,
           height: headerHeight,
           zIndex: headerZindex,
-          elevation: headerZindex, //required for android
-          alignItems: 'center',
+          elevation: headerZindex,
         }}>
         <Animated.View
           style={{
-            position: 'absolute',
+            ...styles.topBox,
             bottom: headerTitleBottom,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
           }}>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}>
-            Datos
-          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.pop()}
+            activeOpacity={0.8}
+            style={{position: 'absolute', left: 5, bottom: -5}}>
+            <Ionicons name="arrow-back-outline" color="white" size={35} />
+          </TouchableOpacity>
+          <Text style={styles.textTitle}>Datos</Text>
         </Animated.View>
       </Animated.View>
       <ScrollView
@@ -149,28 +143,18 @@ export const CarnetScreen = () => {
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
           {useNativeDriver: false},
         )}>
-        <View
+        <LinearGradient
+          colors={['#4EB2E4', '#94CFEC', '#fff']}
           style={{
-            ...styles.headerContainer,
-            height: 150,
-            overflow: 'hidden',
+            ...styles.linearGradient,
+            height: height * 0.2,
+            marginBottom: -height * 0.1,
           }}>
-          <Text
-            style={{
-              ...styles.titleList,
-              color: 'white',
-              alignSelf: 'center',
-              marginTop: 80,
-            }}>
-            Datos
-          </Text>
-        </View>
-        <View
-          style={{
-            marginTop: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          <Text style={styles.buttonText}>Datos</Text>
+        </LinearGradient>
+        <BackButton navigation={navigation} />
+
+        <View style={styles.bodyContainer}>
           {carnets.map((carnet, index) => (
             <View
               key={index}
@@ -333,22 +317,10 @@ export const CarnetScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    height: 170,
-    zIndex: 999,
-    alignItems: 'center',
-    borderBottomRightRadius: Platform.OS === 'ios' ? 1000 : 100,
-    borderBottomLeftRadius: 0,
-  },
   title: {
     fontSize: 24,
   },
-  card: {
-    margin: 5,
-    backgroundColor: '#f8f7f7',
-    borderRadius: 3,
-    padding: 5,
-  },
+
   subcategory: {
     marginHorizontal: 5,
     flexDirection: 'row',
@@ -356,10 +328,7 @@ const styles = StyleSheet.create({
   firstText: {
     fontSize: 16,
   },
-  titleList: {
-    color: 'white',
-    fontSize: 40,
-  },
+
   button: {
     position: 'absolute',
     bottom: 10,
@@ -381,10 +350,109 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  buttonText: {
-    alignSelf: 'center',
+
+  headerContainer: {
+    height: 150,
+    overflow: 'hidden',
+    zIndex: 999,
+    alignItems: 'center',
+    borderBottomRightRadius: Platform.OS === 'ios' ? 1000 : 100,
+    borderBottomLeftRadius: 0,
+  },
+  card: {
+    margin: 5,
+    backgroundColor: '#f8f7f7',
+    borderRadius: 3,
+    padding: 5,
+  },
+  titleList: {
     color: 'white',
-    fontSize: 20,
-    marginHorizontal: 15,
+    fontSize: 40,
+    alignSelf: 'center',
+    marginTop: 80,
+  },
+  top: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    backgroundColor: 'lightskyblue',
+  },
+  topBox: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  textTitle: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  bodyContainer: {
+    marginTop: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  line: {
+    height: 1,
+    width: '100%',
+    alignSelf: 'center',
+    backgroundColor: '#f1f1f1',
+  },
+
+  image: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+  },
+  activity: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+  },
+  buttonAdd: {
+    position: 'absolute',
+    bottom: 100,
+    right: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  add: {
+    backgroundColor: '#fb2331',
+    marginRight: -10,
+    height: 30,
+    paddingRight: 20,
+    paddingLeft: 10,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 28 /* 
+    fontFamily: 'Gill Sans', */,
+    textAlign: 'center',
+    margin: 10,
+    color: '#000',
+    backgroundColor: 'transparent',
   },
 });

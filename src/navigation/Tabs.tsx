@@ -7,7 +7,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAws from 'react-native-vector-icons/FontAwesome5';
 import {ThemeContext} from '../context/theme/ThemeContext';
-import {IS_IPHONE_X} from '../utils/isIphone';
+import {isIphoneXorAbove, IS_IPHONE_X} from '../utils/isIphone';
 import {TabBarAdvancedButton} from '../components/TabBarAdvancedButton';
 import {SettingsStack} from './SettingsStack';
 import {ShopStack} from './ShopStack';
@@ -28,14 +28,14 @@ export const Tabs = () => {
       tabBar={props => (
         <View style={styles.navigatorContainer}>
           <BottomTabBar {...props} />
-          {IS_IPHONE_X && (
+          {isIphoneXorAbove && (
             <View
               style={[
                 styles.xFillLine,
                 {
                   backgroundColor:
                     Platform.OS === 'ios'
-                      ? 'transparent'
+                      ? 'rgba(255,255,255,0.92)'
                       : 'rgba(255,255,255,0.92)',
                   overflow: 'hidden',
                   zIndex: -1,
@@ -57,7 +57,7 @@ export const Tabs = () => {
           backgroundColor:
             Platform.OS === 'android'
               ? 'rgba(255,255,255,0.92)'
-              : 'transparent',
+              : 'rgba(255,255,255,0.92)',
           marginBottom: 0,
         },
         activeTintColor: colors.card,
@@ -136,8 +136,7 @@ const styles = StyleSheet.create({
   },
   navigator: {
     borderTopWidth: 0,
-    backgroundColor:
-      Platform.OS === 'ios' ? 'rgba(255,255,255,0.92)' : 'transparent',
+    backgroundColor: Platform.OS === 'ios' ? 'transparent' : 'transparent',
     elevation: 30,
   },
   xFillLine: {
@@ -145,6 +144,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 34,
+    height: 30,
   },
 });

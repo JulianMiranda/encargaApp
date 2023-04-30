@@ -8,6 +8,9 @@ import {AppScreen} from '../screens/Settings/AppScreen';
 import {TrackScreen} from '../screens/Settings/TrackScreen';
 import {SingleTrackScreen} from '../screens/Settings/SingleTackScreen';
 import {NotificationScreen} from '../screens/Settings/NotificationScreen';
+import {PrivacityScreen} from '../screens/Settings/PrivacityScreen';
+import {PerfilScreen} from '../screens/Settings/PerfilScreen';
+import {TermsScreen} from '../screens/Settings/TermsScreen';
 
 const Stack = createStackNavigator();
 
@@ -90,6 +93,33 @@ export const SettingsStack = () => {
       <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="PerfilScreen"
+        component={PerfilScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="PrivacityScreen"
+        component={PrivacityScreen}
+        options={{
+          headerShown: false,
+          /* title: 'Orden',
+          headerBackTitleVisible: false, */
+        }}
+      />
+      <Stack.Screen
+        name="TermsScreen"
+        component={TermsScreen}
         options={{
           headerShown: false,
           /* title: 'Orden',

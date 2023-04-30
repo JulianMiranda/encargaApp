@@ -8,7 +8,7 @@ import {ThemeContext} from '../context/theme/ThemeContext';
 /* interface Props extends StackScreenProps<any, any> {} */
 
 interface Props {
-  color: string;
+  color?: string;
   navigation: any;
 }
 /* interface Props extends NavigationProp<ParamListBase, string> {} */

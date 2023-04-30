@@ -14,8 +14,6 @@ import {formatToCurrency} from '../utils/formatToCurrency';
 import {FadeInImage} from './FadeInImage';
 import {ModalComponent} from './Modal';
 
-import moment from 'moment';
-
 type Root = 'Shop' | 'Subca';
 
 interface Props {
@@ -29,14 +27,12 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
   const [buttonName, setButtonName] = useState('Add');
   const [isVisible, setIsVisible] = useState(false);
 
- 
-  
-  useEffect(() => {    
-    edit ?   setButtonName('Edit') : setButtonName('Add');
+  useEffect(() => {
+    edit ? setButtonName('Edit') : setButtonName('Add');
     car.map(({subcategory, cantidad}) => {
-      if (subcategory.id === item.id) {        
+      if (subcategory.id === item.id) {
         setCantidad(cantidad.toString());
-       } 
+      }
     });
   }, [car]);
   useEffect(() => {
@@ -52,36 +48,49 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
   };
 
   var fechaInicio = new Date(item.updatedAt).getTime();
-  var fechaFin    = new Date().getTime();
+  var fechaFin = new Date().getTime();
   var diff = fechaFin - fechaInicio;
-  const days = diff/(1000*60*60*24) ;
- 
+  const days = diff / (1000 * 60 * 60 * 24);
+
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity activeOpacity={0.8} onPress={() => setIsVisible(true)}>
-   {days < 15 && <Image
-          source={require('../assets/productonuevo.png')}
-          style={{
-           position: 'absolute',
-           zIndex: 999999999,
-            height: 35,
-            width: 35,
-            marginRight: 30,
-          }}
-        />}
-      
+        {days < 15 && (
+          <Image
+            source={require('../assets/productonuevo.png')}
+            style={{
+              position: 'absolute',
+              zIndex: 999999999,
+              height: 35,
+              width: 35,
+              marginRight: 30,
+            }}
+          />
+        )}
+
         <FadeInImage uri={item.images[0].url} style={styles.image} />
       </TouchableOpacity>
-      <TouchableOpacity style={{flex: 6, marginHorizontal: 5}} activeOpacity={0.8} onPress={() => setIsVisible(true)}>
-
+      <TouchableOpacity
+        style={{flex: 6, marginHorizontal: 5}}
+        activeOpacity={0.8}
+        onPress={() => setIsVisible(true)}>
         <Text style={{...styles.name, fontSize: 16}}>{item.name}</Text>
-     
       </TouchableOpacity>
       <View style={{flex: 3, alignItems: 'center'}}>
-        <Text style={{...styles.name, fontSize: (parseInt(cantidad) > 5) ? 10 : 14, color: (parseInt(cantidad) > 5) ? 'gray' : 'black'}}>
+        <Text
+          style={{
+            ...styles.name,
+            fontSize: parseInt(cantidad) > 5 ? 10 : 14,
+            color: parseInt(cantidad) > 5 ? 'gray' : 'black',
+          }}>
           {formatToCurrency(item.price)}
         </Text>
-        <Text style={{...styles.name, fontSize: (parseInt(cantidad) > 5) ? 14 : 10,color: (parseInt(cantidad) > 5) ? 'black' : 'gray'}}>
+        <Text
+          style={{
+            ...styles.name,
+            fontSize: parseInt(cantidad) > 5 ? 14 : 10,
+            color: parseInt(cantidad) > 5 ? 'black' : 'gray',
+          }}>
           {formatToCurrency(item.priceGalore)}
         </Text>
       </View>
@@ -108,7 +117,7 @@ export const SingleSubcategory = ({item, root, edit}: Props) => {
             flex: 1,
             paddingHorizontal: 5,
             textAlign: 'center',
-          }}          
+          }}
           keyboardType="numeric"
           value={cantidad}
           onChangeText={value => {
@@ -167,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 3,
-    marginLeft: 5
+    marginLeft: 5,
   },
   name: {
     fontSize: 16,

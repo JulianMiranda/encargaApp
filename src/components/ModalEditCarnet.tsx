@@ -240,7 +240,7 @@ export const ModalEditCarnet = ({
             {/* <View style={{flex: 1}}> */}
             <View style={{marginTop: 3}}>
               <Text style={styles.title}>{carnetEdit.name}</Text>
-              <Text style={{fontSize: 14}}>Nombre(s)*</Text>
+              <Text style={{color: '#000', fontSize: 14}}>Nombre(s)*</Text>
               <TextInput
                 placeholder="Juan Carlos"
                 ref={uno}
@@ -248,6 +248,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -267,7 +268,9 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Primer Apellido*</Text>
+                <Text style={{color: '#000', fontSize: 14}}>
+                  Primer Apellido*
+                </Text>
                 <TextInput
                   placeholder="Torres"
                   ref={dos}
@@ -276,6 +279,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -294,7 +298,9 @@ export const ModalEditCarnet = ({
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Segundo Apellido*</Text>
+                <Text style={{color: '#000', fontSize: 14}}>
+                  Segundo Apellido*
+                </Text>
                 <TextInput
                   ref={tres}
                   onSubmitEditing={() => tres.current.focus()}
@@ -303,6 +309,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -322,7 +329,9 @@ export const ModalEditCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Carnet*</Text>
+              <Text style={{color: '#000', fontSize: 14}}>
+                Número de Carnet*
+              </Text>
               <TextInput
                 selectTextOnFocus
                 ref={cuatro}
@@ -332,6 +341,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -348,7 +358,9 @@ export const ModalEditCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Calle Principal*</Text>
+              <Text style={{color: '#000', fontSize: 14}}>
+                Calle Principal*
+              </Text>
               <TextInput
                 selectTextOnFocus
                 ref={cinco}
@@ -357,6 +369,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -375,7 +388,7 @@ export const ModalEditCarnet = ({
               )}
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Casa*</Text>
+              <Text style={{color: '#000', fontSize: 14}}>Número de Casa*</Text>
               <TextInput
                 selectTextOnFocus
                 ref={seis}
@@ -384,6 +397,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -402,7 +416,7 @@ export const ModalEditCarnet = ({
 
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Entre Calle 1</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Entre Calle 1</Text>
                 <TextInput
                   selectTextOnFocus
                   ref={siete}
@@ -411,6 +425,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -424,7 +439,7 @@ export const ModalEditCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Entre Calle 2</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Entre Calle 2</Text>
                 <TextInput
                   selectTextOnFocus
                   ref={ocho}
@@ -433,6 +448,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -448,7 +464,7 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Provincia*</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Provincia*</Text>
                 {/* <TextInput
                   selectTextOnFocusref
                   ={nueve}
@@ -456,6 +472,7 @@ export const ModalEditCarnet = ({
                   placeholder="Cabaiguán"
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -483,7 +500,6 @@ export const ModalEditCarnet = ({
                       const municipios = provincias.filter(
                         province => province.nombre === value,
                       );
-                      console.log(municipios[0].municipios);
                       setAviableMunicipios(municipios[0].municipios);
                     }}>
                     <Picker.Item
@@ -517,7 +533,7 @@ export const ModalEditCarnet = ({
                 )}
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Municipio*</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Municipio*</Text>
 
                 <View style={{flex: 1}}>
                   <Picker
@@ -559,7 +575,9 @@ export const ModalEditCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Número de Teléfono*</Text>
+              <Text style={{color: '#000', fontSize: 14}}>
+                Número de Teléfono*
+              </Text>
               <TextInput
                 selectTextOnFocus
                 ref={once}
@@ -569,6 +587,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -588,7 +607,7 @@ export const ModalEditCarnet = ({
             </View>
             <View style={{flexDirection: 'row', marginTop: 3}}>
               <View style={{flex: 1, marginRight: 2}}>
-                <Text style={{fontSize: 14}}>Departameno</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Departameno</Text>
                 <TextInput
                   selectTextOnFocus
                   ref={doce}
@@ -597,6 +616,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -610,7 +630,7 @@ export const ModalEditCarnet = ({
                 />
               </View>
               <View style={{flex: 1, marginLeft: 2}}>
-                <Text style={{fontSize: 14}}>Piso</Text>
+                <Text style={{color: '#000', fontSize: 14}}>Piso</Text>
                 <TextInput
                   selectTextOnFocus
                   ref={trece}
@@ -619,6 +639,7 @@ export const ModalEditCarnet = ({
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     fontSize: 14,
+                    paddingLeft: 5,
                     height: 40,
                     borderColor: '#c1c1c1',
                     borderWidth: 1,
@@ -633,7 +654,7 @@ export const ModalEditCarnet = ({
               </View>
             </View>
             <View style={{marginTop: 3}}>
-              <Text style={{fontSize: 14}}>Reparto</Text>
+              <Text style={{color: '#000', fontSize: 14}}>Reparto</Text>
               <TextInput
                 selectTextOnFocus
                 ref={catorce}
@@ -642,6 +663,7 @@ export const ModalEditCarnet = ({
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   fontSize: 14,
+                  paddingLeft: 5,
                   height: 40,
                   borderColor: '#c1c1c1',
                   borderWidth: 1,
@@ -736,7 +758,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  title: {fontSize: 20, fontWeight: 'bold', alignSelf: 'center'},
+  title: {fontSize: 20, color: '#000', fontWeight: 'bold', alignSelf: 'center'},
   confirmButton: {
     padding: 6,
     borderRadius: 8,

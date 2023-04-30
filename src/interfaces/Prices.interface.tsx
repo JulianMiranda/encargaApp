@@ -8,6 +8,7 @@ export interface Prices {
   mlc: number;
   mn: number;
   rate: number;
+  ratemlc: number;
   oneandhalfkgPrice: number;
   twokgPrice: number;
   threekgPrice: number;

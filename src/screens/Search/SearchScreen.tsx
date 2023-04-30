@@ -20,7 +20,6 @@ export const SearchScreen = () => {
   const [showResults, setShowResults] = useState(false);
   const [findResultsQuery, setFindResultsQuery] = useState('');
   const {top} = useSafeAreaInsets();
-  const navigation = useNavigation();
   useEffect(() => {
     animatedTransition.start();
   }, []);
@@ -47,7 +46,8 @@ export const SearchScreen = () => {
   };
   const closeSearch = () => {
     Keyboard.dismiss();
-    navigation.navigate('Home');
+    onChangeSearch(''); /* 
+    navigation.navigate('Home'); */
   };
   return (
     <>
@@ -91,7 +91,7 @@ export const SearchScreen = () => {
       {searchQuery === '' && !showResults && (
         <SearchHistory
           showHistory={true}
-          containerHeight={100}
+          containerHeight={120}
           onSearch={onSearch}
         />
       )}

@@ -597,7 +597,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.julianmiranda.encargaAppDev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miranda.julian.encargaAppDev;
 				PRODUCT_NAME = EnviosPackuba;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

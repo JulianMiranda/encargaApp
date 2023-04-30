@@ -130,8 +130,8 @@ export const ShopStepOne = ({handleButton, relleno, setRelleno}: Props) => {
                 height: height - 250,
               }}>
               <Image
-                source={require('../assets/cart.png')}
-                style={{height: 90, width: 110}}
+                source={require('../assets/shop-emptycar.gif')}
+                style={{width: 150, height: 150}}
               />
               <Text style={{marginTop: 10, fontSize: 16}}>
                 Tu carrito de compras está vacío

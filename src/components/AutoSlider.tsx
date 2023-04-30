@@ -1,14 +1,18 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 interface Props {
   imagesPromo: string[];
 }
+
+const {width, height} = Dimensions.get('window');
 export const AutoSlider = ({imagesPromo}: Props) => {
+  const {top} = useSafeAreaInsets();
   return (
     <SliderBox
       images={imagesPromo}
-      sliderBoxHeight={70}
+      sliderBoxHeight={width * 0.16}
       onCurrentImagePressed={(index: any) =>
         console.warn(`image ${index} pressed`)
       }
@@ -23,7 +27,7 @@ export const AutoSlider = ({imagesPromo}: Props) => {
       resizeMode={'cover'}
       paginationBoxStyle={styles.paginationBox}
       dotStyle={styles.dot}
-      ImageComponentStyle={styles.image}
+      ImageComponentStyle={{...styles.image, marginTop: top + height * 0.04}}
     />
   );
 };

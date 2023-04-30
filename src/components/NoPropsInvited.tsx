@@ -17,7 +17,7 @@ export const NoPropsInvited = () => {
         backgroundColor: 'white',
       }}>
       <Image
-        source={require('../assets/account.png')}
+        source={require('../assets/lock.gif')}
         style={{height: 150, width: 150, alignSelf: 'center'}}
       />
       <Text
@@ -27,7 +27,7 @@ export const NoPropsInvited = () => {
           marginBottom: 10,
           alignSelf: 'center',
         }}>
-        Inicia sesión para obtener mejor experiencia
+        Inicia sesión
       </Text>
       <TouchableOpacity
         onPress={invitedLogin}

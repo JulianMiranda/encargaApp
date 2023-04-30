@@ -22,7 +22,7 @@ export const RateScreen = () => {
         <View style={styles.divider} />
         <View style={styles.row}>
           <Text style={styles.rigthText}>1 USD</Text>
-          <Text style={styles.leftText}>1 MLC</Text>
+          <Text style={styles.leftText}>{prices.ratemlc} MLC</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.row}>

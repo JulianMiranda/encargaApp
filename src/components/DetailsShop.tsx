@@ -95,6 +95,35 @@ export const DetailsShop = ({
           </Text>
         </View>
       </View>
+      <View
+        style={{
+          ...styles.total,
+          borderRadius: 4,
+          marginBottom: 30,
+
+          /* backgroundColor: colors.primary */
+        }}>
+        <Text style={{...styles.totalTitle, fontSize: 16, fontWeight: '600'}}>
+          MN:
+        </Text>
+        <Text style={{...styles.totalTxt, fontSize: 18, fontWeight: '500'}}>
+          {formatToCurrency((total + totalMoneyReCalc) * prices.rate)}
+        </Text>
+      </View>
+      <View
+        style={{
+          ...styles.total,
+          borderRadius: 4,
+          marginBottom: 30,
+          /* backgroundColor: colors.primary */
+        }}>
+        <Text style={{...styles.totalTitle, fontSize: 16, fontWeight: '600'}}>
+          MLC:
+        </Text>
+        <Text style={{...styles.totalTxt, fontSize: 16, fontWeight: '500'}}>
+          {formatToCurrency((total + totalMoneyReCalc) / prices.ratemlc)}
+        </Text>
+      </View>
     </View>
   );
 };

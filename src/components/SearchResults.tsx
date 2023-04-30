@@ -3,7 +3,7 @@ import {Image, View, Text, ActivityIndicator, FlatList} from 'react-native';
 import api from '../api/api';
 import {AuthContext} from '../context/auth/AuthContext';
 import {SubcategoryResp} from '../interfaces/Subcategory.interface';
-import {SubcategoryCard} from './SubcategoryCard';
+import {SubcategoryCardSearch} from './SubcategoryCardSearch';
 
 interface Props {
   search: string;
@@ -11,7 +11,6 @@ interface Props {
 
 export const SearchResults = ({search}: Props) => {
   const [products, setProducts] = useState<any>(null);
-
   const {status} = useContext(AuthContext);
   useEffect(() => {
     (async () => {
@@ -29,7 +28,7 @@ export const SearchResults = ({search}: Props) => {
       filter: {status: ['=', true]},
       docsPerPage: 22,
       sort: {name: 'asc'},
-      search: {text: searchWord.trim(), fields: ['name']},
+      search: {text: searchWord.trim(), fields: ['textSearch']},
       population: [
         {
           path: 'category',
@@ -48,7 +47,6 @@ export const SearchResults = ({search}: Props) => {
       ],
     };
     console.log('body', body);
-
     if (status === 'authenticated') {
       api
         .post<SubcategoryResp>('/subcategories/getList', body)
@@ -59,7 +57,7 @@ export const SearchResults = ({search}: Props) => {
         .catch(() => setProducts(null));
     } else {
       api
-        .post<SubcategoryResp>('/subcategories/getListUnAuth', body)
+        .post<SubcategoryResp>('/queries/searchByText', body)
 
         .then(response => {
           setProducts(response.data.data);
@@ -116,7 +114,7 @@ export const SearchResults = ({search}: Props) => {
                 }}
               />
             }
-            renderItem={({item}) => <SubcategoryCard item={item} />}
+            renderItem={({item}) => <SubcategoryCardSearch item={item} />}
             // infinite scroll
             ListFooterComponent={
               <>

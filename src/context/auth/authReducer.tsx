@@ -32,6 +32,7 @@ type AuthAction =
   | {type: 'removeError'}
   | {type: 'deleteCode'; payload: {user: User}}
   | {type: 'setCode'; payload: {user: User}}
+  | {type: 'updateUser'; payload: {user: User}}
   | {type: 'logout'}
   | {type: 'initCheck'}
   | {type: 'loginB'}
@@ -76,7 +77,11 @@ export const authReducer = (
         ...state,
         utility: 'choose',
       };
-
+    case 'updateUser':
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     case 'setPrices':
       return {
         ...state,

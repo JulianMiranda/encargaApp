@@ -19,7 +19,11 @@ export const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => {
   return (
     <View style={styles.container} pointerEvents="box-none">
       <TabBg
-        color={Platform.OS === 'ios' ? 'transparent' : 'rgba(255,255,255,0.92)'}
+        color={
+          Platform.OS === 'ios'
+            ? 'rgba(255,255,255,0.92)'
+            : 'rgba(255,255,255,0.92)'
+        }
         style={styles.background}
       />
       <TouchableOpacity
